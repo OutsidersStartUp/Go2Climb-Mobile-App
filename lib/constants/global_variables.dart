@@ -5,6 +5,8 @@ class GlobalVariables {
   static const backgroundColor = Color.fromRGBO(237, 237, 237, 1);
   static const disableColor = Color.fromRGBO(181, 181, 181, 1);
   static const buttonColor = Color.fromRGBO(51, 141, 214, 1);
+  static const whiteColor = Color.fromRGBO(255, 255, 255, 1);
+  static const blackColor = Color.fromRGBO(0, 0, 0, 1);
 
   static const String logo =
       'https://img.freepik.com/vector-premium/diseno-logo-montana_67734-218.jpg?w=2000';
