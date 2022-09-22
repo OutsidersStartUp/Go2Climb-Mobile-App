@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:go2climb/constants/global_variables.dart';
 
 class Mountains extends StatelessWidget {
@@ -19,7 +17,7 @@ class Mountains extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0, top: 4),
+                    padding: const EdgeInsets.only(left: 20.0, top: 2.5),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: 100),
                       child: Container(
@@ -31,15 +29,18 @@ class Mountains extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            CircleAvatar(
-                              child: IconButton(
-                                icon: Image.network(
-                                  GlobalVariables.logo,
+                            Stack(
+                              alignment: Alignment.center,
+                              clipBehavior: Clip.antiAlias,
+                              children: [
+                                IconButton(
+                                  iconSize: 20,
+                                  onPressed: () {},
+                                  icon: Image.network(
+                                    GlobalVariables.logo,
+                                  ),
                                 ),
-                                iconSize: 50,
-                                onPressed: () {},
-                                color: GlobalVariables.backgroundColor,
-                              ),
+                              ],
                             ),
                             IconButton(
                               iconSize: 35,
@@ -58,9 +59,9 @@ class Mountains extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
         ),
       ),
     );
