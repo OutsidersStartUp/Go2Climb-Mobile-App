@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
-import 'package:go2climb/screens/mountains.dart';
+import 'package:go2climb/router.dart';
+import 'package:go2climb/screens/agency_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,9 +18,12 @@ class MyApp extends StatelessWidget {
       title: 'Go2Climb Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: GlobalVariables.primaryColor),
         primarySwatch: Colors.blue,
       ),
-      home: const Mountains(),
+      home: const AgencyProfile(),
+      onGenerateRoute: (settings) => generateRoute(settings),
     );
   }
 }
