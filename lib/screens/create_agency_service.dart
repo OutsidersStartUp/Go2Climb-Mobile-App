@@ -72,63 +72,143 @@ class CreateAgencyService extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                decoration: BoxDecoration(
-                  color: GlobalVariables.whiteColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                //Form
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: GlobalVariables.whiteColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  //Form
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          child: const Text(
-                      "Agregar nuevo servicio",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                            )
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: GlobalVariables.primaryColor)
-                      ),
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        child: SizedBox(
-                          child: Column(
-                            children: [
-                              TextFormField(),
-                              TextFormField(), 
-                              TextFormField(),
-                            ],
-                          )
-                          ),
-                        
-                    )
-                  ])
-              )
-            ],
+                        newSubtitle("Agregar nuevo servicio"),
+                        sizedBox(),
+                        agencyServiceForm(),
+                        sizedBox(),
+                        newSubtitle("Actividades a realizar"),
+                        sizedBox(),
+                        activityForm(),
+                        sizedBox(),
+                        newSubtitle("Horario"),
+                        sizedBox(),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: _startTime()),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: _startTime()),
+                          ],
+                        )
+                      ]),
+                  )
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  SizedBox sizedBox() => const SizedBox(height: 20);
+
+  Row newSubtitle(String subtitle) {
+    return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          subtitle,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                          )
+                        ),
+                      ),
+                    ],
+                  );
+  }
+
+  Container agencyServiceForm() {
+    return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: GlobalVariables.primaryColor, width: 3)
+                    ),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            TextFormField(),
+                            TextFormField(), 
+                            TextFormField(
+                              decoration: const InputDecoration(border: InputBorder.none),
+                            ),
+                        ],
+                      )
+                    ),
+                  );
+  }
+
+  Container activityForm() {
+    return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: GlobalVariables.primaryColor, width: 3)
+                    ),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        child: TextFormField(
+                          decoration: const InputDecoration(border: InputBorder.none),
+                        )),
+                  );
+  }
+
+  Container _startTime() {
+    return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: GlobalVariables.primaryColor, width: 3)
+                    ),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        child: TextFormField(
+                          decoration: const InputDecoration(border: InputBorder.none),
+                        )),
+                  );
+  }
+
+  Container _endTime() {
+    return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: GlobalVariables.primaryColor, width: 3)
+                    ),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        child: TextFormField(
+                          decoration: const InputDecoration(border: InputBorder.none),
+                        )),
+                  );
   }
 }
 
