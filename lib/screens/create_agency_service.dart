@@ -100,16 +100,23 @@ class CreateAgencyService extends StatelessWidget {
                         sizedBox(),
                         newSubtitle("Horario"),
                         sizedBox(),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: _startTime()),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: _startTime()),
-                          ],
-                        )
+                        scheduleForms(context),
+                        sizedBox(),
+                        newSubtitle("Precio"),
+                        sizedBox(),
+                        priceForm(),
+                        sizedBox(),
+                        newSubtitle("Imagenes referenciales"),
+                        sizedBox(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),                     
+                          child: Image.network(GlobalVariables.uploadImage)),
+                        sizedBox(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),                   
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
+                          )
                       ]),
                   )
                 )
@@ -119,6 +126,19 @@ class CreateAgencyService extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Row scheduleForms(BuildContext context) {
+    return Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: _startTime()),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: _endTime()),
+                        ],
+                      );
   }
 
   SizedBox sizedBox() => const SizedBox(height: 20);
@@ -152,10 +172,21 @@ class CreateAgencyService extends StatelessWidget {
                       child: SizedBox(
                         child: Column(
                           children: [
-                            TextFormField(),
-                            TextFormField(), 
                             TextFormField(
-                              decoration: const InputDecoration(border: InputBorder.none),
+                              decoration: const InputDecoration(
+                                hintText: "Nombre del servicio"
+                              ),
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: "Lugar"
+                              ),
+                            ), 
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Descripción"
+                                )
                             ),
                         ],
                       )
@@ -174,7 +205,9 @@ class CreateAgencyService extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
                         child: TextFormField(
-                          decoration: const InputDecoration(border: InputBorder.none),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "ejm: alpinismo"),
                         )),
                   );
   }
@@ -190,7 +223,9 @@ class CreateAgencyService extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
                         child: TextFormField(
-                          decoration: const InputDecoration(border: InputBorder.none),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "De: 08:00"),
                         )),
                   );
   }
@@ -206,7 +241,27 @@ class CreateAgencyService extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
                         child: TextFormField(
-                          decoration: const InputDecoration(border: InputBorder.none),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Hasta: 10:00"),
+                        )),
+                  );
+  }
+
+  Container priceForm() {
+    return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: GlobalVariables.primaryColor, width: 3)
+                    ),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "200 USD"),
                         )),
                   );
   }
