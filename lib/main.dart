@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Go2Climb Demo',
       theme: ThemeData(
+        fontFamily: 'Roboto',
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         colorScheme:
             ColorScheme.fromSeed(seedColor: GlobalVariables.primaryColor),
