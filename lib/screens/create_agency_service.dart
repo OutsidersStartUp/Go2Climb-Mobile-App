@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateAgencyService extends StatelessWidget {
   static const String routeName = '/create-agency-service';
@@ -213,6 +214,7 @@ class CreateAgencyService extends StatelessWidget {
   }
 
   Container _startTime() {
+    var timeMask = MaskTextInputFormatter(mask: '##:##', filter: { "#": RegExp(r'[0-9]') });
     return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -223,6 +225,8 @@ class CreateAgencyService extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
                         child: TextFormField(
+                          inputFormatters: [timeMask],
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "De: 08:00"),
@@ -231,6 +235,7 @@ class CreateAgencyService extends StatelessWidget {
   }
 
   Container _endTime() {
+    var timeMask = MaskTextInputFormatter(mask: '##:##', filter: { "#": RegExp(r'[0-9]') });
     return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -241,6 +246,8 @@ class CreateAgencyService extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
                         child: TextFormField(
+                          inputFormatters: [timeMask],
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Hasta: 10:00"),
@@ -249,6 +256,7 @@ class CreateAgencyService extends StatelessWidget {
   }
 
   Container priceForm() {
+    var priceMask = MaskTextInputFormatter(mask: 'S/.####', filter: { "#": RegExp(r'[0-9]') });
     return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -259,9 +267,11 @@ class CreateAgencyService extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
                         child: TextFormField(
+                          inputFormatters: [priceMask],
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: "200 USD"),
+                            hintText: "200 PEN"),
                         )),
                   );
   }
