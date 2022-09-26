@@ -4,7 +4,6 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateAgencyService extends StatelessWidget {
   static const String routeName = '/create-agency-service';
-
   const CreateAgencyService({super.key});
 
   @override
@@ -81,16 +80,15 @@ class CreateAgencyService extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: GlobalVariables.whiteColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  //Form
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: GlobalVariables.whiteColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    //Form
+                    child: SingleChildScrollView(
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
                         newSubtitle("Agregar nuevo servicio"),
                         sizedBox(),
                         agencyServiceForm(),
@@ -108,29 +106,37 @@ class CreateAgencyService extends StatelessWidget {
                         priceForm(),
                         sizedBox(),
                         Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),                   
-                        width: MediaQuery.of(context).size.width,                  
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          width: MediaQuery.of(context).size.width,
                           child: ElevatedButton.icon(
                             icon: Text("Agregar oferta"),
                             label: Icon(Icons.add),
-                            onPressed: () => {}, 
+                            onPressed: () => {},
                           ),
                         ),
-
+                        newSubtitle("Precio promocional (USD)"),
+                        sizedBox(),
+                        priceForm(),
+                        sizedBox(),
+                        newSubtitle("Válido"),
+                        sizedBox(),
+                        scheduleForms(context),
+                        sizedBox(),
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),                     
-                          child: Image.network(GlobalVariables.uploadImage)),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Image.network(GlobalVariables.uploadImage)),
                         sizedBox(),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),                   
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
-                          )
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                child: const Text("Continuar")))
                       ]),
-                  )
-                )
+                    ))
               ],
             ),
           ),
@@ -141,150 +147,142 @@ class CreateAgencyService extends StatelessWidget {
 
   Row scheduleForms(BuildContext context) {
     return Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: _startTime()),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: _endTime()),
-                        ],
-                      );
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: _startTime()),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4, child: _endTime()),
+      ],
+    );
+  }
+
+    Row scheduleForOfferForms(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: _startTime()),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4, child: _endTime()),
+      ],
+    );
   }
 
   SizedBox sizedBox() => const SizedBox(height: 20);
 
   Row newSubtitle(String subtitle) {
     return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          subtitle,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                          )
-                        ),
-                      ),
-                    ],
-                  );
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          child: Text(subtitle,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+      ],
+    );
   }
 
   Container agencyServiceForm() {
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: "Nombre del servicio"
-                              ),
-                            ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: "Lugar"
-                              ),
-                            ), 
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Descripción"
-                                )
-                            ),
-                        ],
-                      )
-                    ),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(hintText: "Nombre del servicio"),
+          ),
+          TextFormField(
+            decoration: const InputDecoration(hintText: "Lugar"),
+          ),
+          TextFormField(
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Descripción")),
+        ],
+      )),
+    );
   }
 
   Container activityForm() {
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "ejm: alpinismo"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "ejm: alpinismo"),
+      )),
+    );
   }
 
   Container _startTime() {
-    var timeMask = MaskTextInputFormatter(mask: '##:##', filter: { "#": RegExp(r'[0-9]') });
+    var timeMask =
+        MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          inputFormatters: [timeMask],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "De: 08:00"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [timeMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "De: 08:00"),
+      )),
+    );
   }
 
   Container _endTime() {
-    var timeMask = MaskTextInputFormatter(mask: '##:##', filter: { "#": RegExp(r'[0-9]') });
+    var timeMask =
+        MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          inputFormatters: [timeMask],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Hasta: 10:00"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [timeMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "Hasta: 10:00"),
+      )),
+    );
   }
 
   Container priceForm() {
-    var priceMask = MaskTextInputFormatter(mask: 'S/.####', filter: { "#": RegExp(r'[0-9]') });
+    var priceMask = MaskTextInputFormatter(
+        mask: 'S/.####', filter: {"#": RegExp(r'[0-9]')});
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          inputFormatters: [priceMask],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "200 PEN"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [priceMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "200 PEN"),
+      )),
+    );
   }
+
 }
 
 class MySearchDelegate extends SearchDelegate {
