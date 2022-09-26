@@ -112,6 +112,16 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                         sizedBox(),
                         priceForm(),
                         sizedBox(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton.icon(
+                            icon: Text("Agregar oferta"),
+                            label: Icon(Icons.add),
+                            onPressed: () => setState(() => isVisible = !isVisible),
+                          ),
+                        ),
                         Visibility(
                           visible: isVisible,
                           child: Container(
@@ -127,16 +137,6 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                               sizedBox(),
                           ],),)
                         )),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton.icon(
-                            icon: Text("Agregar oferta"),
-                            label: Icon(Icons.add),
-                            onPressed: () => setState(() => isVisible = !isVisible),
-                          ),
-                        ),
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
