@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class CreateAgencyService extends StatelessWidget {
+class CreateAgencyService extends StatefulWidget {
   static const String routeName = '/create-agency-service';
-  const CreateAgencyService({super.key});
+  CreateAgencyService({super.key});
+
+  @override
+  State<CreateAgencyService> createState() => _CreateAgencyServiceState();
+}
+
+class _CreateAgencyServiceState extends State<CreateAgencyService> {
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +112,21 @@ class CreateAgencyService extends StatelessWidget {
                         sizedBox(),
                         priceForm(),
                         sizedBox(),
+                        Visibility(
+                          visible: isVisible,
+                          child: Container(
+                          child: SingleChildScrollView(
+                            child: Column(mainAxisSize: MainAxisSize.min, children: [
+                              newSubtitle("Precio promocional (USD)"),
+                              sizedBox(),
+                              priceForm(),
+                              sizedBox(),
+                              newSubtitle("Válido"),
+                              sizedBox(),
+                              scheduleForms(context),
+                              sizedBox(),
+                          ],),)
+                        )),
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
@@ -112,17 +134,9 @@ class CreateAgencyService extends StatelessWidget {
                           child: ElevatedButton.icon(
                             icon: Text("Agregar oferta"),
                             label: Icon(Icons.add),
-                            onPressed: () => {},
+                            onPressed: () => setState(() => isVisible = !isVisible),
                           ),
                         ),
-                        newSubtitle("Precio promocional (USD)"),
-                        sizedBox(),
-                        priceForm(),
-                        sizedBox(),
-                        newSubtitle("Válido"),
-                        sizedBox(),
-                        scheduleForms(context),
-                        sizedBox(),
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
@@ -157,7 +171,7 @@ class CreateAgencyService extends StatelessWidget {
     );
   }
 
-    Row scheduleForOfferForms(BuildContext context) {
+  Row scheduleForOfferForms(BuildContext context) {
     return Row(
       children: [
         SizedBox(
@@ -282,7 +296,6 @@ class CreateAgencyService extends StatelessWidget {
       )),
     );
   }
-
 }
 
 class MySearchDelegate extends SearchDelegate {
