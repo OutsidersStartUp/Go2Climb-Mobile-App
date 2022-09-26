@@ -107,6 +107,16 @@ class CreateAgencyService extends StatelessWidget {
                         sizedBox(),
                         priceForm(),
                         sizedBox(),
+                        Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),                   
+                        width: MediaQuery.of(context).size.width,                  
+                          child: ElevatedButton.icon(
+                            icon: Text("Agregar oferta"),
+                            label: Icon(Icons.add),
+                            onPressed: () => {}, 
+                          ),
+                        ),
+
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
