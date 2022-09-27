@@ -98,7 +98,23 @@ class DayOffersState extends State<ServicesView> {
                         onPressed: () {
                           //TODO: Implement change state
                         },
+                        style: ButtonStyle(
+                          minimumSize: const MaterialStatePropertyAll<Size>(
+                              Size(90, 40)),
+                          backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                            ),
+                          ),
+                        ),
                         child: const Text("Ofertas del día"),
+                      ),
+
+                      ElevatedButton(
+                        onPressed: () {
+                          //TODO: Implement change state
+                        },
                         style: ButtonStyle(
                           minimumSize: const MaterialStatePropertyAll<Size>(
                               Size(90, 40)),
@@ -109,30 +125,13 @@ class DayOffersState extends State<ServicesView> {
                             ),
                           ),
                         ),
-                      ),
-
-                      ElevatedButton(
-                        onPressed: () {
-                          //TODO: Implement change state
-                        },
                         child: const Text("Los más populares"),
-                        style: ButtonStyle(
-                          minimumSize: const MaterialStatePropertyAll<Size>(
-                              Size(90, 40)),
-                          backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
-                            ),
-                          ),
-                        ),
                       ),
 
                       ElevatedButton(
                         onPressed: () {
                           //TODO: Implement change state
                         },
-                        child: const Text("Para ti"),
                         style: ButtonStyle(
                           minimumSize: const MaterialStatePropertyAll<Size>(
                               Size(90, 40)),
@@ -143,6 +142,7 @@ class DayOffersState extends State<ServicesView> {
                             ),
                           ),
                         ),
+                        child: const Text("Para ti"),
                       ),
                     ],
                   ),
@@ -195,7 +195,7 @@ class DayOffersState extends State<ServicesView> {
 
   GestureDetector serviceCard(BuildContext context, imageUrl){
     String title = 'Disfruta de una aventura en la montaña el Huascarán';
-    String agency = 'agencia TravelNew';
+    String agency = 'TravelNew';
     String price = 'S/500.00';
     String offer = 'S/480.00';
 
@@ -232,7 +232,7 @@ class DayOffersState extends State<ServicesView> {
                   allowHalfRating: true,
                   itemCount: 5,
                   itemSize: 20,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                   itemBuilder: (context, _) => const Icon(
                     Icons.star,
                     color: Colors.amber,
@@ -258,7 +258,7 @@ class DayOffersState extends State<ServicesView> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('por: '),
+                        const Text('por: '),
                         Text(agency,
                           style: const TextStyle(
                               fontSize: 12,
@@ -272,7 +272,7 @@ class DayOffersState extends State<ServicesView> {
                           allowHalfRating: true,
                           itemCount: 5,
                           itemSize: 15,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                           itemBuilder: (context, _) => const Icon(
                             Icons.star,
                             color: Colors.amber,
