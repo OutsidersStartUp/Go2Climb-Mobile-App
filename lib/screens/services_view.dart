@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go2climb/screens/service_detail.dart';
 import '../constants/global_variables.dart';
 import 'agency_profile.dart';
 
@@ -83,74 +84,75 @@ class DayOffersState extends State<ServicesView> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                // Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        //TODO: Implement change state
-                      },
-                      child: const Text("Ofertas del día"),
-                      style: ButtonStyle(
-                        minimumSize: const MaterialStatePropertyAll<Size>(
-                            Size(90, 40)),
-                        backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  // Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          //TODO: Implement change state
+                        },
+                        child: const Text("Ofertas del día"),
+                        style: ButtonStyle(
+                          minimumSize: const MaterialStatePropertyAll<Size>(
+                              Size(90, 40)),
+                          backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        //TODO: Implement change state
-                      },
-                      child: const Text("Los más populares"),
-                      style: ButtonStyle(
-                        minimumSize: const MaterialStatePropertyAll<Size>(
-                            Size(90, 40)),
-                        backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                      ElevatedButton(
+                        onPressed: () {
+                          //TODO: Implement change state
+                        },
+                        child: const Text("Los más populares"),
+                        style: ButtonStyle(
+                          minimumSize: const MaterialStatePropertyAll<Size>(
+                              Size(90, 40)),
+                          backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        //TODO: Implement change state
-                      },
-                      child: const Text("Para ti"),
-                      style: ButtonStyle(
-                        minimumSize: const MaterialStatePropertyAll<Size>(
-                            Size(90, 40)),
-                        backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                      ElevatedButton(
+                        onPressed: () {
+                          //TODO: Implement change state
+                        },
+                        child: const Text("Para ti"),
+                        style: ButtonStyle(
+                          minimumSize: const MaterialStatePropertyAll<Size>(
+                              Size(90, 40)),
+                          backgroundColor: const MaterialStatePropertyAll<Color>(Colors.grey),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
-                const SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
 
-                //Current State
-                Container(
-                  alignment: Alignment.topLeft,
-                  height: 40,
+                  //Current State
+                  Container(
+                    alignment: Alignment.topLeft,
+                    height: 40,
                     decoration: BoxDecoration(
                       color: GlobalVariables.whiteColor,
                       borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
@@ -159,135 +161,157 @@ class DayOffersState extends State<ServicesView> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(currentState,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                          ),),
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                        ),),
                     ),
-                ),
+                  ),
 
-                const SizedBox(height: 10.0),
-                // Service cards
-                serviceCard(context)
-              ],
-            )
+                  const SizedBox(height: 10.0),
+                  // Service cards
+                  serviceCard(context, GlobalVariables.mountain1),
 
+                  const SizedBox(height: 10.0),
+                  // Service cards
+                  serviceCard(context, GlobalVariables.mountain2),
+
+                  const SizedBox(height: 10.0),
+                  // Service cards
+                  serviceCard(context, GlobalVariables.mountain3),
+
+                  const SizedBox(height: 10.0),
+                  // Service cards
+                  serviceCard(context, GlobalVariables.mountain1),
+                ],
+              )
+
+          ),
         ),
-      ),
+      )
+
     );
   }
 
-  Container serviceCard(BuildContext context) {
-    String imageUrl = GlobalVariables.mountain1;
+  GestureDetector serviceCard(BuildContext context, imageUrl){
     String title = 'Disfruta de una aventura en la montaña el Huascarán';
     String agency = 'agencia TravelNew';
     String price = 'S/500.00';
     String offer = 'S/480.00';
 
-    return Container(
-      height: 320,
-      decoration: BoxDecoration(
-        color: GlobalVariables.whiteColor,
-        borderRadius: BorderRadius.circular(GlobalVariables.borderRadius)
-      ),
-      child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
-                  child: Image.network(imageUrl)
-              ),
-              const SizedBox(height: 10.0),
-
-              RatingBar.builder(
-                initialRating: 3,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 20,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context, ServiceDetail.routeName);
+      },
+      child: Container(
+          height: 320,
+          decoration: BoxDecoration(
+              color: GlobalVariables.whiteColor,
+              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius)
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+                      child: Image.network(imageUrl, height: 190)
+                  ),
                 ),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
-              ),
-              const SizedBox(height: 10.0),
 
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text(title,
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold
-                  ),),
-              ),
-              const SizedBox(height: 5.0),
+                const SizedBox(height: 10.0),
 
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('por: '),
-                      Text(agency,
-                        style: const TextStyle(
+                RatingBar.builder(
+                  initialRating: 3,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 20,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                ),
+                const SizedBox(height: 10.0),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text(title,
+                    style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold
-                      ),),
-                      const SizedBox(width: 15.0),
-                      RatingBar.builder(
-                        initialRating: 3,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: 15,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
-                  ],
-                )
-              ),
-              const SizedBox(height: 5.0),
-              
-              Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(price,
-                        style: const TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                        ),
+                    ),),
+                ),
+                const SizedBox(height: 5.0),
 
-                      ),
-                      const SizedBox(width: 15.0),
-                      Text(offer,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                        ),),
-                    ],
-                  )
-              ),
-            ],
-          ),
-      )
+                Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('por: '),
+                        Text(agency,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold
+                          ),),
+                        const SizedBox(width: 15.0),
+                        RatingBar.builder(
+                          initialRating: 3,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 15,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                      ],
+                    )
+                ),
+                const SizedBox(height: 5.0),
+
+                Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(price,
+                          style: const TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                          ),
+
+                        ),
+                        const SizedBox(width: 15.0),
+                        Text(offer,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                          ),),
+                      ],
+                    )
+                ),
+              ],
+            ),
+          )
+      ),
     );
   }
 }
