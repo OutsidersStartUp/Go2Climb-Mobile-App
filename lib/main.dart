@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/router.dart';
 import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/services_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: GlobalVariables.primaryColor),
         primarySwatch: Colors.blue,
       ),
-      home: const AgencyProfile(),
+      home: ServicesView(),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }

@@ -11,7 +11,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => CreateAgencyService(),
       );
-
+    case AgencyProfile.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AgencyProfile(),
+      );
     default:
       return MaterialPageRoute(
         settings: routeSettings,
