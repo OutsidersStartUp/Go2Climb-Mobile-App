@@ -116,9 +116,28 @@ class CreateAgencyService extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),                   
                           width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
+                          child: ElevatedButton(onPressed: () {},
+                          style: ButtonStyle(
+                          minimumSize: const MaterialStatePropertyAll<Size>(
+                              Size(double.infinity, 40)),
+                          backgroundColor:
+                              const MaterialStatePropertyAll<Color>(GlobalVariables.primaryColor),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ), 
+                          child: const Text(
+                            "Continuar",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),),
                           )
-                      ]),
+                        )
+                      ]
+                    ),
                   )
                 )
               ],
@@ -149,14 +168,12 @@ class CreateAgencyService extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Text(
-                          subtitle,
+                      Text(
+                        subtitle,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                          )
-                        ),
+                        )
                       ),
                     ],
                   );
