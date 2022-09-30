@@ -70,7 +70,9 @@ class DayOffersState extends State<ServicesView> {
                             IconButton(
                               iconSize: 35,
                               icon: const Icon(Icons.menu),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, AgencyProfile.routeName);
+                              },
                               color: GlobalVariables.blackColor,
                             ),
                           ],
