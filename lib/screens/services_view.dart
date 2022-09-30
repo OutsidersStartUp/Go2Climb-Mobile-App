@@ -7,7 +7,7 @@ import 'agency_profile.dart';
 
 class ServicesView extends StatefulWidget {
   static const String routeName = '/services-view';
-  ServicesView({super.key});
+  const ServicesView({super.key});
 
   @override
   State<ServicesView> createState() => DayOffersState();

@@ -173,9 +173,9 @@ class AgencyProfile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      child: Text(
-                          "Somos una agencia destinada al alpinismo para principiantes y personas experimentadas. Contamos con más de 20 años de experiencia en el rubro de alpinismo. Agradecemos tu visita."),
+                    SizedBox(height: 20),
+                      Text(
+                          "Somos una agencia destinada al alpinismo para principiantes y personas experimentadas. Contamos con más de 20 años de experiencia en el rubro de alpinismo. Agradecemos tu visita.", textAlign: TextAlign.center,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

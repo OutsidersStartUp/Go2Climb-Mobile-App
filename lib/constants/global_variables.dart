@@ -14,7 +14,6 @@ class GlobalVariables {
 
   static const String logo =
       'https://img.freepik.com/vector-premium/diseno-logo-montana_67734-218.jpg?w=2000';
-
   static const String mountain1 =
       'https://www.caracteristicas.co/wp-content/uploads/2018/11/montan%CC%83as-e1543190126108.jpg';
   static const String mountain2 =

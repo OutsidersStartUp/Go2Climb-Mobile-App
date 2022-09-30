@@ -6,9 +6,15 @@ import 'package:go2climb/main.dart';
 import 'package:go2climb/screens/agency_profile.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/service_detail.dart';
+import 'package:go2climb/screens/services_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
+    case ServicesView.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const ServicesView(),
+      );
     case CreateAgencyService.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
