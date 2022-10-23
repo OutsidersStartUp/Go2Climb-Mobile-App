@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+import '../services_view.dart';
+
 class PersonalizeTrip extends StatelessWidget {
   static const String routeName = '/personalize-trip';
   PersonalizeTrip({super.key});
@@ -64,34 +66,7 @@ class PersonalizeTrip extends StatelessWidget {
                               sizedBox(),
                               cardInformation(context),
                               sizedBox(),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
-                                width: MediaQuery.of(context).size.width,
-                                child: ElevatedButton(onPressed: () {},
-                                style: ButtonStyle(
-                                  minimumSize: 
-                                  const MaterialStatePropertyAll<Size>(
-                                    Size(double.infinity, 40)),
-                                  backgroundColor:
-                                  const MaterialStatePropertyAll<Color>(
-                                    GlobalVariables.primaryColor),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                      GlobalVariables.borderRadius
-                                      ),
-                                    ),
-                                  ),
-                                ), 
-                                child: const Text(
-                                  "Pagar",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )
-                            )]
+                              payButton(context)]
                           )
                       )
                     ]
@@ -99,6 +74,56 @@ class PersonalizeTrip extends StatelessWidget {
             )
           ]
         )
+      )
+    );
+  }
+
+  Container payButton(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      width: MediaQuery.of(context).size.width,
+      child: ElevatedButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            barrierDismissible: false, 
+            builder: ((context) => AlertDialog(
+              title: const Text("¡Enhorabuena!"),
+              content: const Text("Servicio contratado exitosamente"),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text("Aceptar"),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context, ServicesView.routeName);
+                  },
+                )
+              ],
+            )),
+          );
+        },
+      style: ButtonStyle(
+        minimumSize: 
+        const MaterialStatePropertyAll<Size>(
+          Size(double.infinity, 40)),
+        backgroundColor:
+        const MaterialStatePropertyAll<Color>(
+          GlobalVariables.primaryColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                GlobalVariables.borderRadius
+              ),
+            ),
+          ),
+      ), 
+      child: const Text(
+        "Pagar",
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.black,
+        ),
+      ),
       )
     );
   }
