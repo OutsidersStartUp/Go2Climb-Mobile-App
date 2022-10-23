@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/screens/agency_profile.dart';
 import 'package:go2climb/screens/services_view.dart';
 
 import '../constants/global_variables.dart';
@@ -123,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
             onPressed: () {
               Navigator.pushNamed(
-                  context, ServicesView.routeName);
+                  context, AgencyProfile.routeName);
             },
             child: Text("Registrate y ofrece servicios turisticos"),
           );

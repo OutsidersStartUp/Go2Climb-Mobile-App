@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/screens/agency_profile.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateAgencyService extends StatefulWidget {
@@ -147,7 +148,10 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context, AgencyProfile.routeName);
+                                },
                                 child: const Text("Continuar")))
                       ]),
                     ))
