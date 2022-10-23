@@ -7,6 +7,7 @@ import 'package:go2climb/screens/agency_profile.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/service_detail.dart';
 import 'package:go2climb/screens/services_view.dart';
+import 'package:go2climb/screens/tourist/personalize_trip.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -30,6 +31,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const AgencyProfile(),
       );
+    case PersonalizeTrip.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => PersonalizeTrip(),
+      );  
     default:
       return MaterialPageRoute(
         settings: routeSettings,
