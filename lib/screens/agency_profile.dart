@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go2climb/components/AppBarGo2Climb.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 
@@ -11,68 +12,7 @@ class AgencyProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: GlobalVariables.backgroundColor,
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: MySearchDelegate(),
-              );
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
-        flexibleSpace: SafeArea(
-          child: Builder(
-            builder: (BuildContext context) {
-              return SizedBox(
-                width: 10.0,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0, top: 2.5),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 100),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: GlobalVariables.whiteColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Stack(
-                              alignment: Alignment.center,
-                              clipBehavior: Clip.antiAlias,
-                              children: [
-                                IconButton(
-                                  iconSize: 20,
-                                  onPressed: () {},
-                                  icon: Image.network(
-                                    GlobalVariables.user,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                              iconSize: 35,
-                              icon: const Icon(Icons.menu),
-                              onPressed: () {},
-                              color: GlobalVariables.blackColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ),
+      appBar: const AppBarGo2Climb(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -174,8 +114,9 @@ class AgencyProfile extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20),
-                      Text(
-                          "Somos una agencia destinada al alpinismo para principiantes y personas experimentadas. Contamos con más de 20 años de experiencia en el rubro de alpinismo. Agradecemos tu visita.", textAlign: TextAlign.center,
+                    Text(
+                      "Somos una agencia destinada al alpinismo para principiantes y personas experimentadas. Contamos con más de 20 años de experiencia en el rubro de alpinismo. Agradecemos tu visita.",
+                      textAlign: TextAlign.center,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
