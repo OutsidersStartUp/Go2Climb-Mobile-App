@@ -97,18 +97,26 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                     child: SingleChildScrollView(
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
                         newSubtitle("Agregar nuevo servicio"),
-                        newSubtitle("Actividades a realizar"),
-                        newSubtitle("Horario"),
+                        newSubtitle("Promocionar servicio"),
                         Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            width: MediaQuery.of(context).size.width,
-                            child: ElevatedButton(
-                                onPressed: () {
+                          child: const Text('Promociona tu servicio y llega a mas personas. Los usuarios que promocionan sus servicios tienen una mayor relevancia al realizar una busqueda.',
+                          textAlign: TextAlign.justify,),
+                        ),
+                        newSubtitle("Tiempo de promocion"),
+                        newSubtitle("Metodo de pago"),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            onPressed: () {
                                   
-                                },
-                                child: const Text("Continuar")))
+                            },
+                            child: const Text("Continuar")
+                          )
+                        )
                       ]),
-                    ))
+                    )
+                  )
               ],
             ),
           ),
@@ -170,8 +178,8 @@ Row newSubtitle(String subtitle) {
   );
 }
 
-Container _startTime() {
-  var timeMask = MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
+Container _startDate() {
+  var dateMask = MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
@@ -181,19 +189,37 @@ Container _startTime() {
     margin: const EdgeInsets.symmetric(horizontal: 10),
     child: SizedBox(
       child: TextFormField(
-      inputFormatters: [timeMask],
+      inputFormatters: [dateMask],
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return null;
+        }
+        final components = value.split("/");
+        if (components.length == 3) {
+          final day = int.tryParse(components[0]);
+          final month = int.tryParse(components[1]);
+          final year = int.tryParse(components[2]);
+          if (day != null && month != null && year != null) {
+            final date = DateTime(year, month, day);
+            if (date.year == year && date.month == month && date.day == day) {
+              return null;
+            }
+          }
+        }
+        return "Fecha no valida";
+      },
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
-        border: InputBorder.none, hintText: "De: 08:00"
+        border: InputBorder.none, hintText: "De: 08/08/2021"
         ),
       )
     ),
   );
 }
 
-  Container _endTime() {
-    var timeMask =
-        MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
+Container _endDate() {
+    var dateMask =
+        MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -202,10 +228,28 @@ Container _startTime() {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [timeMask],
+        inputFormatters: [dateMask],
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return null;
+          }
+          final components = value.split("/");
+          if (components.length == 3) {
+            final day = int.tryParse(components[0]);
+            final month = int.tryParse(components[1]);
+            final year = int.tryParse(components[2]);
+            if (day != null && month != null && year != null) {
+              final date = DateTime(year, month, day);
+              if (date.year == year && date.month == month && date.day == day) {
+                return null;
+              }
+            }
+          }
+          return "Fecha no valida";
+        },
         keyboardType: TextInputType.number,
         decoration: const InputDecoration(
-            border: InputBorder.none, hintText: "Hasta: 10:00"),
+            border: InputBorder.none, hintText: "Hasta: 08/09/2021"),
       )),
     );
   }
@@ -235,9 +279,9 @@ Row scheduleForms(BuildContext context) {
       children: [
         SizedBox(
             width: MediaQuery.of(context).size.width * 0.4,
-            child: _startTime()),
+            child: _startDate()),
         SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4, child: _endTime()),
+            width: MediaQuery.of(context).size.width * 0.4, child: _endDate()),
       ],
     );
 }
