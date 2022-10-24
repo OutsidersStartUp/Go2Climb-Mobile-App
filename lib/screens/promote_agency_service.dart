@@ -79,11 +79,42 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
           ),
         ),
       ),
+      body: SingleChildScrollView(
+                child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: GlobalVariables.whiteColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    //Form
+                    child: SingleChildScrollView(
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        newSubtitle("Agregar nuevo servicio"),
+                        newSubtitle("Actividades a realizar"),
+                        newSubtitle("Horario"),
+                        Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  
+                                },
+                                child: const Text("Continuar")))
+                      ]),
+                    ))
+              ],
+            ),
+          ),
+        ),
 
-
-
-
-      
+      )
     );
   }
 }
@@ -118,4 +149,95 @@ class MySearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return Text('');
   }
+}
+
+SizedBox sizedBox() => const SizedBox(height: 20);
+
+Row newSubtitle(String subtitle) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        child: Text(subtitle,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            )
+        ),
+      ),
+    ],
+  );
+}
+
+Container _startTime() {
+  var timeMask = MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: GlobalVariables.primaryColor, width: 3)
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+      child: TextFormField(
+      inputFormatters: [timeMask],
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        border: InputBorder.none, hintText: "De: 08:00"
+        ),
+      )
+    ),
+  );
+}
+
+  Container _endTime() {
+    var timeMask =
+        MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [timeMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "Hasta: 10:00"),
+      )),
+    );
+  }
+
+Container priceForm() {
+  var priceMask = MaskTextInputFormatter(mask: 'S/.####', filter: {"#": RegExp(r'[0-9]')});
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+      child: TextFormField(
+      inputFormatters: [priceMask],
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        border: InputBorder.none, hintText: "200 PEN"),
+      )
+    ),
+  );
+}
+
+Row scheduleForms(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: _startTime()),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4, child: _endTime()),
+      ],
+    );
 }
