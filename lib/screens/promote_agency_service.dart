@@ -97,18 +97,16 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                     //Form
                     child: SingleChildScrollView(
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        newSubtitle("Agregar nuevo servicio"),
+                        newSubHeading("Agregar nuevo servicio"),
                         sizedBox(),
-                        newSubtitle("Promocionar servicio"),
+                        newSubHeading("Promocionar servicio"),
                         sizedBox(),
-                        Container(
-                          child: const Text('Promociona tu servicio y llega a más personas. Los usuarios que promocionan sus servicios tienen una mayor relevancia al realizar una búsqueda.',
-                          textAlign: TextAlign.justify,),
-                        ),
+                        const Text('Promociona tu servicio y llega a más personas. Los usuarios que promocionan sus servicios tienen una mayor relevancia al realizar una búsqueda.',
+                        textAlign: TextAlign.justify,),
                         sizedBox(),
-                        newSubtitle("Tiempo de promoción"),
+                        newSubHeading("Tiempo de promoción"),
                         sizedBox(),
-                        DateForm(context),
+                        dateForm(context),
                         sizedBox(),
                         priceForm(),
                         sizedBox(),
@@ -124,7 +122,7 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                           ],
                         ),
                         sizedBox(),
-                        newSubtitle("Método de pago"),
+                        newSubHeading("Método de pago"),
                         sizedBox(),
                         Container(
                           decoration: BoxDecoration(
@@ -284,20 +282,20 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text('');
+    return const Text('');
   }
 }
 
 SizedBox sizedBox() => const SizedBox(height: 20);
 
-Row newSubtitle(String subtitle) {
+Row newSubHeading(String subtitle) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
         child: Text(subtitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             )
@@ -403,7 +401,7 @@ Container priceForm() {
   );
 }
 
-Row DateForm(BuildContext context) {
+Row dateForm(BuildContext context) {
     return Row(
       children: [
         SizedBox(
