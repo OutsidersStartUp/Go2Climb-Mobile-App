@@ -97,22 +97,71 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                     child: SingleChildScrollView(
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
                         newSubtitle("Agregar nuevo servicio"),
+                        sizedBox(),
                         newSubtitle("Promocionar servicio"),
+                        sizedBox(),
                         Container(
                           child: const Text('Promociona tu servicio y llega a mas personas. Los usuarios que promocionan sus servicios tienen una mayor relevancia al realizar una busqueda.',
                           textAlign: TextAlign.justify,),
                         ),
+                        sizedBox(),
                         newSubtitle("Tiempo de promocion"),
-                        newSubtitle("Metodo de pago"),
+                        sizedBox(),
+                        DateForm(context),
+                        sizedBox(),
+                        priceForm(),
+                        sizedBox(),
+                        Row(
+                          children: const [
+                            Spacer(),
+                            Text("Costo diario por promocion: 5.00 USD",
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic
+                              ),
+                            )
+                          ],
+                        ),
+                      sizedBox(),
+                      newSubtitle("Metodo de pago"),
+                      sizedBox(),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                            color: Colors.transparent,
+                            style: BorderStyle.solid,
+                            width: 1.0,
+                          ),
+                          color: GlobalVariables.primaryColor,
+                          borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          margin: const EdgeInsets.all(5),
+                          width: MediaQuery.of(context).size.width,
+                          height: 80.0,
+                          child: const Text('Tarjeta 01',
+                            textAlign: TextAlign.justify,),
+                          
+                        ),
+                        sizedBox(),
+                        sizedBox(),
+                        sizedBox(),
+
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () {
-                                  
-                            },
-                            child: const Text("Continuar")
-                          )
+                          child: Row(
+                            children: [
+                              OutlinedButton(onPressed: () {}, child: const Text("Omitir")),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                                  backgroundColor: Theme.of(context).colorScheme.primary,
+                                  ).copyWith(
+                                    elevation: ButtonStyleButton.allOrNull(0.0)),
+                                onPressed: () {},
+                                child: const Text('Continuar'),
+                              )
+                            ],)
                         )
                       ]),
                     )
@@ -186,7 +235,7 @@ Container _startDate() {
       border: Border.all(color: GlobalVariables.primaryColor, width: 3)
     ),
     padding: const EdgeInsets.symmetric(horizontal: 5),
-    margin: const EdgeInsets.symmetric(horizontal: 10),
+    margin: const EdgeInsets.symmetric(horizontal: 5),
     child: SizedBox(
       child: TextFormField(
       inputFormatters: [dateMask],
@@ -225,7 +274,7 @@ Container _endDate() {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
       padding: const EdgeInsets.symmetric(horizontal: 5),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       child: SizedBox(
           child: TextFormField(
         inputFormatters: [dateMask],
@@ -262,7 +311,7 @@ Container priceForm() {
         border: Border.all(color: GlobalVariables.primaryColor, width: 3)
     ),
     padding: const EdgeInsets.symmetric(horizontal: 5),
-    margin: const EdgeInsets.symmetric(horizontal: 10),
+    margin: const EdgeInsets.symmetric(horizontal: 5),
     child: SizedBox(
       child: TextFormField(
       inputFormatters: [priceMask],
@@ -274,7 +323,7 @@ Container priceForm() {
   );
 }
 
-Row scheduleForms(BuildContext context) {
+Row DateForm(BuildContext context) {
     return Row(
       children: [
         SizedBox(
