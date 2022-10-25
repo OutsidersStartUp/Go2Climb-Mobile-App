@@ -122,58 +122,64 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                             )
                           ],
                         ),
-                      sizedBox(),
-                      newSubtitle("Metodo de pago"),
-                      sizedBox(),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.transparent,
-                            style: BorderStyle.solid,
-                            width: 1.0,
-                          ),
-                          color: GlobalVariables.primaryColor,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        margin: const EdgeInsets.all(5),
-                        width: MediaQuery.of(context).size.width,
-                        height: 80.0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: const <Widget>[
-                                Text(
-                                  "Tarjeta 01",
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Text(
-                                  "xxxx-xxxx-xxxx-xx45",
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ]
+                        sizedBox(),
+                        newSubtitle("Metodo de pago"),
+                        sizedBox(),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.transparent,
+                              style: BorderStyle.solid,
+                              width: 1.0,
                             ),
-                            Spacer(),
-                            IconButton(
-                              iconSize: 45,
-                              onPressed: () {},
-                              icon: Image.network(
-                                    GlobalVariables.visaIcon,
+                            color: GlobalVariables.primaryColor,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          margin: const EdgeInsets.all(5),
+                          width: MediaQuery.of(context).size.width,
+                          height: 80.0,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: const <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(left:15),
+                                    child: Text(
+                                      "Tarjeta 01",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left:15),
+                                    child: Text(
+                                      "xxxx-xxxx-xxxx-xx45",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                iconSize: 45,
+                                onPressed: () {},
+                                icon: Image.network(
+                                    GlobalVariables.visaIcon,
                                 ),
-                          ],
-                  ),
+                              ),
+                            ],
+                        ),
                       ),
                         sizedBox(),
                         sizedBox(),
