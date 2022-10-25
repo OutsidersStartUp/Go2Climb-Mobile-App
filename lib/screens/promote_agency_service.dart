@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/screens/agency_profile.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class PromoteAgencyService extends StatefulWidget {
@@ -101,11 +102,11 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                         newSubtitle("Promocionar servicio"),
                         sizedBox(),
                         Container(
-                          child: const Text('Promociona tu servicio y llega a mas personas. Los usuarios que promocionan sus servicios tienen una mayor relevancia al realizar una busqueda.',
+                          child: const Text('Promociona tu servicio y llega a más personas. Los usuarios que promocionan sus servicios tienen una mayor relevancia al realizar una búsqueda.',
                           textAlign: TextAlign.justify,),
                         ),
                         sizedBox(),
-                        newSubtitle("Tiempo de promocion"),
+                        newSubtitle("Tiempo de promoción"),
                         sizedBox(),
                         DateForm(context),
                         sizedBox(),
@@ -114,7 +115,7 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                         Row(
                           children: const [
                             Spacer(),
-                            Text("Costo diario por promocion: 5.00 USD",
+                            Text("Costo diario por promoción: 5.00 USD",
                               textAlign: TextAlign.end,
                               style: TextStyle(
                                 fontStyle: FontStyle.italic
@@ -123,7 +124,7 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                           ],
                         ),
                         sizedBox(),
-                        newSubtitle("Metodo de pago"),
+                        newSubtitle("Método de pago"),
                         sizedBox(),
                         Container(
                           decoration: BoxDecoration(
@@ -133,11 +134,11 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                               width: 1.0,
                             ),
                             color: GlobalVariables.primaryColor,
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                           margin: const EdgeInsets.all(5),
                           width: MediaQuery.of(context).size.width,
-                          height: 80.0,
+                          height: 70.0,
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -171,11 +172,14 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                                 ]
                               ),
                               const Spacer(),
-                              IconButton(
-                                iconSize: 45,
-                                onPressed: () {},
-                                icon: Image.network(
-                                    GlobalVariables.visaIcon,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: IconButton(
+                                  iconSize: 45,
+                                  onPressed: () {},
+                                  icon: Image.network(
+                                      GlobalVariables.visaIcon,
+                                  ),
                                 ),
                               ),
                             ],
@@ -186,19 +190,57 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
                         sizedBox(),
 
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           width: MediaQuery.of(context).size.width,
                           child: Row(
+                            mainAxisAlignment : MainAxisAlignment.spaceAround,
                             children: [
-                              OutlinedButton(onPressed: () {}, child: const Text("Omitir")),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                                  backgroundColor: Theme.of(context).colorScheme.primary,
-                                  ).copyWith(
-                                    elevation: ButtonStyleButton.allOrNull(0.0)),
-                                onPressed: () {},
-                                child: const Text('Continuar'),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        AgencyProfile.routeName);
+                                    }, 
+                                    style: ButtonStyle(
+                                      backgroundColor: const MaterialStatePropertyAll<Color>(GlobalVariables.whiteColor),
+                                      foregroundColor: const MaterialStatePropertyAll<Color>(GlobalVariables.blackColor),
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(18.0),
+                                          side: const BorderSide(color: Colors.black)
+                                        )
+                                      )
+                                    ),
+                                    child: const Text("Omitir")
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: 
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 5.0),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: const MaterialStatePropertyAll<Color>(GlobalVariables.primaryColor),
+                                        foregroundColor: const MaterialStatePropertyAll<Color>(GlobalVariables.blackColor),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18.0),
+                                            side: const BorderSide(color: Colors.transparent)
+                                          )
+                                        )
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          AgencyProfile.routeName);
+                                      },
+                                      child: const Text('Continuar'),
+                                    ),
+                                  ),
                               )
                             ],)
                         )
@@ -209,7 +251,6 @@ class _PromoteAgencyService extends State<PromoteAgencyService> {
             ),
           ),
         ),
-
       )
     );
   }
