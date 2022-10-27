@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/monitor-clients.dart';
 
 class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
   const AppBarGo2Climb({
@@ -60,6 +61,11 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                           ),
                           InkWell(
                             child: PopupMenuButton(
+                              onSelected: (result) {
+                                switch(result) {
+                                  case 'Clientes': Navigator.pushNamed(context, MonitorClients.routeName);
+                                }
+                              },
                               iconSize: 35,
                               icon: const Icon(Icons.menu),
                               offset: Offset(AppBar().preferredSize.height / 2,
@@ -74,6 +80,7 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                 ),
                                 PopupMenuItem<String>(
                                   child: Text('Clientes'),
+                                  value: 'Clientes',
                                 ),
                                 PopupMenuItem<String>(
                                   child: Text('Cambiar plan'),
