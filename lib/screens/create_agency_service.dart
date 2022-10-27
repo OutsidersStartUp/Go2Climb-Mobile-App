@@ -146,16 +146,36 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                             child: Image.network(GlobalVariables.uploadImage)),
                         sizedBox(),
                         Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            width: MediaQuery.of(context).size.width,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context, PromoteAgencyService.routeName);
-                                },
-                                child: const Text("Continuar")))
-                      ]),
-                    ))
+                          padding: const EdgeInsets.symmetric(horizontal: 15),                   
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context, PromoteAgencyService.routeName);
+                            },
+                            style: ButtonStyle(
+                            minimumSize: const MaterialStatePropertyAll<Size>(
+                                Size(double.infinity, 40)),
+                            backgroundColor:
+                                const MaterialStatePropertyAll<Color>(GlobalVariables.primaryColor),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ), 
+                            child: const Text(
+                              "Continuar",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),),
+                            )
+                          )
+                        ]
+                      ),
+                    )
+                  )
               ],
             ),
           ),
@@ -192,18 +212,18 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
 
   Row newSubtitle(String subtitle) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          child: Text(subtitle,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
-      ],
-    );
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        subtitle,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                        )
+                      ),
+                    ],
+                  );
   }
 
   Container agencyServiceForm() {
