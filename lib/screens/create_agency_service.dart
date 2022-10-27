@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class CreateAgencyService extends StatelessWidget {
+class CreateAgencyService extends StatefulWidget {
   static const String routeName = '/create-agency-service';
+  CreateAgencyService({super.key});
 
-  const CreateAgencyService({super.key});
+  @override
+  State<CreateAgencyService> createState() => _CreateAgencyServiceState();
+}
+
+class _CreateAgencyServiceState extends State<CreateAgencyService> {
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -81,16 +89,15 @@ class CreateAgencyService extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: GlobalVariables.whiteColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  //Form
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: GlobalVariables.whiteColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    //Form
+                    child: SingleChildScrollView(
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
                         newSubtitle("Agregar nuevo servicio"),
                         sizedBox(),
                         agencyServiceForm(),
@@ -107,39 +114,68 @@ class CreateAgencyService extends StatelessWidget {
                         sizedBox(),
                         priceForm(),
                         sizedBox(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton.icon(
+                            icon: Text("Agregar oferta"),
+                            label: Icon(Icons.add),
+                            onPressed: () => setState(() => isVisible = !isVisible),
+                          ),
+                        ),
+                        Visibility(
+                          visible: isVisible,
+                          child: Container(
+                          child: SingleChildScrollView(
+                            child: Column(mainAxisSize: MainAxisSize.min, children: [
+                              newSubtitle("Precio promocional (USD)"),
+                              sizedBox(),
+                              priceForm(),
+                              sizedBox(),
+                              newSubtitle("Válido"),
+                              sizedBox(),
+                              scheduleForms(context),
+                              sizedBox(),
+                          ],),)
+                        )),
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),                     
-                          child: Image.network(GlobalVariables.uploadImage)),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Image.network(GlobalVariables.uploadImage)),
                         sizedBox(),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),                   
                           width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(onPressed: () {},
-                          style: ButtonStyle(
-                          minimumSize: const MaterialStatePropertyAll<Size>(
-                              Size(double.infinity, 40)),
-                          backgroundColor:
-                              const MaterialStatePropertyAll<Color>(GlobalVariables.primaryColor),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context, PromoteAgencyService.routeName);
+                            },
+                            style: ButtonStyle(
+                            minimumSize: const MaterialStatePropertyAll<Size>(
+                                Size(double.infinity, 40)),
+                            backgroundColor:
+                                const MaterialStatePropertyAll<Color>(GlobalVariables.primaryColor),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                  ),
                                 ),
-                              ),
-                            ), 
-                          child: const Text(
-                            "Continuar",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),),
+                              ), 
+                            child: const Text(
+                              "Continuar",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),),
+                            )
                           )
-                        )
-                      ]
-                    ),
+                        ]
+                      ),
+                    )
                   )
-                )
               ],
             ),
           ),
@@ -150,15 +186,26 @@ class CreateAgencyService extends StatelessWidget {
 
   Row scheduleForms(BuildContext context) {
     return Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: _startTime()),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: _endTime()),
-                        ],
-                      );
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: _startTime()),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4, child: _endTime()),
+      ],
+    );
+  }
+
+  Row scheduleForOfferForms(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: _startTime()),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4, child: _endTime()),
+      ],
+    );
   }
 
   SizedBox sizedBox() => const SizedBox(height: 20);
@@ -181,116 +228,98 @@ class CreateAgencyService extends StatelessWidget {
 
   Container agencyServiceForm() {
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: "Nombre del servicio"
-                              ),
-                            ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: "Lugar"
-                              ),
-                            ), 
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Descripción"
-                                )
-                            ),
-                        ],
-                      )
-                    ),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(hintText: "Nombre del servicio"),
+          ),
+          TextFormField(
+            decoration: const InputDecoration(hintText: "Lugar"),
+          ),
+          TextFormField(
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Descripción")),
+        ],
+      )),
+    );
   }
 
   Container activityForm() {
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "ejm: alpinismo"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "ejm: alpinismo"),
+      )),
+    );
   }
 
   Container _startTime() {
-    var timeMask = MaskTextInputFormatter(mask: '##:##', filter: { "#": RegExp(r'[0-9]') });
+    var timeMask =
+        MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          inputFormatters: [timeMask],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "De: 08:00"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [timeMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "De: 08:00"),
+      )),
+    );
   }
 
   Container _endTime() {
-    var timeMask = MaskTextInputFormatter(mask: '##:##', filter: { "#": RegExp(r'[0-9]') });
+    var timeMask =
+        MaskTextInputFormatter(mask: '##:##', filter: {"#": RegExp(r'[0-9]')});
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          inputFormatters: [timeMask],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Hasta: 10:00"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [timeMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "Hasta: 10:00"),
+      )),
+    );
   }
 
   Container priceForm() {
-    var priceMask = MaskTextInputFormatter(mask: 'S/.####', filter: { "#": RegExp(r'[0-9]') });
+    var priceMask = MaskTextInputFormatter(
+        mask: 'S/.####', filter: {"#": RegExp(r'[0-9]')});
     return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: GlobalVariables.primaryColor, width: 3)
-                    ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        child: TextFormField(
-                          inputFormatters: [priceMask],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "200 PEN"),
-                        )),
-                  );
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [priceMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "200 PEN"),
+      )),
+    );
   }
 }
 

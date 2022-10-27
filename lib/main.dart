@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/screens/login_page.dart';
 import 'package:go2climb/router.dart';
-import 'package:go2climb/screens/agency_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: GlobalVariables.primaryColor),
         primarySwatch: Colors.blue,
       ),
-      home: const AgencyProfile(),
+      home: LoginPage(),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }
