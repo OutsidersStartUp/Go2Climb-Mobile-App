@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateAgencyService extends StatefulWidget {
@@ -150,7 +151,7 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                             child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pushNamed(
-                                    context, AgencyProfile.routeName);
+                                    context, PromoteAgencyService.routeName);
                                 },
                                 child: const Text("Continuar")))
                       ]),
