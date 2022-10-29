@@ -28,6 +28,25 @@ class DayOffersState extends State<ServicesView> {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        //TODO: Implement change state
+                      },
+                      style: ButtonStyle(
+                        minimumSize: const MaterialStatePropertyAll<Size>(
+                            Size(90, 40)),
+                        backgroundColor:
+                        const MaterialStatePropertyAll<Color>(
+                            Colors.grey),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                GlobalVariables.borderRadius),
+                          ),
+                        ),
+                      ),
+                      child: const Text("Filtros"),
+                    ),
                     // Buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

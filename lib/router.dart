@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/main.dart';
 import 'package:go2climb/screens/agency_profile.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
+import 'package:go2climb/screens/filters.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:go2climb/screens/service_detail.dart';
@@ -17,6 +18,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => MonitorClients(),
+      );
+    case Filters.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const Filters(),
       );
     case ServicesView.routeName:
       return MaterialPageRoute(
