@@ -41,12 +41,29 @@ class _ChangeAgencyPlanState extends State<ChangeAgencyPlan> {
                         newPlanBox('Premium'),
                         newPlanBox('Estandar'),
                       ]
-                    )
+                    ),
+                    Row(
+                      children: const [
+                        Expanded(
+                          child: Text(
+                            "*El pago se realizara de forma automatica, puede cancelar en cualquier momento",
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        )
+                      ],
+                    ),
+                    newSubHeading('Metodo de pago'),
+                    sizedBox(),
+                    cardNumber(),
+                    sizedBox(),
+                    cardholderName(),
+                    sizedBox(),
+                    cardInformation(context),
                   ],
                 )
               )
-
-
           ],) ),   
     );
   }
@@ -68,6 +85,8 @@ Row newSubHeading(String subtitle) {
   );
 }
 
+SizedBox sizedBox() => const SizedBox(height: 15);
+
 Container newPlanBox(String name){
   return Container(
     child: Column(
@@ -86,3 +105,94 @@ Container newPlanBox(String name){
     )
     );
 }
+
+Container cardNumber() {
+    var cardMask = MaskTextInputFormatter(
+        mask: '####-####-####-####', filter: {"#": RegExp(r'[0-9]')});
+
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [cardMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          border: InputBorder.none, 
+          hintText: "Número de tarjeta crédito/débito")
+      )),
+    );
+  }
+
+Container cardholderName() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        keyboardType: TextInputType.text,
+        decoration: const InputDecoration(
+          border: InputBorder.none, 
+          hintText: "Nombre del titular de la tarjeta")
+      )),
+    );
+}
+
+Row cardInformation(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: _dueDate()),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4, 
+            child: _cvcCvv()),
+      ],
+    );
+}
+
+  Container _dueDate() {
+    var dueDateMask = MaskTextInputFormatter(mask: '##/##', filter: {"#": RegExp(r'[0-9]')});
+    
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [dueDateMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          border: InputBorder.none, hintText: "MM/AA"),
+          textAlign: TextAlign.center
+      )),
+    );
+  }
+
+Container _cvcCvv() {
+    var cvcMask = MaskTextInputFormatter(mask: '###', filter: {"#": RegExp(r'[0-9]')});
+
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [cvcMask],
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          border: InputBorder.none, hintText: "CVC/CVV"),
+          textAlign: TextAlign.center
+      )),
+    );
+  }
