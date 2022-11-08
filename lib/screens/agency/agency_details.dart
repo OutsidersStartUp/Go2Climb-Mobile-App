@@ -1,11 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/models/agency.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 
 class AgencyDetails extends StatelessWidget {
   const AgencyDetails({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.agency,
+  });
+
+  final Agency agency;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,7 @@ class AgencyDetails extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: Image.network(GlobalVariables.logo),
+                              icon: Image.network(agency.photo),
                               iconSize: 140,
                             ),
                           ],
@@ -55,9 +61,9 @@ class AgencyDetails extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'TravelNew',
+                                      agency.name,
                                     ),
-                                    Text('travelnew@gmail.com'),
+                                    Text(agency.email),
                                     Wrap(spacing: -18, children: [
                                       IconButton(
                                         onPressed: () {},
@@ -91,14 +97,14 @@ class AgencyDetails extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text("RUC"),
-                                        Text("641478521"),
+                                        Text(agency.ruc),
                                       ]),
                                   Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text("Teléfono"),
-                                        Text("+51 952364789"),
+                                        Text(agency.phoneNumber),
                                       ]),
                                 ],
                               )),
@@ -109,10 +115,13 @@ class AgencyDetails extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    "Somos una agencia destinada al alpinismo para principiantes y personas experimentadas. Contamos con más de 20 años de experiencia en el rubro de alpinismo. Agradecemos tu visita.",
-                    textAlign: TextAlign.center,
+                  Container(
+                    child: Text(
+                      agency.description,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
+                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -125,7 +134,7 @@ class AgencyDetails extends StatelessWidget {
                           Icons.circle,
                           color: Colors.blue,
                         ),
-                        Text("Maicena, Lima - Perú")
+                        Text(agency.location)
                       ])
                     ],
                   )

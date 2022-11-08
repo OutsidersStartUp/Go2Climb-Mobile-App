@@ -5,11 +5,19 @@ enum AgencyStatus { initial, success, failure }
 class AgencyState extends Equatable {
   const AgencyState({
     this.status = AgencyStatus.initial,
-    this.agency = Agency,
+    this.agency = const Agency(
+        name: "",
+        email: "",
+        phoneNumber: "",
+        description: "",
+        location: "",
+        ruc: "",
+        photo: "",
+        score: 0),
   });
 
   final AgencyStatus status;
-  final Object agency;
+  final Agency agency;
 
   AgencyState copyWith({
     AgencyStatus? status,
