@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 
 class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
@@ -65,6 +66,11 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                   case 'Clientes':
                                     Navigator.pushNamed(
                                         context, MonitorClients.routeName);
+                                    break;
+                                  case 'Cambiar plan':
+                                    Navigator.pushNamed(
+                                        context, ChangeAgencyPlan.routeName);
+                                    break;
                                 }
                               },
                               iconSize: 35,
@@ -80,10 +86,11 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                   child: Text('Perfil'),
                                 ),
                                 PopupMenuItem<String>(
-                                  child: Text('Clientes'),
                                   value: 'Clientes',
+                                  child: Text('Clientes'),
                                 ),
                                 PopupMenuItem<String>(
+                                  value: 'Cambiar plan',
                                   child: Text('Cambiar plan'),
                                 ),
                                 PopupMenuItem<String>(
