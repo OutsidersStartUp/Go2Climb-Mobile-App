@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class GlobalVariables {
+  static const String url = "https://go2climb.azurewebsites.net/";
+
   static const primaryColor = Color.fromRGBO(156, 212, 231, 1);
   static const backgroundColor = Color.fromRGBO(237, 237, 237, 1);
   static const disableColor = Color.fromRGBO(181, 181, 181, 1);
