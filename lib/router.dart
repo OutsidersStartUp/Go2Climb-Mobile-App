@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:go2climb/main.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/agency/agency_profile_edit.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
@@ -37,6 +38,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const AgencyPage(),
       );
+    /*
+    case AgencyProfileEdit.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AgencyProfileEdit(),
+      );*/
     case PromoteAgencyService.routeName:
       return MaterialPageRoute(
         settings: routeSettings,

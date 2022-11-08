@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go2climb/models/agency.dart';
 
 class GlobalVariables {
   static const String url = "https://go2climb.azurewebsites.net/";

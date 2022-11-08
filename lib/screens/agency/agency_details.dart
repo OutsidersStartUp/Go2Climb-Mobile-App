@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/models/agency.dart';
+import 'package:go2climb/screens/agency/agency_profile_edit.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 
 class AgencyDetails extends StatelessWidget {
@@ -126,7 +127,16 @@ class AgencyDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll<Color>(
+                                GlobalVariables.buttonColor)),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AgencyProfileEdit(agency: agency)));
+                        },
                         child: Text("Editar información"),
                       ),
                       Row(children: [
