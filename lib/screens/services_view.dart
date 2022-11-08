@@ -1,10 +1,16 @@
-import 'package:flutter/gestures.dart';
+
+import 'dart:ui';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go2climb/components/AppBarGo2Climb.dart';
+import 'package:go2climb/models/agency.dart';
+import 'package:go2climb/models/service.dart';
 import 'package:go2climb/screens/service_detail.dart';
 import '../constants/global_variables.dart';
-import 'agency_profile.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ServicesView extends StatefulWidget {
   static const String routeName = '/services-view';
@@ -16,6 +22,61 @@ class ServicesView extends StatefulWidget {
 
 class DayOffersState extends State<ServicesView> {
   String currentState = 'Ofertas del día';
+  String currentCategory = 'offers';
+  String endpoint = 'api/v1/services';
+  String agencyEndpoint = 'api/v1/agencies';
+
+  List<Service> data = [];
+  List<Agency> agencies = [];
+
+  Future<List<Service>> retrieveServices(String category) async{
+    data = [];
+    var response = await http.get(Uri.parse(
+        '${GlobalVariables.url}$endpoint'
+    ));
+    //var response = await http.get(Uri.parse(
+    //    '${GlobalVariables.url}$endpoint/services/category?name=$category&start=0&limit=10'
+    //));
+    var services = <Service>[];
+    if (response.statusCode == 200) {
+      var servicesJson = json.decode(response.body);
+      for (var serviceJson in servicesJson){
+        services.add(Service.fromMap(serviceJson));
+      }
+      for (var service in services) {
+        retrieveAgency(service.agencyId)
+            .then((value) {
+              setState(() {
+                agencies.add(value);
+              });
+            });
+      }
+    }
+    return services;
+  }
+
+  Future<Agency> retrieveAgency(int agencyId) async{
+    var response = await http.get(Uri.parse(
+        '${GlobalVariables.url}$agencyEndpoint/$agencyId'
+    ));
+    late Agency agencyResource;
+    if (response.statusCode == 200) {
+      var agencyJson = json.decode(response.body);
+      agencyResource = Agency.fromMap(agencyJson);
+    }
+    return agencyResource;
+  }
+
+  @override
+  void initState(){
+    retrieveServices(currentCategory)
+    .then((value) {
+      setState(() {
+        data.addAll(value);
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +95,14 @@ class DayOffersState extends State<ServicesView> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            //TODO: Implement change state
+                            if (currentState != 'Ofertas del día'){
+                              setState(() {
+                                currentCategory = 'offers';
+                                currentState = 'Ofertas del día';
+                                retrieveServices(currentCategory);
+                                print(data);
+                              });
+                            }
                           },
                           style: ButtonStyle(
                             minimumSize: const MaterialStatePropertyAll<Size>(
@@ -53,7 +121,14 @@ class DayOffersState extends State<ServicesView> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            //TODO: Implement change state
+                            if (currentState != 'Los más populares'){
+                              setState(() {
+                                currentCategory = 'populars';
+                                currentState = 'Los más populares';
+                                retrieveServices(currentCategory);
+                                print(data);
+                              });
+                            }
                           },
                           style: ButtonStyle(
                             minimumSize: const MaterialStatePropertyAll<Size>(
@@ -72,7 +147,14 @@ class DayOffersState extends State<ServicesView> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            //TODO: Implement change state
+                            if (currentState != 'Para ti'){
+                              setState(() {
+                                currentCategory = 'forYou';
+                                currentState = 'Para ti';
+                                retrieveServices(currentCategory);
+                                print(data);
+                              });
+                            }
                           },
                           style: ButtonStyle(
                             minimumSize: const MaterialStatePropertyAll<Size>(
@@ -113,30 +195,68 @@ class DayOffersState extends State<ServicesView> {
                       ),
                     ),
 
-                    const SizedBox(height: 10.0),
-                    // Service cards
-                    serviceCard(context, GlobalVariables.mountain1),
+                    Container(
+                      constraints: BoxConstraints(
+                          maxHeight: double.infinity
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: data == [] ? 0 : data.length,
+                        itemBuilder: (context, i) {
+                          return Column(
+                            children: [
+                              const SizedBox(height: 10.0),
+                              serviceCard(context, i),
+                            ],
+                          );
+                        },
+                      ),
+                    )
 
-                    const SizedBox(height: 10.0),
-                    // Service cards
-                    serviceCard(context, GlobalVariables.mountain2),
 
-                    const SizedBox(height: 10.0),
-                    // Service cards
-                    serviceCard(context, GlobalVariables.mountain3),
 
-                    const SizedBox(height: 10.0),
-                    // Service cards
-                    serviceCard(context, GlobalVariables.mountain1),
+
+                    //const SizedBox(height: 10.0),
+                    //// Service cards
+                    //serviceCard(context, 1),
+
+                    //const SizedBox(height: 10.0),
+                    //// Service cards
+                    //serviceCard(context, 1),
+
+                    //const SizedBox(height: 10.0),
+                    //// Service cards
+                    //serviceCard(context, 1),
+
+                    //const SizedBox(height: 10.0),
+                    //// Service cards
+                    //serviceCard(context, 1),
                   ],
                 )),
           ),
         ));
   }
 
-  GestureDetector serviceCard(BuildContext context, imageUrl) {
-    String title = 'Disfruta de una aventura en la montaña el Huascarán';
-    String agency = 'TravelNew';
+  GestureDetector serviceCard(BuildContext context, i) {
+    String title = data[i].name;
+    String agency = agencies[i].name;
+
+    //retrieveAgencyName(int.parse(data[i]['agencyId']));
+    //String price = data[i]['price'];
+    //String offer = data[i]['newPrice'];
+    String imageUrl = data[i].photos;
+    double score = data[i].score.toDouble();
+    print('********############=============================');
+    print(data[i]);
+    print(data.length);
+    print(data[i].name);
+    print(data[i].agencyId);
+    print('********############=============================');
+
+    //String imageUrl = 'https://humanidades.com/wp-content/uploads/2018/11/montan%CC%83as-e1543190126108.jpg';
+
+    //String title = 'Disfruta de una aventura en la montaña el Huascarán';
+    //String agency = 'TravelNew';
     String price = 'S/500.00';
     String offer = 'S/480.00';
 
@@ -145,7 +265,10 @@ class DayOffersState extends State<ServicesView> {
         Navigator.pushNamed(context, ServiceDetail.routeName);
       },
       child: Container(
-          height: 320,
+          //height: 320,
+          constraints: BoxConstraints(
+              maxHeight: double.infinity
+          ),
           decoration: BoxDecoration(
               color: GlobalVariables.whiteColor,
               borderRadius:
@@ -165,10 +288,10 @@ class DayOffersState extends State<ServicesView> {
                 ),
                 const SizedBox(height: 10.0),
                 RatingBar.builder(
-                  initialRating: 3,
+                  initialRating: score,
                   minRating: 1,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
+                  allowHalfRating: false,
                   itemCount: 5,
                   itemSize: 20,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
