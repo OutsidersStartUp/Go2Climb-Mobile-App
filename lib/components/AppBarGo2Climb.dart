@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/main.dart';
 import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/login_page.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
+import 'package:go2climb/screens/services_view.dart';
+import 'package:go2climb/screens/tourist/tourist_profile.dart';
 
 class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
   const AppBarGo2Climb({
@@ -63,7 +67,14 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                             child: PopupMenuButton(
                               onSelected: (result) {
                                 switch(result) {
+                                  case 'Inicio': Navigator.pushNamed(context, ServicesView.routeName);
+                                  break;
+                                  case 'Perfil': Navigator.pushNamed(context, TouristProfile.routeName);
+                                  break;
                                   case 'Clientes': Navigator.pushNamed(context, MonitorClients.routeName);
+                                  break;
+                                  case 'Cerrar sesión': Navigator.pushNamed(context, LoginPage.RouteName);
+                                  break;
                                 }
                               },
                               iconSize: 35,
@@ -73,20 +84,23 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                               itemBuilder: (context) =>
                                   const <PopupMenuItem<String>>[
                                 PopupMenuItem<String>(
-                                  child: Text('Inicio'),
+                                  value: 'Inicio',
+                                  child: Text('Inicio')
                                 ),
                                 PopupMenuItem<String>(
-                                  child: Text('Perfil'),
+                                  value: 'Perfil',
+                                  child: Text('Perfil')
                                 ),
                                 PopupMenuItem<String>(
-                                  child: Text('Clientes'),
                                   value: 'Clientes',
+                                  child: Text('Clientes'),
                                 ),
                                 PopupMenuItem<String>(
                                   child: Text('Cambiar plan'),
                                 ),
                                 PopupMenuItem<String>(
-                                  child: Text('Cerrar sesión'),
+                                  value: 'Cerrar sesión',
+                                  child: Text('Cerrar sesión')
                                 ),
                               ],
                             ),
