@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
-import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/agency/agency_page.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 
 class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
@@ -51,7 +50,7 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                 iconSize: 20,
                                 onPressed: () {
                                   Navigator.pushNamed(
-                                      context, AgencyProfile.routeName);
+                                      context, AgencyPage.routeName);
                                 },
                                 icon: Image.network(
                                   GlobalVariables.user,
@@ -62,8 +61,10 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                           InkWell(
                             child: PopupMenuButton(
                               onSelected: (result) {
-                                switch(result) {
-                                  case 'Clientes': Navigator.pushNamed(context, MonitorClients.routeName);
+                                switch (result) {
+                                  case 'Clientes':
+                                    Navigator.pushNamed(
+                                        context, MonitorClients.routeName);
                                 }
                               },
                               iconSize: 35,

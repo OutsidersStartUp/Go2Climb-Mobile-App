@@ -1,9 +1,8 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/main.dart';
-import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/agency/agency_page.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
@@ -33,10 +32,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => ServiceDetail(),
       );
-    case AgencyProfile.routeName:
+    case AgencyPage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const AgencyProfile(),
+        builder: (_) => const AgencyPage(),
       );
     case PromoteAgencyService.routeName:
       return MaterialPageRoute(
@@ -47,7 +46,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => PersonalizeTrip(),
-      );  
+      );
     default:
       return MaterialPageRoute(
         settings: routeSettings,

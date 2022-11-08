@@ -1,9 +1,12 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:go2climb/router.dart';
+import 'package:go2climb/simple_bloc_observer.dart';
 
 void main() {
+  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 

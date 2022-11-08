@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go2climb/components/AppBarGo2Climb.dart';
 import 'package:go2climb/screens/service_detail.dart';
 import '../constants/global_variables.dart';
-import 'agency_profile.dart';
+import 'agency/agency_page.dart';
 
 class ServicesView extends StatefulWidget {
   static const String routeName = '/services-view';
