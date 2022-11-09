@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/services_view.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ChangeAgencyPlan extends StatefulWidget {
@@ -14,6 +15,9 @@ class ChangeAgencyPlan extends StatefulWidget {
 }
 
 class _ChangeAgencyPlanState extends State<ChangeAgencyPlan> {
+  Color basicPlanColor = GlobalVariables.whiteColor;
+  Color standardPlanColor = GlobalVariables.whiteColor;
+  Color premiumPlanColor = GlobalVariables.whiteColor;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,84 +28,135 @@ class _ChangeAgencyPlanState extends State<ChangeAgencyPlan> {
         children: [
           Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              decoration: BoxDecoration(
-                  color: GlobalVariables.whiteColor,
-                  borderRadius:
-                      BorderRadius.circular(GlobalVariables.borderRadius)),
+              decoration:
+                  const BoxDecoration(color: GlobalVariables.whiteColor),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   newSubHeading('Selecciona un plan'),
-                  sizedBox(),
                   Row(children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 3, color: GlobalVariables.primaryColor),
-                          borderRadius: const BorderRadius.horizontal(
-                              left: Radius.circular(25)),
-                        ),
-                        child: Column(children: [
-                          Text("Plan Basico"),
-                          IconButton(
-                            iconSize: 45,
-                            onPressed: () {},
-                            icon: Image.network(
-                              GlobalVariables.visaIcon,
-                            ),
-                          ),
-                          const Text("Publicar 3 servicios"),
-                          const Text("20.00 USD")
-                        ]),
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Container(
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          basicPlanColor = Color.fromARGB(255, 150, 150, 150);
+                          standardPlanColor = GlobalVariables.whiteColor;
+                          premiumPlanColor = GlobalVariables.whiteColor;
+                        });
+                      },
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Container(
                           padding: const EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 3, color: GlobalVariables.primaryColor),
-                          ),
-                          child: Column(children: [
-                            const Text("Plan Estandar"),
-                            IconButton(
-                              iconSize: 45,
-                              onPressed: () {},
-                              icon: Image.network(
-                                GlobalVariables.visaIcon,
-                              ),
-                            ),
-                            const Text("Publicar 10 servicios"),
-                            const Text("35.00 USD")
-                          ])),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
+                            color: basicPlanColor,
                             border: Border.all(
                                 width: 3, color: GlobalVariables.primaryColor),
                             borderRadius: const BorderRadius.horizontal(
-                                right: Radius.circular(25)),
+                                left: Radius.circular(25)),
                           ),
                           child: Column(children: [
-                            Text("Plan Premium"),
+                            const Text("Plan Basico"),
                             IconButton(
                               iconSize: 45,
                               onPressed: () {},
                               icon: Image.network(
-                                GlobalVariables.visaIcon,
+                                GlobalVariables.basicKey,
                               ),
                             ),
-                            Text("Publicar 50 servicios"),
-                            Text("45.00 USD")
-                          ])),
+                            const Text(
+                              "Publicar 3 servicios",
+                              textAlign: TextAlign.center,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text("20.00 USD",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w600)),
+                            )
+                          ]),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          standardPlanColor = Color.fromARGB(255, 150, 150, 150);
+                          basicPlanColor = GlobalVariables.whiteColor;
+                          premiumPlanColor = GlobalVariables.whiteColor;
+                        });
+                      },
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              color: standardPlanColor,
+                              border: Border.all(
+                                  width: 3, color: GlobalVariables.primaryColor),
+                            ),
+                            child: Column(children: [
+                              const Text("Plan Estandar"),
+                              IconButton(
+                                iconSize: 45,
+                                onPressed: () {},
+                                icon: Image.network(
+                                  GlobalVariables.standardKey,
+                                ),
+                              ),
+                              const Text(
+                                "Publicar 10 servicios",
+                                textAlign: TextAlign.center,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text("35.00 USD",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600)),
+                              )
+                            ])),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          premiumPlanColor = Color.fromARGB(255, 150, 150, 150);
+                          basicPlanColor = GlobalVariables.whiteColor;
+                          standardPlanColor = GlobalVariables.whiteColor;
+                        });
+                      },
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              color: premiumPlanColor,
+                              border: Border.all(
+                                  width: 3, color: GlobalVariables.primaryColor),
+                              borderRadius: const BorderRadius.horizontal(
+                                  right: Radius.circular(25)),
+                            ),
+                            child: Column(children: [
+                              const Text("Plan Premium"),
+                              IconButton(
+                                iconSize: 45,
+                                onPressed: () {},
+                                icon: Image.network(
+                                  GlobalVariables.goldKey,
+                                ),
+                              ),
+                              const Text(
+                                "Publicar 50 servicios",
+                                textAlign: TextAlign.center,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text("45.00 USD",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600)),
+                              )
+                            ])),
+                      ),
                     )
                   ]),
                   Row(
@@ -124,6 +179,11 @@ class _ChangeAgencyPlanState extends State<ChangeAgencyPlan> {
                   cardholderName(),
                   sizedBox(),
                   cardInformation(context),
+                  sizedBox(),
+                  sizedBox(),
+                  sizedBox(),
+                  sizedBox(),
+                  payButton(context)
                 ],
               ))
         ],
@@ -190,9 +250,9 @@ Row cardInformation(BuildContext context) {
   return Row(
     children: [
       SizedBox(
-          width: MediaQuery.of(context).size.width * 0.4, child: _dueDate()),
+          width: MediaQuery.of(context).size.width * 0.45, child: _dueDate()),
       SizedBox(
-          width: MediaQuery.of(context).size.width * 0.4, child: _cvcCvv()),
+          width: MediaQuery.of(context).size.width * 0.45, child: _cvcCvv()),
     ],
   );
 }
@@ -235,4 +295,48 @@ Container _cvcCvv() {
                 border: InputBorder.none, hintText: "CVC/CVV"),
             textAlign: TextAlign.center)),
   );
+}
+
+Container payButton(BuildContext context) {
+  return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      width: MediaQuery.of(context).size.width,
+      child: ElevatedButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: ((context) => AlertDialog(
+                  title: const Text("¡Enhorabuena!"),
+                  content: const Text("Servicio contratado exitosamente"),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text("Aceptar"),
+                      onPressed: () {
+                        Navigator.pushNamed(context, ServicesView.routeName);
+                      },
+                    )
+                  ],
+                )),
+          );
+        },
+        style: ButtonStyle(
+          minimumSize:
+              const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+          backgroundColor: const MaterialStatePropertyAll<Color>(
+              GlobalVariables.primaryColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+            ),
+          ),
+        ),
+        child: const Text(
+          "Pagar",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      ));
 }

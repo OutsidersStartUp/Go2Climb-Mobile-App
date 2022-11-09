@@ -28,4 +28,9 @@ class GlobalVariables {
   static const String uploadImage = 'https://i.imgur.com/jPEPZlK.png';
   static const String visaIcon =
       'https://www.bullsportsdirect.com/wp-content/uploads/2019/05/Visa-Logo-design-Vector-Download-300x190.png';
+  static const String basicKey =
+      'https://cdn3.iconfinder.com/data/icons/wpzoom-developer-icon-set/500/104-512.png';
+  static const String standardKey =
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThMu3m00zSucJ9CLhW0SobRqmCHHTRvkbre7CWsr6rYmyq0dmCCeHyV6WKcdfDmTyLH0U&usqp=CAU';
+  static const String goldKey = 'https://cdn-icons-png.flaticon.com/512/3014/3014229.png';
 }
