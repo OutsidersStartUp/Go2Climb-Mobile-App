@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
-import 'package:go2climb/screens/agency_profile.dart';
+
 import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -121,24 +121,28 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                           child: ElevatedButton.icon(
                             icon: Text("Agregar oferta"),
                             label: Icon(Icons.add),
-                            onPressed: () => setState(() => isVisible = !isVisible),
+                            onPressed: () =>
+                                setState(() => isVisible = !isVisible),
                           ),
                         ),
                         Visibility(
-                          visible: isVisible,
-                          child: Container(
-                          child: SingleChildScrollView(
-                            child: Column(mainAxisSize: MainAxisSize.min, children: [
-                              newSubtitle("Precio promocional (USD)"),
-                              sizedBox(),
-                              priceForm(),
-                              sizedBox(),
-                              newSubtitle("Válido"),
-                              sizedBox(),
-                              scheduleForms(context),
-                              sizedBox(),
-                          ],),)
-                        )),
+                            visible: isVisible,
+                            child: Container(
+                                child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  newSubtitle("Precio promocional (USD)"),
+                                  sizedBox(),
+                                  priceForm(),
+                                  sizedBox(),
+                                  newSubtitle("Válido"),
+                                  sizedBox(),
+                                  scheduleForms(context),
+                                  sizedBox(),
+                                ],
+                              ),
+                            ))),
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
@@ -146,36 +150,36 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                             child: Image.network(GlobalVariables.uploadImage)),
                         sizedBox(),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),                   
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context, PromoteAgencyService.routeName);
-                            },
-                            style: ButtonStyle(
-                            minimumSize: const MaterialStatePropertyAll<Size>(
-                                Size(double.infinity, 40)),
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(GlobalVariables.primaryColor),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, PromoteAgencyService.routeName);
+                              },
+                              style: ButtonStyle(
+                                minimumSize:
+                                    const MaterialStatePropertyAll<Size>(
+                                        Size(double.infinity, 40)),
+                                backgroundColor:
+                                    const MaterialStatePropertyAll<Color>(
+                                        GlobalVariables.primaryColor),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
-                              ), 
-                            child: const Text(
-                              "Continuar",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),),
-                            )
-                          )
-                        ]
-                      ),
-                    )
-                  )
+                              ),
+                              child: const Text(
+                                "Continuar",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ))
+                      ]),
+                    ))
               ],
             ),
           ),
@@ -212,18 +216,16 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
 
   Row newSubtitle(String subtitle) {
     return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        subtitle,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                        )
-                      ),
-                    ],
-                  );
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(subtitle,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            )),
+      ],
+    );
   }
 
   Container agencyServiceForm() {

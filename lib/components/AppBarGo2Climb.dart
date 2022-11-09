@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
-import 'package:go2climb/main.dart';
-import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/services_view.dart';
@@ -55,7 +54,7 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                 iconSize: 20,
                                 onPressed: () {
                                   Navigator.pushNamed(
-                                      context, AgencyProfile.routeName);
+                                      context, AgencyPage.routeName);
                                 },
                                 icon: Image.network(
                                   GlobalVariables.user,
@@ -66,14 +65,26 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                           InkWell(
                             child: PopupMenuButton(
                               onSelected: (result) {
-                                switch(result) {
-                                  case 'Inicio': Navigator.pushNamed(context, ServicesView.routeName);
+                                switch (result) {
+                                  case 'Clientes':
+                                    Navigator.pushNamed(
+                                        context, MonitorClients.routeName);
+                                    break;
+                                  case 'Cambiar plan':
+                                    Navigator.pushNamed(
+                                        context, ChangeAgencyPlan.routeName);
+                                    break;
+                                  case 'Inicio': 
+                                    Navigator.pushNamed(
+                                      context, ServicesView.routeName);
                                   break;
-                                  case 'Perfil': Navigator.pushNamed(context, TouristProfile.routeName);
+                                  case 'Perfil': 
+                                    Navigator.pushNamed(
+                                      context, TouristProfile.routeName);
                                   break;
-                                  case 'Clientes': Navigator.pushNamed(context, MonitorClients.routeName);
-                                  break;
-                                  case 'Cerrar sesión': Navigator.pushNamed(context, LoginPage.RouteName);
+                                  case 'Cerrar sesión': 
+                                    Navigator.pushNamed(
+                                      context, LoginPage.RouteName);
                                   break;
                                 }
                               },
@@ -96,6 +107,7 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                   child: Text('Clientes'),
                                 ),
                                 PopupMenuItem<String>(
+                                  value: 'Cambiar plan',
                                   child: Text('Cambiar plan'),
                                 ),
                                 PopupMenuItem<String>(

@@ -1,9 +1,10 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/main.dart';
-import 'package:go2climb/screens/agency_profile.dart';
+import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/agency/agency_profile_edit.dart';
+import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
@@ -29,15 +30,26 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => CreateAgencyService(),
       );
-    case ServiceDetail.routeName:
+    //case ServiceDetail.routeName:
+    //  return MaterialPageRoute(
+    //    settings: routeSettings,
+    //    builder: (_) => ServiceDetail(),
+    //  );
+    case AgencyPage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => ServiceDetail(),
+        builder: (_) => const AgencyPage(),
       );
-    case AgencyProfile.routeName:
+    /*
+    case AgencyProfileEdit.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const AgencyProfile(),
+        builder: (_) => const AgencyProfileEdit(),
+      );*/
+    case ChangeAgencyPlan.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const ChangeAgencyPlan(),
       );
     case TouristProfile.routeName:
       return MaterialPageRoute(
@@ -53,7 +65,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => PersonalizeTrip(),
-      );  
+      );
     default:
       return MaterialPageRoute(
         settings: routeSettings,

@@ -1,18 +1,9 @@
 import 'dart:convert';
+import 'package:equatable/equatable.dart';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class Agency {
-  final int id;
-  final String name;
-  final String email;
-  final int phoneNumber;
-  final String description;
-  final String location;
-  final int ruc;
-  final String photo;
-  final double score;
-  Agency({
-    required this.id,
+class Agency extends Equatable {
+  const Agency({
+
     required this.name,
     required this.email,
     required this.phoneNumber,
@@ -22,10 +13,17 @@ class Agency {
     required this.photo,
     required this.score,
   });
+  final String name;
+  final String email;
+  final String phoneNumber;
+  final String description;
+  final String location;
+  final String ruc;
+  final String photo;
+  final int score;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'name': name,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -39,20 +37,18 @@ class Agency {
 
   factory Agency.fromMap(Map<String, dynamic> map) {
     return Agency(
-      id: map['id'] as int,
       name: map['name'] as String,
       email: map['email'] as String,
-      phoneNumber: map['phoneNumber'] as int,
+      phoneNumber: map['phoneNumber'] as String,
       description: map['description'] as String,
       location: map['location'] as String,
-      ruc: map['ruc'] as int,
+      ruc: map['ruc'] as String,
       photo: map['photo'] as String,
-      score: map['score'] as double,
+      score: map['score'] as int,
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Agency.fromJson(String source) =>
-      Agency.fromMap(json.decode(source) as Map<String, dynamic>);
+  @override
+  List<Object?> get props =>
+      [name, email, phoneNumber, description, location, ruc, photo, score];
 }
