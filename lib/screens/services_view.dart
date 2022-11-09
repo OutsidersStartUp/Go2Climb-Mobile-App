@@ -1,7 +1,3 @@
-
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go2climb/components/AppBarGo2Climb.dart';
@@ -83,12 +79,13 @@ class DayOffersState extends State<ServicesView> {
     return Scaffold(
         backgroundColor: GlobalVariables.backgroundColor,
         appBar: const AppBarGo2Climb(),
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(10.0),
+        body: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                physics: ScrollPhysics(),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     // Buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,8 +105,8 @@ class DayOffersState extends State<ServicesView> {
                             minimumSize: const MaterialStatePropertyAll<Size>(
                                 Size(90, 40)),
                             backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    Colors.grey),
+                            const MaterialStatePropertyAll<Color>(
+                                Colors.grey),
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -134,8 +131,8 @@ class DayOffersState extends State<ServicesView> {
                             minimumSize: const MaterialStatePropertyAll<Size>(
                                 Size(90, 40)),
                             backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    Colors.grey),
+                            const MaterialStatePropertyAll<Color>(
+                                Colors.grey),
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -160,8 +157,8 @@ class DayOffersState extends State<ServicesView> {
                             minimumSize: const MaterialStatePropertyAll<Size>(
                                 Size(90, 40)),
                             backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    Colors.grey),
+                            const MaterialStatePropertyAll<Color>(
+                                Colors.grey),
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -183,7 +180,7 @@ class DayOffersState extends State<ServicesView> {
                       decoration: BoxDecoration(
                         color: GlobalVariables.whiteColor,
                         borderRadius:
-                            BorderRadius.circular(GlobalVariables.borderRadius),
+                        BorderRadius.circular(GlobalVariables.borderRadius),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -195,74 +192,37 @@ class DayOffersState extends State<ServicesView> {
                       ),
                     ),
 
-                    Container(
-                      constraints: BoxConstraints(
-                          maxHeight: double.infinity
-                      ),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: data == [] ? 0 : data.length,
-                        itemBuilder: (context, i) {
-                          return Column(
-                            children: [
-                              const SizedBox(height: 10.0),
-                              serviceCard(context, i),
-                            ],
-                          );
-                        },
-                      ),
-                    )
-
-
-
-
-                    //const SizedBox(height: 10.0),
-                    //// Service cards
-                    //serviceCard(context, 1),
-
-                    //const SizedBox(height: 10.0),
-                    //// Service cards
-                    //serviceCard(context, 1),
-
-                    //const SizedBox(height: 10.0),
-                    //// Service cards
-                    //serviceCard(context, 1),
-
-                    //const SizedBox(height: 10.0),
-                    //// Service cards
-                    //serviceCard(context, 1),
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: data == [] ? 0 : data.length,
+                      itemBuilder: (context, i) {
+                        return Column(
+                          children: [
+                            const SizedBox(height: 10.0),
+                            serviceCard(context, i),
+                          ],
+                        );
+                      },
+                    ),
                   ],
-                )),
-          ),
-        ));
+                ),
+              )),
+        ),);
   }
 
   GestureDetector serviceCard(BuildContext context, i) {
-    String title = data[i].name;
-    String agency = agencies[i].name;
-
-    //retrieveAgencyName(int.parse(data[i]['agencyId']));
-    //String price = data[i]['price'];
-    //String offer = data[i]['newPrice'];
     String imageUrl = data[i].photos;
     double score = data[i].score.toDouble();
-    print('********############=============================');
-    print(data[i]);
-    print(data.length);
-    print(data[i].name);
-    print(data[i].agencyId);
-    print('********############=============================');
-
-    //String imageUrl = 'https://humanidades.com/wp-content/uploads/2018/11/montan%CC%83as-e1543190126108.jpg';
-
-    //String title = 'Disfruta de una aventura en la montaña el Huascarán';
-    //String agency = 'TravelNew';
-    String price = 'S/500.00';
-    String offer = 'S/480.00';
+    String title = data[i].name;
+    String agency = agencies[i].name;
+    double agencyScore = agencies[i].score.toDouble();
+    String price = 'S/${data[i].price}.00';
+    String offer = 'S/${data[i].newPrice}.00';
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ServiceDetail.routeName);
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ServiceDetail(data[i], agency)));
       },
       child: Container(
           //height: 320,
@@ -299,6 +259,7 @@ class DayOffersState extends State<ServicesView> {
                     Icons.star,
                     color: Colors.amber,
                   ),
+                  ignoreGestures: true,
                   onRatingUpdate: (rating) {
                     print(rating);
                   },
@@ -326,10 +287,10 @@ class DayOffersState extends State<ServicesView> {
                         ),
                         const SizedBox(width: 15.0),
                         RatingBar.builder(
-                          initialRating: 3,
+                          initialRating: agencyScore,
                           minRating: 1,
                           direction: Axis.horizontal,
-                          allowHalfRating: true,
+                          allowHalfRating: false,
                           itemCount: 5,
                           itemSize: 15,
                           itemPadding:
@@ -338,6 +299,7 @@ class DayOffersState extends State<ServicesView> {
                             Icons.star,
                             color: Colors.amber,
                           ),
+                          ignoreGestures: true,
                           onRatingUpdate: (rating) {
                             print(rating);
                           },
