@@ -5,18 +5,19 @@ import 'package:go2climb/models/agency.dart';
 
 class Service {
   final int id;
+  final int agencyId;
   final String name;
-  final double score;
-  final double price;
-  final double newPrice;
+  final int score;
+  final int price;
+  final int newPrice;
   final String location;
-  final DateTime creationDate;
+  final String creationDate;
   final String photos;
   final String description;
   final bool isOffer;
-  final Agency agency;
   Service({
     required this.id,
+    required this.agencyId,
     required this.name,
     required this.score,
     required this.price,
@@ -25,40 +26,38 @@ class Service {
     required this.creationDate,
     required this.photos,
     required this.description,
-    required this.isOffer,
-    required this.agency,
+    required this.isOffer
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'agencyId': agencyId,
       'name': name,
       'score': score,
       'price': price,
       'newPrice': newPrice,
       'location': location,
-      'creationDate': creationDate.millisecondsSinceEpoch,
+      'creationDate': creationDate,
       'photos': photos,
       'description': description,
-      'isOffer': isOffer,
-      'agency': agency.toMap(),
+      'isOffer': isOffer
     };
   }
 
   factory Service.fromMap(Map<String, dynamic> map) {
     return Service(
       id: map['id'] as int,
+      agencyId: map['agencyId'] as int,
       name: map['name'] as String,
-      score: map['score'] as double,
-      price: map['price'] as double,
-      newPrice: map['newPrice'] as double,
+      score: map['score'] as int,
+      price: map['price'] as int,
+      newPrice: map['newPrice'] as int,
       location: map['location'] as String,
-      creationDate:
-          DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
+      creationDate: map['creationDate'] as String,
       photos: map['photos'] as String,
       description: map['description'] as String,
       isOffer: map['isOffer'] as bool,
-      agency: Agency.fromMap(map['agency'] as Map<String, dynamic>),
     );
   }
 

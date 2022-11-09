@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class Agency extends Equatable {
   const Agency({
+
     required this.name,
     required this.email,
     required this.phoneNumber,

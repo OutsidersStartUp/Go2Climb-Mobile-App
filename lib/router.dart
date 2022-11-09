@@ -28,11 +28,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => CreateAgencyService(),
       );
-    case ServiceDetail.routeName:
-      return MaterialPageRoute(
-        settings: routeSettings,
-        builder: (_) => ServiceDetail(),
-      );
+    //case ServiceDetail.routeName:
+    //  return MaterialPageRoute(
+    //    settings: routeSettings,
+    //    builder: (_) => ServiceDetail(),
+    //  );
     case AgencyPage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
