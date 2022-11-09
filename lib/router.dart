@@ -1,17 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go2climb/main.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
-import 'package:go2climb/screens/agency/agency_profile_edit.dart';
 import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
-import 'package:go2climb/screens/service_detail.dart';
 import 'package:go2climb/screens/services_view.dart';
 import 'package:go2climb/screens/tourist/personalize_trip.dart';
-import 'package:go2climb/screens/tourist/tourist_profile.dart';
+import 'package:go2climb/screens/tourist/tourist_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -51,10 +47,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const ChangeAgencyPlan(),
       );
-    case TouristProfile.routeName:
+    case TouristPage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => TouristProfile(),
+        builder: (_) => const TouristPage(),
       );
     case PromoteAgencyService.routeName:
       return MaterialPageRoute(

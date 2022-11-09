@@ -5,7 +5,8 @@ import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/services_view.dart';
-import 'package:go2climb/screens/tourist/tourist_profile.dart';
+
+import '../screens/tourist/tourist_page.dart';
 
 class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
   const AppBarGo2Climb({
@@ -80,7 +81,7 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                   break;
                                   case 'Perfil': 
                                     Navigator.pushNamed(
-                                      context, TouristProfile.routeName);
+                                      context, TouristPage.routeName);
                                   break;
                                   case 'Cerrar sesión': 
                                     Navigator.pushNamed(

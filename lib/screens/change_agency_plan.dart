@@ -308,7 +308,7 @@ Container payButton(BuildContext context) {
             barrierDismissible: false,
             builder: ((context) => AlertDialog(
                   title: const Text("¡Enhorabuena!"),
-                  content: const Text("Servicio contratado exitosamente"),
+                  content: const Text("Plan actualizado exitosamente"),
                   actions: <Widget>[
                     TextButton(
                       child: const Text("Aceptar"),
