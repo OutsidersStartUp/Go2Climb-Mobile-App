@@ -18,53 +18,116 @@ class _ChangeAgencyPlanState extends State<ChangeAgencyPlan> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: GlobalVariables.backgroundColor,
-      appBar: AppBar(
-        title: const Text("Cambiar plan")
-      ),
+      appBar: AppBar(title: const Text("Cambiar plan")),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20, horizontal: 20),
+          child: Column(
+        children: [
+          Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               decoration: BoxDecoration(
-                color: GlobalVariables.whiteColor,
-                borderRadius: BorderRadius.circular(GlobalVariables.borderRadius)
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    newSubHeading('Selecciona un plan'),
-                    Row(
-                      children: [
-                        newPlanBox('Basico'),
-                        newPlanBox('Premium'),
-                        newPlanBox('Estandar'),
-                      ]
-                    ),
-                    Row(
-                      children: const [
-                        Expanded(
-                          child: Text(
-                            "*El pago se realizara de forma automatica, puede cancelar en cualquier momento",
-                            textAlign: TextAlign.start,
-                            maxLines: 2,
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                  color: GlobalVariables.whiteColor,
+                  borderRadius:
+                      BorderRadius.circular(GlobalVariables.borderRadius)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  newSubHeading('Selecciona un plan'),
+                  sizedBox(),
+                  Row(children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 3, color: GlobalVariables.primaryColor),
+                          borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(25)),
+                        ),
+                        child: Column(children: [
+                          Text("Plan Basico"),
+                          IconButton(
+                            iconSize: 45,
+                            onPressed: () {},
+                            icon: Image.network(
+                              GlobalVariables.visaIcon,
+                            ),
                           ),
-                        )
-                      ],
+                          const Text("Publicar 3 servicios"),
+                          const Text("20.00 USD")
+                        ]),
+                      ),
                     ),
-                    newSubHeading('Metodo de pago'),
-                    sizedBox(),
-                    cardNumber(),
-                    sizedBox(),
-                    cardholderName(),
-                    sizedBox(),
-                    cardInformation(context),
-                  ],
-                )
-              )
-          ],) ),   
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 3, color: GlobalVariables.primaryColor),
+                          ),
+                          child: Column(children: [
+                            const Text("Plan Estandar"),
+                            IconButton(
+                              iconSize: 45,
+                              onPressed: () {},
+                              icon: Image.network(
+                                GlobalVariables.visaIcon,
+                              ),
+                            ),
+                            const Text("Publicar 10 servicios"),
+                            const Text("35.00 USD")
+                          ])),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 3, color: GlobalVariables.primaryColor),
+                            borderRadius: const BorderRadius.horizontal(
+                                right: Radius.circular(25)),
+                          ),
+                          child: Column(children: [
+                            Text("Plan Premium"),
+                            IconButton(
+                              iconSize: 45,
+                              onPressed: () {},
+                              icon: Image.network(
+                                GlobalVariables.visaIcon,
+                              ),
+                            ),
+                            Text("Publicar 50 servicios"),
+                            Text("45.00 USD")
+                          ])),
+                    )
+                  ]),
+                  Row(
+                    children: const [
+                      Expanded(
+                        child: Text(
+                          "*El pago se realizara de forma automatica, puede cancelar en cualquier momento",
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    ],
+                  ),
+                  sizedBox(),
+                  newSubHeading('Metodo de pago'),
+                  sizedBox(),
+                  cardNumber(),
+                  sizedBox(),
+                  cardholderName(),
+                  sizedBox(),
+                  cardInformation(context),
+                ],
+              ))
+        ],
+      )),
     );
   }
 }
@@ -87,112 +150,89 @@ Row newSubHeading(String subtitle) {
 
 SizedBox sizedBox() => const SizedBox(height: 15);
 
-Container newPlanBox(String name){
+Container cardNumber() {
+  var cardMask = MaskTextInputFormatter(
+      mask: '####-####-####-####', filter: {"#": RegExp(r'[0-9]')});
+
   return Container(
-    child: Column(
-      children: [
-        Text("Plan Basico"),
-        IconButton(
-          iconSize: 45,
-          onPressed: () {},
-            icon: Image.network(
-              GlobalVariables.visaIcon,
-            ),
-        ),
-        Text("Publicar 3 servicios"),
-        Text("20 USD")
-      ]
-    )
-    );
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+        child: TextFormField(
+            inputFormatters: [cardMask],
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: "Número de tarjeta crédito/débito"))),
+  );
 }
 
-Container cardNumber() {
-    var cardMask = MaskTextInputFormatter(
-        mask: '####-####-####-####', filter: {"#": RegExp(r'[0-9]')});
-
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-          child: TextFormField(
-        inputFormatters: [cardMask],
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: InputBorder.none, 
-          hintText: "Número de tarjeta crédito/débito")
-      )),
-    );
-  }
-
 Container cardholderName() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-          child: TextFormField(
-        keyboardType: TextInputType.text,
-        decoration: const InputDecoration(
-          border: InputBorder.none, 
-          hintText: "Nombre del titular de la tarjeta")
-      )),
-    );
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+        child: TextFormField(
+            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: "Nombre del titular de la tarjeta"))),
+  );
 }
 
 Row cardInformation(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: _dueDate()),
-        SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4, 
-            child: _cvcCvv()),
-      ],
-    );
+  return Row(
+    children: [
+      SizedBox(
+          width: MediaQuery.of(context).size.width * 0.4, child: _dueDate()),
+      SizedBox(
+          width: MediaQuery.of(context).size.width * 0.4, child: _cvcCvv()),
+    ],
+  );
 }
 
-  Container _dueDate() {
-    var dueDateMask = MaskTextInputFormatter(mask: '##/##', filter: {"#": RegExp(r'[0-9]')});
-    
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-          child: TextFormField(
-        inputFormatters: [dueDateMask],
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "MM/AA"),
-          textAlign: TextAlign.center
-      )),
-    );
-  }
+Container _dueDate() {
+  var dueDateMask =
+      MaskTextInputFormatter(mask: '##/##', filter: {"#": RegExp(r'[0-9]')});
+
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+        child: TextFormField(
+            inputFormatters: [dueDateMask],
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+                border: InputBorder.none, hintText: "MM/AA"),
+            textAlign: TextAlign.center)),
+  );
+}
 
 Container _cvcCvv() {
-    var cvcMask = MaskTextInputFormatter(mask: '###', filter: {"#": RegExp(r'[0-9]')});
+  var cvcMask =
+      MaskTextInputFormatter(mask: '###', filter: {"#": RegExp(r'[0-9]')});
 
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-          child: TextFormField(
-        inputFormatters: [cvcMask],
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "CVC/CVV"),
-          textAlign: TextAlign.center
-      )),
-    );
-  }
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+        child: TextFormField(
+            inputFormatters: [cvcMask],
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+                border: InputBorder.none, hintText: "CVC/CVV"),
+            textAlign: TextAlign.center)),
+  );
+}
