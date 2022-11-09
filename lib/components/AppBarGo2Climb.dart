@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
 import 'package:go2climb/screens/change_agency_plan.dart';
+import 'package:go2climb/screens/login_page.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
+import 'package:go2climb/screens/services_view.dart';
+import 'package:go2climb/screens/tourist/tourist_profile.dart';
 
 class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
   const AppBarGo2Climb({
@@ -71,6 +74,18 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                     Navigator.pushNamed(
                                         context, ChangeAgencyPlan.routeName);
                                     break;
+                                  case 'Inicio': 
+                                    Navigator.pushNamed(
+                                      context, ServicesView.routeName);
+                                  break;
+                                  case 'Perfil': 
+                                    Navigator.pushNamed(
+                                      context, TouristProfile.routeName);
+                                  break;
+                                  case 'Cerrar sesión': 
+                                    Navigator.pushNamed(
+                                      context, LoginPage.RouteName);
+                                  break;
                                 }
                               },
                               iconSize: 35,
@@ -80,10 +95,12 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                               itemBuilder: (context) =>
                                   const <PopupMenuItem<String>>[
                                 PopupMenuItem<String>(
-                                  child: Text('Inicio'),
+                                  value: 'Inicio',
+                                  child: Text('Inicio')
                                 ),
                                 PopupMenuItem<String>(
-                                  child: Text('Perfil'),
+                                  value: 'Perfil',
+                                  child: Text('Perfil')
                                 ),
                                 PopupMenuItem<String>(
                                   value: 'Clientes',
@@ -94,7 +111,8 @@ class AppBarGo2Climb extends StatelessWidget implements PreferredSizeWidget {
                                   child: Text('Cambiar plan'),
                                 ),
                                 PopupMenuItem<String>(
-                                  child: Text('Cerrar sesión'),
+                                  value: 'Cerrar sesión',
+                                  child: Text('Cerrar sesión')
                                 ),
                               ],
                             ),
