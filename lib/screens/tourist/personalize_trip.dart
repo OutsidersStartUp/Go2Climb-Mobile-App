@@ -2,16 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+import '../../models/service.dart';
 import '../services_view.dart';
 
-class PersonalizeTrip extends StatelessWidget {
+class PersonalizeTrip extends StatefulWidget {
   static const String routeName = '/personalize-trip';
-  PersonalizeTrip({super.key});
+  final Service service;
+  final String agencyName;
 
-  String imageUrl = GlobalVariables.mountain1;
-  String title = 'Disfruta de una aventura en la montaña el Huascarán';
-  String agency = 'TravelNew';
+  PersonalizeTrip(this.service, this.agencyName);
 
+  @override
+  State<PersonalizeTrip> createState() => _PersonalizeTripState(service, agencyName);
+}
+
+class _PersonalizeTripState extends State<PersonalizeTrip> {
+  final Service service;
+  final String agencyName;
+  late String imageUrl;
+  late String title;
+  late String agency;
+
+  _PersonalizeTripState(this.service, this.agencyName){
+    imageUrl = service.photos;
+    title = service.name;
+    agency = agencyName;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -347,11 +347,10 @@ class _ServiceDetailState extends State<ServiceDetail> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                // TODO: Pass Service Id
-                                Navigator.pushNamed(
-                                    context, PersonalizeTrip.routeName);
+                                Navigator.push(
+                                  context, MaterialPageRoute(builder: (BuildContext context) => PersonalizeTrip(service, agency)));
                               },
-                              child: Text("Solicitar"),
+                              child: const Text("Solicitar"),
                             ),
                           ]
                       )
