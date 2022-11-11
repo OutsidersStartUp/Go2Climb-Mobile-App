@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/models/create_hired_services.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:http/http.dart' as http;
 
@@ -204,9 +205,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
     );
   }
 
-  Container _travelDate() {
-    var dateMask = MaskTextInputFormatter(mask: '##-##-####', filter: {"#": RegExp(r'[0-9]')});
-    
+  Container _travelDate() {  
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -215,12 +214,27 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [dateMask],
         keyboardType: TextInputType.number,
         controller: scheduledDate,
         decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "Fecha de salida"),
-          textAlign: TextAlign.center
+          icon: Icon(Icons.calendar_today),
+          border: InputBorder.none, hintText: "Salida"
+          ),
+          readOnly: true,
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate:DateTime(2022),
+              lastDate: DateTime(2024)
+            );
+            if(pickedDate != null){
+              String formattedDate = DateFormat.yMd().format(pickedDate);
+              setState(() {
+                scheduledDate.text = formattedDate;
+              });
+            }
+          },
       )),
     );
   }
@@ -277,7 +291,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
@@ -295,7 +309,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
