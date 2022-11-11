@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/models/create_hired_services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:http/http.dart' as http;
 
 import '../../models/service.dart';
 import '../services_view.dart';
@@ -17,17 +21,30 @@ class PersonalizeTrip extends StatefulWidget {
 }
 
 class _PersonalizeTripState extends State<PersonalizeTrip> {
+  final urlAPI = Uri.parse("${GlobalVariables.url}api/v1/hiredservice");
+  final headers = {"Content-Type" : "application/json"};
+  late Future<CreateHiredServices> createHiredServices;
+
   final Service service;
   final String agencyName;
   late String imageUrl;
   late String title;
   late String agency;
+  late int serviceId; //late? :v
+
+  int customerId = 1;
+  String status = "pending"; //default
 
   _PersonalizeTripState(this.service, this.agencyName){
     imageUrl = service.photos;
     title = service.name;
     agency = agencyName;
+    serviceId = service.id;
   }
+
+  final scheduledDate = TextEditingController();
+  final amount = TextEditingController();
+  final price = TextEditingController();
   
   @override
   Widget build(BuildContext context) {
@@ -111,6 +128,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
                 TextButton(
                   child: const Text("Aceptar"),
                   onPressed: () {
+                    saveHiredService();
                     Navigator.pushNamed(
                       context, ServicesView.routeName);
                   },
@@ -187,7 +205,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
   }
 
   Container _travelDate() {
-    var dateMask = MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
+    var dateMask = MaskTextInputFormatter(mask: '##-##-####', filter: {"#": RegExp(r'[0-9]')});
     
     return Container(
       decoration: BoxDecoration(
@@ -199,6 +217,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
           child: TextFormField(
         inputFormatters: [dateMask],
         keyboardType: TextInputType.number,
+        controller: scheduledDate,
         decoration: const InputDecoration(
           border: InputBorder.none, hintText: "Fecha de salida"),
           textAlign: TextAlign.center
@@ -219,6 +238,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
           child: TextFormField(
         inputFormatters: [numberOfPeopleMask],
         keyboardType: TextInputType.number,
+        controller: amount,
         decoration: const InputDecoration(
           border: InputBorder.none, hintText: "# Personas"),
           textAlign: TextAlign.center
@@ -228,7 +248,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
 
   Container priceForm() {
     var priceMask = MaskTextInputFormatter(
-        mask: 'S/.#####', filter: {"#": RegExp(r'[0-9]')});
+        mask: '#####', filter: {"#": RegExp(r'[0-9]')});
 
     return Container(
       decoration: BoxDecoration(
@@ -240,6 +260,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
           child: TextFormField(
         inputFormatters: [priceMask],
         keyboardType: TextInputType.number,
+        controller: price,
         decoration: const InputDecoration(
           border: InputBorder.none, 
           hintText: "Total importe (S/.)"),
@@ -337,5 +358,21 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
           textAlign: TextAlign.center
       )),
     );
+  }
+  
+  void saveHiredService() async {
+    final newHiredService = {
+      "scheduledDate": scheduledDate.text,
+      "amount": amount.text,
+      "price": price.text,
+      "customerId": customerId, 
+      "serviceId": serviceId,
+      "status": status
+    };
+
+    await http.post(urlAPI, headers: headers, body: jsonEncode(newHiredService));
+    scheduledDate.clear();
+    amount.clear();
+    price.clear();
   }
 }
