@@ -27,12 +27,12 @@ class DayOffersState extends State<ServicesView> {
 
   Future<List<Service>> retrieveServices(String category) async{
     data = [];
-    var response = await http.get(Uri.parse(
-        '${GlobalVariables.url}$endpoint'
-    ));
     //var response = await http.get(Uri.parse(
-    //    '${GlobalVariables.url}$endpoint/services/category?name=$category&start=0&limit=10'
+    //    '${GlobalVariables.url}$endpoint'
     //));
+    var response = await http.get(Uri.parse(
+        '${GlobalVariables.url}$endpoint/services/category?name=$category&start=0&limit=10'
+    ));
     var services = <Service>[];
     if (response.statusCode == 200) {
       var servicesJson = json.decode(response.body);
@@ -93,11 +93,14 @@ class DayOffersState extends State<ServicesView> {
                         ElevatedButton(
                           onPressed: () {
                             if (currentState != 'Ofertas del día'){
-                              setState(() {
-                                currentCategory = 'offers';
-                                currentState = 'Ofertas del día';
-                                retrieveServices(currentCategory);
-                                print(data);
+                              currentCategory = 'offers';
+                              retrieveServices(currentCategory)
+                              .then((value) {
+                                setState(() {
+                                  data.addAll(value);
+                                  currentState = 'Ofertas del día';
+                                  print(data);
+                                });
                               });
                             }
                           },
@@ -119,11 +122,14 @@ class DayOffersState extends State<ServicesView> {
                         ElevatedButton(
                           onPressed: () {
                             if (currentState != 'Los más populares'){
-                              setState(() {
-                                currentCategory = 'populars';
-                                currentState = 'Los más populares';
-                                retrieveServices(currentCategory);
-                                print(data);
+                              currentCategory = 'populars';
+                              retrieveServices(currentCategory)
+                                  .then((value) {
+                                    setState(() {
+                                    data.addAll(value);
+                                    currentState = 'Los más populares';
+                                    print(data);
+                                  });
                               });
                             }
                           },
@@ -145,11 +151,14 @@ class DayOffersState extends State<ServicesView> {
                         ElevatedButton(
                           onPressed: () {
                             if (currentState != 'Para ti'){
-                              setState(() {
-                                currentCategory = 'forYou';
-                                currentState = 'Para ti';
-                                retrieveServices(currentCategory);
-                                print(data);
+                              currentCategory = 'forYou';
+                              retrieveServices(currentCategory)
+                                  .then((value) {
+                                    data.addAll(value);
+                                    setState(() {
+                                    currentState = 'Para ti';
+                                    print(data);
+                                });
                               });
                             }
                           },
@@ -314,13 +323,14 @@ class DayOffersState extends State<ServicesView> {
                       children: [
                         Text(
                           price,
-                          style: const TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            decoration: data[i].isOffer ? TextDecoration.lineThrough : TextDecoration.none,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 15.0),
-                        Text(
+                        if (data[i].isOffer)
+                          Text(
                           offer,
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
