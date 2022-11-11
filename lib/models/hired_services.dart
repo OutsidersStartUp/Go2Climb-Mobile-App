@@ -6,44 +6,48 @@ import 'package:go2climb/models/service.dart';
 
 class HiredServices {
   final int id;
+  final int customerId;
+  final int serviceId;
   final int amount;
-  final double price;
-  final DateTime scheduledDate;
-  final int status;
-  final Customer customer;
-  final Service service;
+  final int price;
+  final String scheduledDate;
+  final String status;
+  final Customer? customer;
+  final Service? service;
   HiredServices({
     required this.id,
+    required this.customerId,
+    required this.serviceId,
     required this.amount,
     required this.price,
     required this.scheduledDate,
     required this.status,
-    required this.customer,
-    required this.service,
+    this.customer,
+    this.service,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'customerId': customerId,
+      'serviceId': serviceId,
       'amount': amount,
       'price': price,
-      'scheduledDate': scheduledDate.millisecondsSinceEpoch,
+      'scheduledDate': scheduledDate,
       'status': status,
-      'customer': customer.toMap(),
-      'service': service.toMap(),
     };
   }
 
   factory HiredServices.fromMap(Map<String, dynamic> map) {
     return HiredServices(
       id: map['id'] as int,
+      customerId: map['customerId'] as int,
+      serviceId: map['serviceId'] as int,
       amount: map['amount'] as int,
-      price: map['price'] as double,
-      scheduledDate:
-          DateTime.fromMillisecondsSinceEpoch(map['scheduledDate'] as int),
-      status: map['status'] as int,
-      customer: Customer.fromMap(map['customer'] as Map<String, dynamic>),
-      service: Service.fromMap(map['service'] as Map<String, dynamic>),
+      price: map['price'] as int,
+      scheduledDate: map['scheduledDate'] as String,
+      status: map['status'] as String,
+      customer: map['customer'] == null ? null : Customer.fromMap(map['customer'] as Map<String, dynamic>),
+      service: map['service'] == null ? null : Service.fromMap(map['service'] as Map<String, dynamic>),
     );
   }
 

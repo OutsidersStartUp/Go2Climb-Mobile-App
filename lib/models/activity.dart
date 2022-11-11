@@ -7,12 +7,10 @@ class Activity {
   final int id;
   final String name;
   final String description;
-  final Service service;
   Activity({
     required this.id,
     required this.name,
     required this.description,
-    required this.service,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,7 +18,6 @@ class Activity {
       'id': id,
       'name': name,
       'description': description,
-      'service': service.toMap(),
     };
   }
 
@@ -29,7 +26,6 @@ class Activity {
       id: map['id'] as int,
       name: map['name'] as String,
       description: map['description'] as String,
-      service: Service.fromMap(map['service'] as Map<String, dynamic>),
     );
   }
 
