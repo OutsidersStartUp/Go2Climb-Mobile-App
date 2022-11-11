@@ -69,7 +69,6 @@ class _ServiceDetailState extends State<ServiceDetail> {
         .then((value) {
           setState(() {
             activities.addAll(value);
-            print(activities);
           });
         });
     super.initState();
