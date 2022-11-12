@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+
+import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/create_service.dart';
 
 class CreateAgencyService extends StatefulWidget {
   static const String routeName = '/create-agency-service';
@@ -12,6 +19,21 @@ class CreateAgencyService extends StatefulWidget {
 
 class _CreateAgencyServiceState extends State<CreateAgencyService> {
   bool isVisible = false;
+
+  final url = Uri.parse("https://go2climb.azurewebsites.net/api/v1/services");
+  final headers = {"Content-Type": "application/json;charset=UTF-8"};
+  late Future<CreateService> createService;
+
+  bool isOffer = false;
+  int agencyId = 2;
+  String creationDate = DateTime.now().toString().substring(0, 10);
+
+  final name = TextEditingController();
+  final location = TextEditingController();
+  final description = TextEditingController();
+  final price = TextEditingController();
+  final newPrice = TextEditingController();
+  final photos = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -104,51 +126,56 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                         sizedBox(),
                         activityForm(),
                         sizedBox(),
-                        newSubtitle("Horario"),
+                        /*newSubtitle("Horario"),
                         sizedBox(),
-                        scheduleForms(context),
-                        sizedBox(),
+                        scheduleForms(context),*/
+                        //Text(creationDate),
                         newSubtitle("Precio"),
                         sizedBox(),
                         priceForm(),
                         sizedBox(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton.icon(
-                            icon: Text("Agregar oferta"),
-                            label: Icon(Icons.add),
-                            onPressed: () => setState(() => isVisible = !isVisible),
-                          ),
-                        ),
-                        Visibility(
-                          visible: isVisible,
-                          child: Container(
-                          child: SingleChildScrollView(
-                            child: Column(mainAxisSize: MainAxisSize.min, children: [
-                              newSubtitle("Precio promocional (USD)"),
-                              sizedBox(),
-                              priceForm(),
-                              sizedBox(),
-                              newSubtitle("Válido"),
-                              sizedBox(),
-                              scheduleForms(context),
-                              sizedBox(),
-                          ],),)
-                        )),
+                        addOfferToggle(),
+                        addOfferForm(),
                         newSubtitle("Imagenes referenciales"),
                         sizedBox(),
                         Container(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Image.network(GlobalVariables.uploadImage)),
                         sizedBox(),
+                        urlImageForm(),
+                        sizedBox(),
                         Container(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
-                                onPressed: () {},
-                                child: const Text("Continuar")))
+                              onPressed: () {
+                                saveService();
+                                print("The price is $price");
+                                print("offer: $isOffer");
+                                Navigator.pushNamed(
+                                    context, PromoteAgencyService.routeName);
+                              },
+                              style: ButtonStyle(
+                                minimumSize:
+                                    const MaterialStatePropertyAll<Size>(
+                                        Size(double.infinity, 40)),
+                                backgroundColor:
+                                    const MaterialStatePropertyAll<Color>(
+                                        GlobalVariables.primaryColor),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                "Continuar",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ))
                       ]),
                     ))
               ],
@@ -157,6 +184,47 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
         ),
       ),
     );
+  }
+
+  Container urlImageForm() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        controller: photos,
+        decoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Url de la imagen del servicio"),
+      )),
+    );
+  }
+
+  void saveService() async {
+    if (newPrice.text != '') {
+      isOffer = true;
+    }
+    final newService = {
+      "name": name.text,
+      "location": location.text,
+      "description": description.text,
+      "price": price.text,
+      "newPrice": newPrice.text,
+      "photos": photos.text,
+      "creationDate": creationDate,
+      "isOffer": isOffer,
+      "agencyId": agencyId
+    };
+    await http.post(url, headers: headers, body: jsonEncode(newService));
+    name.clear();
+    location.clear();
+    description.clear();
+    price.clear();
+    newPrice.clear();
+    photos.clear();
   }
 
   Row scheduleForms(BuildContext context) {
@@ -190,13 +258,11 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          child: Text(subtitle,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
+        Text(subtitle,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            )),
       ],
     );
   }
@@ -212,12 +278,15 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
           child: Column(
         children: [
           TextFormField(
+            controller: name,
             decoration: const InputDecoration(hintText: "Nombre del servicio"),
           ),
           TextFormField(
+            controller: location,
             decoration: const InputDecoration(hintText: "Lugar"),
           ),
           TextFormField(
+              controller: description,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Descripción")),
         ],
@@ -225,12 +294,45 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
     );
   }
 
+  Container addOfferToggle() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      width: MediaQuery.of(context).size.width,
+      child: ElevatedButton.icon(
+        icon: Text("Agregar oferta"),
+        label: Icon(Icons.add),
+        onPressed: () => setState(() => isVisible = !isVisible),
+      ),
+    );
+  }
+
+  Visibility addOfferForm() {
+    return Visibility(
+        visible: isVisible,
+        child: Container(
+            child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              newSubtitle("Precio promocional (USD)"),
+              sizedBox(),
+              offerPriceForm(),
+              sizedBox(),
+              newSubtitle("Válido"),
+              sizedBox(),
+              scheduleForms(context),
+              sizedBox(),
+            ],
+          ),
+        )));
+  }
+
   Container activityForm() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
@@ -279,18 +381,39 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
   }
 
   Container priceForm() {
-    var priceMask = MaskTextInputFormatter(
-        mask: 'S/.####', filter: {"#": RegExp(r'[0-9]')});
+    var priceMask =
+        MaskTextInputFormatter(mask: '####', filter: {"#": RegExp(r'[0-9]')});
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
         inputFormatters: [priceMask],
         keyboardType: TextInputType.number,
+        controller: price,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "200 PEN"),
+      )),
+    );
+  }
+
+  Container offerPriceForm() {
+    var priceMask =
+        MaskTextInputFormatter(mask: '####', filter: {"#": RegExp(r'[0-9]')});
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+        inputFormatters: [priceMask],
+        keyboardType: TextInputType.number,
+        controller: newPrice,
         decoration: const InputDecoration(
             border: InputBorder.none, hintText: "200 PEN"),
       )),
