@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:go2climb/screens/login_page.dart';
+import 'package:go2climb/screens/agency/register_agency_plan.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../constants/global_variables.dart';
 
-class RegisterTourist extends StatefulWidget {
-  static const String routeName = '/register-tourist';
-  RegisterTourist({super.key});
+class RegisterAgency extends StatefulWidget {
+  static const String routeName = '/register-agency';
+  RegisterAgency({super.key});
 
   @override
-  State<RegisterTourist> createState() => _RegisterTouristState();
+  State<RegisterAgency> createState() => _RegisterAgencyState();
 }
 
-class _RegisterTouristState extends State<RegisterTourist> {
+class _RegisterAgencyState extends State<RegisterAgency> {
   bool _checkboxState1 = false;
-  bool _checkboxState2 = false;
   var iconState = true;
   bool passwordState = true;
 
@@ -46,30 +45,31 @@ class _RegisterTouristState extends State<RegisterTourist> {
                           sizedBox(),
                           passwordForm(),
                           sizedBox(),
-                          newSubtitle("Información de la cuenta"),
+                          newSubtitle("Información de la agencia"),
                           sizedBox(),
                           nameForm(),
                           sizedBox(),
-                          lastNameForm(),
-                          sizedBox(),
                           accountInformation(context),
                           sizedBox(),
-                          condition1("Declaro tener +18 años de edad."),
-                          condition2("Acepto los términos y condiciones."),
-                          const SizedBox(height: 60),
-                          finishButton(context)
+                          _locationForm(),
+                          sizedBox(),
+                          _descriptionForm(),
+                          sizedBox(),
+                          condition1("Acepto los términos y condiciones."),
+                          const SizedBox(height: 30),
+                          continueButton(context)
                         ]))
               ]))
         ])));
   }
 
-  Container finishButton(BuildContext context) {
+  Container continueButton(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, LoginPage.RouteName);
+            Navigator.pushNamed(context, RegisterAgencyPlan.routeName);
           },
           style: ButtonStyle(
             minimumSize:
@@ -83,7 +83,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
             ),
           ),
           child: const Text(
-            "Finalizar",
+            "Continuar",
             style: TextStyle(
               fontSize: 16,
               color: Colors.black,
@@ -99,21 +99,6 @@ class _RegisterTouristState extends State<RegisterTourist> {
             value: _checkboxState1,
             onChanged: (value) {
               _checkboxState1 = value!;
-              setState(() {});
-            }),
-        Text(condition,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      ],
-    );
-  }
-
-  Row condition2(String condition) {
-    return Row(
-      children: [
-        Checkbox(
-            value: _checkboxState2,
-            onChanged: (value) {
-              _checkboxState2 = value!;
               setState(() {});
             }),
         Text(condition,
@@ -155,32 +140,35 @@ class _RegisterTouristState extends State<RegisterTourist> {
 
   Container passwordForm() {
     return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: SizedBox(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
           child: TextFormField(
               obscureText: passwordState,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                  border: InputBorder.none,
+                  border: InputBorder.none, 
                   hintText: "Contraseña",
                   suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          iconState = !iconState;
-                          passwordState = !passwordState;
-                        });
-                      },
-                      child: iconState
-                          ? const Icon(
-                              Icons.visibility_off,
-                              color: Colors.grey,
-                            )
-                          : const Icon(Icons.visibility)))),
-        ));
+                    onTap: (){
+                      setState(() {
+                        iconState = !iconState;
+                        passwordState = !passwordState;
+                      });
+                    },
+                    child: iconState ? const Icon(
+                      Icons.visibility_off,
+                      color: Colors.grey,
+                    ): const Icon(
+                      Icons.visibility
+                    )
+                  )
+          )
+      ),
+    ));
   }
 
   Container nameForm() {
@@ -194,22 +182,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
           child: TextFormField(
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
-                  border: InputBorder.none, hintText: "Nombres"))),
-    );
-  }
-
-  Container lastNameForm() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-          child: TextFormField(
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                  border: InputBorder.none, hintText: "Apellidos"))),
+                  border: InputBorder.none, hintText: "Nombre de la agencia"))),
     );
   }
 
@@ -218,11 +191,31 @@ class _RegisterTouristState extends State<RegisterTourist> {
       children: [
         SizedBox(
             width: MediaQuery.of(context).size.width * 0.4,
-            child: _contactNumber()),
+            child: _rucNumber()),
         SizedBox(
             width: MediaQuery.of(context).size.width * 0.4, 
-            child: _country()),
+            child: _contactNumber()),
       ],
+    );
+  }
+
+  Container _rucNumber() {
+    var rucMask = MaskTextInputFormatter(
+        mask: '###########', filter: {"#": RegExp(r'[0-9]')});
+
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+              inputFormatters: [rucMask],
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Número RUC"),
+              textAlign: TextAlign.center)),
     );
   }
 
@@ -246,19 +239,33 @@ class _RegisterTouristState extends State<RegisterTourist> {
     );
   }
 
-  Container _country() {
+  Container _locationForm() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
-                  border: InputBorder.none, hintText: "País"),
-              textAlign: TextAlign.center)),
+                  border: InputBorder.none, hintText: "Ubicación física de la agencia"))),
+    );
+  }
+
+  Container _descriptionForm() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+              keyboardType: TextInputType.name,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Descripción de la agencia"))),
     );
   }
 }
