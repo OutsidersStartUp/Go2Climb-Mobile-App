@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go2climb/screens/agency/register_agency_plan.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:http/http.dart' as http;
 
 import '../../constants/global_variables.dart';
 
@@ -16,6 +19,19 @@ class _RegisterAgencyState extends State<RegisterAgency> {
   bool _checkboxState1 = false;
   var iconState = true;
   bool passwordState = true;
+
+  //String defaultAgencyPhoto = "https://cdn-icons-png.flaticon.com/512/770/770655.png";
+
+  final urlAPI = Uri.parse("${GlobalVariables.url}api/v1/agencies/auth/sign-up");
+  final headers = {"Content-Type" : "application/json;charset=UTF-8"};
+
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final description = TextEditingController();
+  final location = TextEditingController();
+  final ruc = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +85,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
+            saveAgency();
             Navigator.pushNamed(context, RegisterAgencyPlan.routeName);
           },
           style: ButtonStyle(
@@ -132,6 +149,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: email,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Correo electrónico"))),
@@ -147,6 +165,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: password,
               obscureText: passwordState,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -180,6 +199,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: name,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Nombre de la agencia"))),
@@ -211,6 +231,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: ruc,
               inputFormatters: [rucMask],
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
@@ -231,6 +252,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: phoneNumber,
               inputFormatters: [cellphoneMask],
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
@@ -248,6 +270,7 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: location,
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Ubicación física de la agencia"))),
@@ -263,9 +286,31 @@ class _RegisterAgencyState extends State<RegisterAgency> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: description,
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Descripción de la agencia"))),
     );
+  }
+  
+  void saveAgency() async{
+    final newTourist = {
+      "name": name.text, 
+      "email": email.text,
+      "password": password.text,
+      "phoneNumber": phoneNumber.text,
+      "description": description.text,
+      "location": location.text,
+      "ruc": ruc.text,
+      //"photo": defaultAgencyPhoto
+    };
+    await http.post(urlAPI, headers: headers, body: jsonEncode(newTourist));
+    name.clear();
+    email.clear();
+    password.clear();
+    phoneNumber.clear();
+    description.clear();
+    location.clear();
+    ruc.clear();
   }
 }

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:http/http.dart' as http;
 
 import '../../constants/global_variables.dart';
 
@@ -17,6 +20,16 @@ class _RegisterTouristState extends State<RegisterTourist> {
   bool _checkboxState2 = false;
   var iconState = true;
   bool passwordState = true;
+  //String defaultTouristPhoto = "https://cdn-icons-png.flaticon.com/512/2102/2102633.png";
+
+  final urlAPI = Uri.parse("${GlobalVariables.url}api/v1/customers/auth/sign-up");
+  final headers = {"Content-Type" : "application/json;charset=UTF-8"};
+
+  final name = TextEditingController();
+  final lastName = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final phoneNumber = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +82,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
+            saveTourist();
             Navigator.pushNamed(context, LoginPage.RouteName);
           },
           style: ButtonStyle(
@@ -147,6 +161,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: email,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Correo electrónico"))),
@@ -162,6 +177,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: SizedBox(
           child: TextFormField(
+              controller: password,
               obscureText: passwordState,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -192,6 +208,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: name,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Nombres"))),
@@ -207,6 +224,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: lastName,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "Apellidos"))),
@@ -238,6 +256,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              controller: phoneNumber,
               inputFormatters: [cellphoneMask],
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
@@ -260,5 +279,22 @@ class _RegisterTouristState extends State<RegisterTourist> {
                   border: InputBorder.none, hintText: "País"),
               textAlign: TextAlign.center)),
     );
+  }
+  
+  void saveTourist() async{
+    final newTourist = {
+      "name": name.text, 
+      "lastName": lastName.text,
+      "email": email.text,
+      "password": password.text,
+      "phoneNumber": phoneNumber.text,
+      //"photo": defaultTouristPhoto
+    };
+    await http.post(urlAPI, headers: headers, body: jsonEncode(newTourist));
+    name.clear();
+    lastName.clear();
+    email.clear();
+    password.clear();
+    phoneNumber.clear();
   }
 }
