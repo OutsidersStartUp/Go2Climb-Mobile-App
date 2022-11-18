@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
 import 'package:go2climb/screens/services_view.dart';
+import 'package:go2climb/screens/tourist/register_tourist.dart';
 
 import '../constants/global_variables.dart';
 
@@ -40,6 +41,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               _bottonLogin(),
               SizedBox(
+                height: 20.0,
+              ),
+              _bottonLogin2(),
+              const SizedBox(
                 height: 20.0,
               ),
               _bottonRegisterClient(),
@@ -103,14 +108,27 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  //Borrar ↓
+  Widget _bottonLogin2() {
+    return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, AgencyPage.routeName);
+        },
+        child: const Text("Iniciar como agencia"),
+      );
+    });
+  }
+
   Widget _bottonRegisterClient() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, ServicesView.routeName);
+          Navigator.pushNamed(context, RegisterTourist.routeName);
         },
-        child: Text("Registrate y disfruta tu aventura"),
+        child: const Text("Registrate y disfruta tu aventura"),
       );
     });
   }

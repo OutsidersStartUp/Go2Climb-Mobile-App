@@ -6,6 +6,7 @@ import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:go2climb/screens/services_view.dart';
+import 'package:go2climb/screens/tourist/register_tourist.dart';
 import 'package:go2climb/screens/tourist/tourist_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -55,6 +56,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const PromoteAgencyService(),
+      );
+    case RegisterTourist.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => RegisterTourist(),
       );
     default:
       return MaterialPageRoute(
