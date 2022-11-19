@@ -205,9 +205,14 @@ class DayOffersState extends State<ServicesView> {
                     ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: data == [] ? 0 : data.length,
+                      itemCount: data.isEmpty ? 1 : data.length,
                       itemBuilder: (context, i) {
-                        return Column(
+                        return data.isEmpty
+                        ? const Text(
+                          "",
+                          textAlign: TextAlign.center,
+                        )
+                        : Column(
                           children: [
                             const SizedBox(height: 10.0),
                             serviceCard(context, i),

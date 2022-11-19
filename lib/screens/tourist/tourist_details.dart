@@ -227,8 +227,6 @@ class _TouristDetailsState extends State<TouristDetails> {
                                     ],
                                   );
                           }),
-
-
                       const SizedBox(height: 20)
                     ]
                 ),
