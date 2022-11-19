@@ -18,131 +18,212 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                  child: Image.network(
-                GlobalVariables.logo,
-                height: 200.0,
-              )),
-              SizedBox(
-                height: 15.0,
-              ),
-              _userTextField(),
-              SizedBox(
-                height: 15,
-              ),
-              _passwordTextField(),
-              SizedBox(
-                height: 20.0,
-              ),
-              _bottonLogin(),
-              SizedBox(
-                height: 20.0,
-              ),
-              _bottonLogin2(),
-              const SizedBox(
-                height: 20.0,
-              ),
-              _bottonRegisterClient(),
-              SizedBox(
-                height: 20.0,
-              ),
-              _bottonRegisterAgency(),
-            ],
-          ),
-        ),
-      ),
+    return Scaffold(
+      backgroundColor: GlobalVariables.backgroundColor,
+      appBar: AppBar(title: const Text("Cambiar plan")),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  newSubHeading("Te damos la bienvenida a Go2Climb"),
+                  sizedBox(),
+                  emailContainer()
+
+                ],
+              )
+            )
+
+          ],))
+    
+    
+    
+    
+    
     );
   }
-
-  Widget _userTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 35.0),
-        child: TextField(
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            icon: Icon(Icons.email),
-            hintText: 'ejemplo@correo.com',
-            labelText: 'Correo electrónico',
-          ),
-          onChanged: (value) {},
-        ),
-      );
-    });
-  }
-
-  Widget _passwordTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 35.0),
-        child: TextField(
-          keyboardType: TextInputType.emailAddress,
-          obscureText: true,
-          decoration: InputDecoration(
-            icon: Icon(Icons.lock),
-            hintText: 'Contraseña',
-            labelText: 'Contraseña',
-          ),
-          onChanged: (value) {},
-        ),
-      );
-    });
-  }
-
-  Widget _bottonLogin() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, ServicesView.routeName);
-        },
-        child: const Text("Iniciar Sesión"),
-      );
-    });
-  }
-
-  //Borrar ↓
-  Widget _bottonLogin2() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AgencyPage.routeName);
-        },
-        child: const Text("Iniciar como agencia"),
-      );
-    });
-  }
-
-  Widget _bottonRegisterClient() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, RegisterTourist.routeName);
-        },
-        child: const Text("Regístrate y disfruta tu aventura"),
-      );
-    });
-  }
-
-  Widget _bottonRegisterAgency() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, RegisterAgency.routeName);
-        },
-        child: const Text("Regístrate y ofrece servicios turisticos"),
-      );
-    });
-  }
 }
+
+SizedBox sizedBox() => const SizedBox(height: 15);
+
+Container emailContainer(){
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+            //controller: emailController, NOT IMPLEMENTED YET
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Correo electronico")
+          )
+      ),
+  );
+}
+
+
+Row newSubHeading(String subtitle) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        child: Text(subtitle,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            )),
+      ),
+    ],
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //     child: Scaffold(
+  //       body: Center(
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             Flexible(
+  //                 child: Image.network(
+  //               GlobalVariables.logo,
+  //               height: 200.0,
+  //             )),
+  //             const SizedBox(
+  //               height: 15.0,
+  //             ),
+  //             _userTextField(),
+  //             SizedBox(
+  //               height: 15,
+  //             ),
+  //             _passwordTextField(),
+  //             SizedBox(
+  //               height: 20.0,
+  //             ),
+  //             _bottonLogin(),
+  //             SizedBox(
+  //               height: 20.0,
+  //             ),
+  //             _bottonLogin2(),
+  //             const SizedBox(
+  //               height: 20.0,
+  //             ),
+  //             _bottonRegisterClient(),
+  //             SizedBox(
+  //               height: 20.0,
+  //             ),
+  //             _bottonRegisterAgency(),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget _userTextField() {
+  //   return StreamBuilder(
+  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //     return Container(
+  //       padding: EdgeInsets.symmetric(horizontal: 35.0),
+  //       child: TextField(
+  //         keyboardType: TextInputType.emailAddress,
+  //         decoration: InputDecoration(
+  //           icon: Icon(Icons.email),
+  //           hintText: 'ejemplo@correo.com',
+  //           labelText: 'Correo electrónico',
+  //         ),
+  //         onChanged: (value) {},
+  //       ),
+  //     );
+  //   });
+  // }
+
+  // Widget _passwordTextField() {
+  //   return StreamBuilder(
+  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //     return Container(
+  //       padding: EdgeInsets.symmetric(horizontal: 35.0),
+  //       child: TextField(
+  //         keyboardType: TextInputType.emailAddress,
+  //         obscureText: true,
+  //         decoration: InputDecoration(
+  //           icon: Icon(Icons.lock),
+  //           hintText: 'Contraseña',
+  //           labelText: 'Contraseña',
+  //         ),
+  //         onChanged: (value) {},
+  //       ),
+  //     );
+  //   });
+  // }
+
+  // Widget _bottonLogin() {
+  //   return StreamBuilder(
+  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //     return ElevatedButton(
+  //       onPressed: () {
+  //         Navigator.pushNamed(context, ServicesView.routeName);
+  //       },
+  //       child: const Text("Iniciar Sesión"),
+  //     );
+  //   });
+  // }
+
+  // //Borrar ↓
+  // Widget _bottonLogin2() {
+  //   return StreamBuilder(
+  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //     return ElevatedButton(
+  //       onPressed: () {
+  //         Navigator.pushNamed(context, AgencyPage.routeName);
+  //       },
+  //       child: const Text("Iniciar como agencia"),
+  //     );
+  //   });
+  // }
+
+  // Widget _bottonRegisterClient() {
+  //   return StreamBuilder(
+  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //     return ElevatedButton(
+  //       onPressed: () {
+  //         Navigator.pushNamed(context, RegisterTourist.routeName);
+  //       },
+  //       child: const Text("Regístrate y disfruta tu aventura"),
+  //     );
+  //   });
+  // }
+
+  // Widget _bottonRegisterAgency() {
+  //   return StreamBuilder(
+  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+  //     return ElevatedButton(
+  //       onPressed: () {
+  //         Navigator.pushNamed(context, RegisterAgency.routeName);
+  //       },
+  //       child: const Text("Regístrate y ofrece servicios turisticos"),
+  //     );
+  //   });
+  // }
