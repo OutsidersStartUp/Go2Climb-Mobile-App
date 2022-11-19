@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
@@ -11,7 +10,6 @@ import 'package:go2climb/screens/tourist/register_tourist.dart';
 import '../constants/global_variables.dart';
 
 class LoginPage extends StatefulWidget {
-
   static const String RouteName = '/login_page';
   LoginPage({super.key});
 
@@ -20,9 +18,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  AuthController authController = AuthController();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: GlobalVariables.backgroundColor,
         appBar: AppBar(title: const Text("Iniciar sesion")),
@@ -54,197 +55,177 @@ class _LoginPageState extends State<LoginPage> {
           ],
         )));
   }
-}
 
-SizedBox sizedBox() => const SizedBox(height: 15);
+  SizedBox sizedBox() => const SizedBox(height: 15);
 
-Container loginButton(BuildContext context) {
-  
-  return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      width: MediaQuery.of(context).size.width,
-      child: ElevatedButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: ((context) => AlertDialog(
-                  title: const Text("¡Enhorabuena!"),
-                  content: const Text("Plan actualizado exitosamente"),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text("Aceptar"),
-                      onPressed: () {
-                        Navigator.pushNamed(context, ServicesView.routeName);
-                      },
-                    )
-                  ],
-                )),
-          );
-        },
-        style: ButtonStyle(
-          minimumSize:
-              const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
-          backgroundColor: const MaterialStatePropertyAll<Color>(
-              GlobalVariables.primaryColor),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+  Container loginButton(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          onPressed: () {
+            authController.loginUser(
+              emailController.text, passwordController.text);
+          },
+          style: ButtonStyle(
+            minimumSize:
+                const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+                GlobalVariables.primaryColor),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(GlobalVariables.borderRadius),
+              ),
             ),
           ),
-        ),
-        child: const Text(
-          "Iniciar sesion",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-      ));
-}
-
-Container registerAgencyButton(BuildContext context) {
-  return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      width: MediaQuery.of(context).size.width,
-      child: ElevatedButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: ((context) => AlertDialog(
-                  title: const Text("¡Enhorabuena!"),
-                  content: const Text("Plan actualizado exitosamente"),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text("Aceptar"),
-                      onPressed: () {
-                        Navigator.pushNamed(context, ServicesView.routeName);
-                      },
-                    )
-                  ],
-                )),
-          );
-        },
-        style: ButtonStyle(
-          minimumSize:
-              const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
-          backgroundColor: const MaterialStatePropertyAll<Color>(
-              GlobalVariables.primaryColor),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
-            ),
-          ),
-        ),
-        child: const Text(
-          "Registrate y ofrece servicios turisticos",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-      ));
-}
-
-Container registerCustomerButton(BuildContext context) {
-  return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      width: MediaQuery.of(context).size.width,
-      child: ElevatedButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: ((context) => AlertDialog(
-                  title: const Text("¡Enhorabuena!"),
-                  content: const Text("Plan actualizado exitosamente"),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text("Aceptar"),
-                      onPressed: () {
-                        Navigator.pushNamed(context, ServicesView.routeName);
-                      },
-                    )
-                  ],
-                )),
-          );
-        },
-        style: ButtonStyle(
-          minimumSize:
-              const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
-          backgroundColor: const MaterialStatePropertyAll<Color>(
-              GlobalVariables.primaryColor),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
-            ),
-          ),
-        ),
-        child: const Text(
-          "Registrate y disfruta tu aventura",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-      ));
-}
-
-Container emailContainer() {
-  TextEditingController emailController = TextEditingController();
-  return Container(
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-    padding: const EdgeInsets.symmetric(horizontal: 5),
-    margin: const EdgeInsets.symmetric(horizontal: 10),
-    child: SizedBox(
-        child: TextFormField(
-            controller: emailController,
-            decoration: const InputDecoration(
-                border: InputBorder.none, hintText: "Correo electronico"))),
-  );
-}
-
-Container passwordContainer() {
-    TextEditingController passwordController = TextEditingController();
-  return Container(
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-    padding: const EdgeInsets.symmetric(horizontal: 5),
-    margin: const EdgeInsets.symmetric(horizontal: 10),
-    child: SizedBox(
-        child: TextFormField(
-            controller: passwordController,
-            decoration: const InputDecoration(
-                border: InputBorder.none, hintText: "Contraseña"))),
-  );
-}
-
-Row newSubHeading(String subtitle) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Container(
-        child: Text(subtitle,
-            style: const TextStyle(
+          child: const Text(
+            "Iniciar sesion",
+            style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.bold,
-            )),
-      ),
-    ],
-  );
+              color: Colors.black,
+            ),
+          ),
+        ));
+  }
+
+  Container registerAgencyButton(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: ((context) => AlertDialog(
+                    title: const Text("¡Enhorabuena!"),
+                    content: const Text("Plan actualizado exitosamente"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text("Aceptar"),
+                        onPressed: () {
+                          Navigator.pushNamed(context, ServicesView.routeName);
+                        },
+                      )
+                    ],
+                  )),
+            );
+          },
+          style: ButtonStyle(
+            minimumSize:
+                const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+                GlobalVariables.primaryColor),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(GlobalVariables.borderRadius),
+              ),
+            ),
+          ),
+          child: const Text(
+            "Registrate y ofrece servicios turisticos",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ));
+  }
+
+  Container registerCustomerButton(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: ((context) => AlertDialog(
+                    title: const Text("¡Enhorabuena!"),
+                    content: const Text("Plan actualizado exitosamente"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text("Aceptar"),
+                        onPressed: () {
+                          Navigator.pushNamed(context, ServicesView.routeName);
+                        },
+                      )
+                    ],
+                  )),
+            );
+          },
+          style: ButtonStyle(
+            minimumSize:
+                const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+                GlobalVariables.primaryColor),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(GlobalVariables.borderRadius),
+              ),
+            ),
+          ),
+          child: const Text(
+            "Registrate y disfruta tu aventura",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ));
+  }
+
+  Container emailContainer() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Correo electronico"))),
+    );
+  }
+
+  Container passwordContainer() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Contraseña"))),
+    );
+  }
+
+  Row newSubHeading(String subtitle) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          child: Text(subtitle,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+      ],
+    );
+  }
 }
-
-
-
-
-
-
-
 
 
 
