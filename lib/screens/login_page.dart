@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
@@ -31,23 +33,76 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   newSubHeading("Te damos la bienvenida a Go2Climb"),
                   sizedBox(),
-                  emailContainer()
-
+                  emailContainer(),
+                  sizedBox(),
+                  passwordContainer(),
+                  sizedBox(),
+                  loginButton(context),
+                  sizedBox(),
+                  sizedBox(),
+                  newSubHeading("Aun no tienes una cuenta?"),
+                  // _buttonRegisterAgency(),
+                  // _buttonRegisterCustomer()
                 ],
               )
             )
 
           ],))
-    
-    
-    
-    
-    
+
     );
   }
 }
 
 SizedBox sizedBox() => const SizedBox(height: 15);
+
+Container loginButton(BuildContext context) {
+  return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      width: MediaQuery.of(context).size.width,
+      child: ElevatedButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: ((context) => AlertDialog(
+                  title: const Text("¡Enhorabuena!"),
+                  content: const Text("Plan actualizado exitosamente"),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text("Aceptar"),
+                      onPressed: () {
+                        Navigator.pushNamed(context, ServicesView.routeName);
+                      },
+                    )
+                  ],
+                )),
+          );
+        },
+        style: ButtonStyle(
+          minimumSize:
+              const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+          backgroundColor: const MaterialStatePropertyAll<Color>(
+              GlobalVariables.primaryColor),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+            ),
+          ),
+        ),
+        child: const Text(
+          "Pagar",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      ));
+}
+
+
+
+
+
 
 Container emailContainer(){
     return Container(
@@ -63,6 +118,25 @@ Container emailContainer(){
             decoration: const InputDecoration(
               border: InputBorder.none,
               hintText: "Correo electronico")
+          )
+      ),
+  );
+}
+
+Container passwordContainer(){
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: GlobalVariables.primaryColor, width: 3)
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+          child: TextFormField(
+            //controller: emailController, NOT IMPLEMENTED YET
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Contraseña")
           )
       ),
   );
@@ -204,7 +278,7 @@ Row newSubHeading(String subtitle) {
   //   });
   // }
 
-  // Widget _bottonRegisterClient() {
+  // Widget _buttonRegisterCustomer() {
   //   return StreamBuilder(
   //       builder: (BuildContext context, AsyncSnapshot snapshot) {
   //     return ElevatedButton(
@@ -216,7 +290,7 @@ Row newSubHeading(String subtitle) {
   //   });
   // }
 
-  // Widget _bottonRegisterAgency() {
+  // Widget _buttonRegisterAgency() {
   //   return StreamBuilder(
   //       builder: (BuildContext context, AsyncSnapshot snapshot) {
   //     return ElevatedButton(
