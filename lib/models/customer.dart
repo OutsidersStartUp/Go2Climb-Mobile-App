@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'dart:convert';
 
 class Customer extends Equatable {
   const Customer({
@@ -33,6 +34,8 @@ class Customer extends Equatable {
       photo: map['photo'] as String,
     );
   }
+
+  String toJson() => json.encode(toMap());
 
   @override
   List<Object?> get props =>
