@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go2climb/models/service_reviews.dart';
 import 'package:go2climb/screens/tourist/personalize_trip.dart';
 import '../constants/global_variables.dart';
 import 'agency/agency_page.dart';
 import '../models/activity.dart';
 import '../models/service.dart';
-import '../screens/agency/agency_profile.dart';
+import '../models/customer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -43,11 +44,9 @@ class _ServiceDetailState extends State<ServiceDetail> {
   String isGoodToKnow = "Este servicio atiende a los visitantes de lunes a viernes";
   String time = "desde 10:00 hasta 20:00";
 
-  //String agency = 'TravelNew';
-  //String price = 'S/500.00';
-  //String offer = 'S/480.00';
-
   List<Activity> activities = [];
+  List<ServiceReviews> reviews = [];
+  //List<Customer> customers = [];
 
   Future<List<Activity>> retrieveActivities() async{
     var response = await http.get(Uri.parse(
@@ -63,6 +62,20 @@ class _ServiceDetailState extends State<ServiceDetail> {
     return _activities;
   }
 
+  Future<List<ServiceReviews>> retrieveReviews() async{
+    var response = await http.get(Uri.parse(
+        '${GlobalVariables.url}api/v1/services/${service.id}/servicereviews'
+    ));
+    var _reviews = <ServiceReviews>[];
+    if (response.statusCode == 200){
+      var reviewsJson = json.decode(response.body);
+      for (var reviewJson in reviewsJson){
+        _reviews.add(ServiceReviews.fromMap(reviewJson));
+      }
+    }
+    return _reviews;
+  }
+
   @override
   void initState(){
     retrieveActivities()
@@ -71,6 +84,12 @@ class _ServiceDetailState extends State<ServiceDetail> {
             activities.addAll(value);
           });
         });
+    retrieveReviews()
+        .then((value) {
+      setState(() {
+        reviews.addAll(value);
+      });
+    });
     super.initState();
   }
 
@@ -269,9 +288,9 @@ class _ServiceDetailState extends State<ServiceDetail> {
 
                                           ListView.builder(
                                             shrinkWrap: true,
-                                              itemCount: activities == [] ? 1 : activities.length,
+                                              itemCount: activities.isEmpty ? 1 : activities.length,
                                               itemBuilder: (context, i){
-                                                return activities == []
+                                                return activities.isEmpty
                                                     ? Text("No se han especificado actividades para este servicio")
                                                     : activityWidget(i);
                                               }
@@ -326,39 +345,150 @@ class _ServiceDetailState extends State<ServiceDetail> {
                                   ]
                               )
                           ),
+
+                          const SizedBox(height: 10.0),
+                          Container(
+                            width: 450,
+                            child: Container(
+                                height: 70,
+                                decoration: const BoxDecoration(
+                                  color: GlobalVariables.whiteColor,
+                                ),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(price,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context, MaterialPageRoute(builder: (BuildContext context) => PersonalizeTrip(service, agency)));
+                                        },
+                                        child: const Text("Solicitar"),
+                                      ),
+                                    ]
+                                )
+                            ),),
+
+                          const SizedBox(height: 10.0),
+                          Container(
+                              decoration: const BoxDecoration(
+                                color: GlobalVariables.whiteColor,
+                                borderRadius: BorderRadius.all(Radius.circular(GlobalVariables.borderRadius)),
+                              ),
+                              child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("Reseñas de este servicio",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10.0),
+
+                                          ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: reviews.isEmpty ? 1 : reviews.length,
+                                              itemBuilder: (context, i){
+                                                return reviews.isEmpty
+                                                    ? Text("Este servicio aún no tiene reseñas")
+                                                    : reviewWidget(i);
+                                              }
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ]
+                              )
+                          ),
                         ]
                     )
                 ),
-                Container(
-                  width: 450,
-                  child: Container(
-                      height: 70,
-                      decoration: const BoxDecoration(
-                        color: GlobalVariables.whiteColor,
-                      ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(price,
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context, MaterialPageRoute(builder: (BuildContext context) => PersonalizeTrip(service, agency)));
-                              },
-                              child: const Text("Solicitar"),
-                            ),
-                          ]
-                      )
-                  ),)
 
               ]
           ),
         )
+    );
+  }
+
+  reviewWidget(i) {
+    String customerName = reviews[i].customer!.name;
+    double score = reviews[i].score.toDouble();
+    String comment = reviews[i].comment;
+
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            const Expanded(
+              flex: 0,
+              child: Icon(
+                Icons.circle,
+                color: Colors.blue,
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(customerName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold
+                    ),
+                    textAlign: TextAlign.justify,),
+                  Container(
+                    child: Text(
+                      comment,
+                      textAlign: TextAlign.justify,),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Text(score.toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),
+                      textAlign: TextAlign.justify,),
+                    RatingBar.builder(
+                      initialRating: 1,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      itemCount: 1,
+                      itemSize: 20,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      ignoreGestures: true,
+                      onRatingUpdate: (rating) {
+                      },
+                    ),
+                  ],
+                )
+            )
+          ],
+        ),
+        const SizedBox(height: 10.0),
+      ],
     );
   }
 
