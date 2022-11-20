@@ -22,21 +22,65 @@ class AgencyDetails extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 320,
+              height: 350,
               decoration: BoxDecoration(
                 color: GlobalVariables.whiteColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               //Agency Description
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Stack(
+                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      //Left Icon
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                              color: GlobalVariables.primaryColor,
+                              width: 1.0, // Underline thickness
+                            ))),
+                            padding: const EdgeInsets.only(left: 30, top: 30),
+                            child: Text(
+                              agency.name,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 110.0, top: 25),
+                            child: Row(children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                              ),
+                              Text('80', style: TextStyle(fontSize: 20)),
+                              Text(
+                                '%',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 25),
+                              )
+                            ]),
+                          ),
+                        ],
+                      ),
                       Container(
-                        margin: EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(left: 30, top: 50.0),
+                        child: Text(agency.email),
+                      ),
+                    ],
+                  ),
+                  //Left Icon
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 5),
                         child: Stack(
                           alignment: Alignment.center,
                           clipBehavior: Clip.antiAlias,
@@ -49,103 +93,81 @@ class AgencyDetails extends StatelessWidget {
                           ],
                         ),
                       ),
-                      //Right Description
-                      Container(
-                        child: SizedBox(
-                            child: Padding(
-                          padding: const EdgeInsets.only(top: 60.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      agency.name,
-                                    ),
-                                    Text(agency.email),
-                                    Wrap(spacing: -18, children: [
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.star_border),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.star_border),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.star_border),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.star_border),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.star_border),
-                                      ),
-                                    ]),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                  child: Row(
+                      SizedBox(
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("RUC"),
-                                        Text(agency.ruc),
-                                      ]),
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Teléfono"),
-                                        Text(agency.phoneNumber),
-                                      ]),
-                                ],
-                              )),
-                            ],
-                          ),
-                        )),
-                      ),
+                                  Text(
+                                    "RUC",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(agency.ruc),
+                                ]),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Teléfono",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(agency.phoneNumber),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    child: Text(
-                      agency.description,
-                      textAlign: TextAlign.center,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30.0),
+                    child: Container(
+                      child: Text(
+                        agency.description,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20),
+
+                  SizedBox(height: 10),
+
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll<Color>(
-                                GlobalVariables.buttonColor)),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      AgencyProfileEdit(agency: agency)));
-                        },
-                        child: Text("Editar información"),
-                      ),
-                      Row(children: [
-                        Icon(
-                          Icons.circle,
-                          color: Colors.blue,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30.0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll<Color>(
+                                  GlobalVariables.buttonColor)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AgencyProfileEdit(agency: agency)));
+                          },
+                          child: Text("Editar información"),
                         ),
-                        Text(agency.location)
-                      ])
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25.0, top: 10),
+                        child: Row(children: [
+                          Icon(
+                            Icons.circle,
+                            color: Colors.blue,
+                          ),
+                          Text(agency.location)
+                        ]),
+                      ),
                     ],
                   )
                 ],
@@ -157,6 +179,7 @@ class AgencyDetails extends StatelessWidget {
               decoration: BoxDecoration(
                   color: GlobalVariables.whiteColor,
                   borderRadius: BorderRadius.circular(10.0)),
+              //------------------------------------Offers Section------------------------------------//
               child: Column(children: [
                 Padding(
                   padding:
