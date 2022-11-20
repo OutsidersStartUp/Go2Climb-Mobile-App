@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/models/customer.dart';
+import 'package:go2climb/screens/review_service_dialog.dart';
 import '../../models/hired_services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -264,6 +265,8 @@ class _HiredServiceState extends State<HiredService> {
 
   @override
   Widget build(BuildContext context) {
+    ReviewServiceDialog reviewServiceDialog = ReviewServiceDialog();
+
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -388,7 +391,12 @@ class _HiredServiceState extends State<HiredService> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (status != 'pending'){
-                          //TODO: Review Service
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                              //TODO: Change Customer ID
+                                reviewServiceDialog.buildDialog(context, hiredService.service!, 1)
+                          );
                         }
                       },
                       style: ButtonStyle(
