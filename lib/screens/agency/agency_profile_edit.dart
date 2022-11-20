@@ -6,6 +6,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:go2climb/components/AppBarGo2Climb.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/models/agency.dart';
+import 'package:go2climb/models/api/agency_put.dart';
+import 'package:http/http.dart' as http;
+
+var id = 1;
+final url = Uri.https(
+  'go2climb.azurewebsites.net',
+  '/api/v1/agencies/$id',
+);
 
 class AgencyProfileEdit extends StatefulWidget {
   static const String routeName = '/agency-profile-edit';
@@ -22,6 +30,7 @@ class AgencyProfileEdit extends StatefulWidget {
 }
 
 class _AgencyProfileEditState extends State<AgencyProfileEdit> {
+  late TextEditingController _controllerEmail;
   late TextEditingController _controllerRUC;
   late TextEditingController _controllerPhoneNumber;
   late TextEditingController _controllerDescription;
@@ -29,6 +38,7 @@ class _AgencyProfileEditState extends State<AgencyProfileEdit> {
 
   void initState() {
     super.initState();
+    _controllerEmail = new TextEditingController(text: widget.agency.email);
     _controllerRUC = new TextEditingController(text: widget.agency.ruc);
     _controllerPhoneNumber =
         new TextEditingController(text: widget.agency.phoneNumber);
@@ -79,22 +89,62 @@ class _AgencyProfileEditState extends State<AgencyProfileEdit> {
                       border: OutlineInputBorder(),
                       labelText: 'Location: ${widget.agency.location}',
                       hintText: widget.agency.location)),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll<Color>(Colors.red)),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Guardar información"),
-                ),
-              ),
+              Container(
+                  child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll<Color>(Colors.red)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        //updateService();
+                      },
+                      child: Text("Guardar información"),
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll<Color>(Colors.blue)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Atrás"),
+                    ),
+                  ),
+                ],
+              )),
             ],
           ),
         ),
       ),
     );
   }
+//------------------The magic is here------------------//
+/*
+  void updateService() async {
+    AgencyPut agency = new AgencyPut(
+      name: widget.agency.name,
+      email: widget.agency.email,
+      password: '',
+      phoneNumber: _controllerPhoneNumber.text,
+      description: _controllerDescription.text,
+      location: _controllerLocation.text,
+      ruc: _controllerRUC.text,
+      photo: widget.agency.photo,
+      score: widget.agency.score,
+    );
+
+    await http.put(url,
+        headers: {"Content-Type": "application/json"}, body: agency);
+
+    Navigator.pop(context);
+  }
+  */
 }
