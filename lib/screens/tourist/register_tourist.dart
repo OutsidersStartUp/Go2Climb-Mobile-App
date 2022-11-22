@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/link.dart';
 
 import '../../constants/global_variables.dart';
 
@@ -130,8 +131,26 @@ class _RegisterTouristState extends State<RegisterTourist> {
               _checkboxState2 = value!;
               setState(() {});
             }),
-        Text(condition,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Link(
+            uri: Uri.parse('https://will-iam210.github.io/Go2Climb-Terms-and-Conditions/'),
+            target: LinkTarget.blank,
+            builder: (context, followLink) {
+              return GestureDetector(
+                onTap: followLink,
+                child: Text(
+                  condition,
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Color.fromARGB(255, 43, 43, 80),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),),
+              );
+            }
+          )
+        ),
       ],
     );
   }
