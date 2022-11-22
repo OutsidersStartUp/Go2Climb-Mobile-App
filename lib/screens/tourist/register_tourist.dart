@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -23,14 +24,17 @@ class _RegisterTouristState extends State<RegisterTourist> {
   bool passwordState = true;
   //String defaultTouristPhoto = "https://cdn-icons-png.flaticon.com/512/2102/2102633.png";
 
-  final urlAPI = Uri.parse("${GlobalVariables.url}api/v1/customers/auth/sign-up");
-  final headers = {"Content-Type" : "application/json;charset=UTF-8"};
+  final urlAPI =
+      Uri.parse("${GlobalVariables.url}api/v1/customers/auth/sign-up");
+  final headers = {"Content-Type": "application/json;charset=UTF-8"};
 
   final name = TextEditingController();
   final lastName = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
   final phoneNumber = TextEditingController();
+
+  final _keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,30 +55,60 @@ class _RegisterTouristState extends State<RegisterTourist> {
                         color: GlobalVariables.whiteColor,
                         borderRadius: BorderRadius.circular(
                             GlobalVariables.borderRadius)),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          newSubtitle("Te damos la bienvenida a Go2Climb"),
-                          sizedBox(),
-                          emailForm(),
-                          sizedBox(),
-                          passwordForm(),
-                          sizedBox(),
-                          newSubtitle("Información de la cuenta"),
-                          sizedBox(),
-                          nameForm(),
-                          sizedBox(),
-                          lastNameForm(),
-                          sizedBox(),
-                          accountInformation(context),
-                          sizedBox(),
-                          condition1("Declaro tener +18 años de edad."),
-                          condition2("Acepto los términos y condiciones."),
-                          const SizedBox(height: 60),
-                          finishButton(context)
-                        ]))
+                    child: Form(
+                      key: _keyForm,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            newSubtitle("Te damos la bienvenida a Go2Climb"),
+                            sizedBox(),
+                            emailForm(),
+                            sizedBox(),
+                            passwordForm(),
+                            sizedBox(),
+                            newSubtitle("Información de la cuenta"),
+                            sizedBox(),
+                            nameForm(),
+                            sizedBox(),
+                            lastNameForm(),
+                            sizedBox(),
+                            accountInformation(context),
+                            sizedBox(),
+                            condition1("Declaro tener +18 años de edad."),
+                            condition2("Acepto los términos y condiciones."),
+                            const SizedBox(height: 60),
+                            finishButton(context)
+                          ]),
+                    ))
               ]))
         ])));
+  }
+
+  String? validatePassword(value) {
+    if (value!.isEmpty) {
+      return 'Este campo es obligatorio';
+    }
+    if (value.length < 8) {
+      return 'Su contraseña debe tener al menos 8 caracteres';
+    }
+    return null;
+  }
+
+  String? validateForm(value) {
+    if (value!.isEmpty) {
+      return 'Este campo es obligatorio';
+    }
+    return null;
+  }
+
+  String? validateCellphone(value) {
+    if (value!.isEmpty) {
+      return 'Este campo es obligatorio';
+    }
+    if (value.length < 9) {
+      return 'Celular inválido';
+    }
+    return null;
   }
 
   Container finishButton(BuildContext context) {
@@ -83,8 +117,13 @@ class _RegisterTouristState extends State<RegisterTourist> {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
-            saveTourist();
-            Navigator.pushNamed(context, LoginPage.RouteName);
+            if (_keyForm.currentState!.validate() && _checkboxState1 == true && _checkboxState2 == true) {
+              //print("validación exitosa");
+              saveTourist();
+              Navigator.pushNamed(context, LoginPage.RouteName);
+            } else {
+              //print("error en la validación");
+            }
           },
           style: ButtonStyle(
             minimumSize:
@@ -123,13 +162,14 @@ class _RegisterTouristState extends State<RegisterTourist> {
   }
 
   Future<void> _launchURL(String url) async {
-    final Uri uri = Uri(scheme: "https", host: url, path: "Go2Climb-Terms-and-Conditions");
-    if(!await launchUrl(
+    final Uri uri =
+        Uri(scheme: "https", host: url, path: "Go2Climb-Terms-and-Conditions");
+    if (!await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
-      )) {
-        throw "Can not launch url";
-      }
+    )) {
+      throw "Can not launch url";
+    }
   }
 
   Row condition2(String condition) {
@@ -147,12 +187,10 @@ class _RegisterTouristState extends State<RegisterTourist> {
           },
           child: Text(condition,
               style: const TextStyle(
-                decoration: TextDecoration.underline,
-                color: Color(0xff0000ee),
-                fontSize: 16, 
-                fontWeight: FontWeight.bold
-              )
-          ),
+                  decoration: TextDecoration.underline,
+                  color: Color(0xff0000ee),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold)),
         ),
       ],
     );
@@ -183,10 +221,14 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-              controller: email,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                  border: InputBorder.none, hintText: "Correo electrónico"))),
+        controller: email,
+        keyboardType: TextInputType.emailAddress,
+        decoration: const InputDecoration(
+            border: InputBorder.none, hintText: "Correo electrónico"),
+        validator: (email) => email != null && !EmailValidator.validate(email)
+            ? 'Email inválido'
+            : null,
+      )),
     );
   }
 
@@ -199,6 +241,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: SizedBox(
           child: TextFormField(
+              validator: validatePassword,
               controller: password,
               obscureText: passwordState,
               keyboardType: TextInputType.text,
@@ -230,6 +273,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              validator: validateForm,
               controller: name,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
@@ -246,6 +290,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              validator: validateForm,
               controller: lastName,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
@@ -278,6 +323,7 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              validator: validateCellphone,
               controller: phoneNumber,
               inputFormatters: [cellphoneMask],
               keyboardType: TextInputType.phone,
@@ -296,16 +342,17 @@ class _RegisterTouristState extends State<RegisterTourist> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+              validator: validateForm,
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                   border: InputBorder.none, hintText: "País"),
               textAlign: TextAlign.center)),
     );
   }
-  
-  void saveTourist() async{
+
+  void saveTourist() async {
     final newTourist = {
-      "name": name.text, 
+      "name": name.text,
       "lastName": lastName.text,
       "email": email.text,
       "password": password.text,
