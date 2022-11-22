@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/screens/login_page.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/global_variables.dart';
 
@@ -122,6 +122,16 @@ class _RegisterTouristState extends State<RegisterTourist> {
     );
   }
 
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri(scheme: "https", host: url, path: "Go2Climb-Terms-and-Conditions");
+    if(!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+      )) {
+        throw "Can not launch url";
+      }
+  }
+
   Row condition2(String condition) {
     return Row(
       children: [
@@ -131,25 +141,18 @@ class _RegisterTouristState extends State<RegisterTourist> {
               _checkboxState2 = value!;
               setState(() {});
             }),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Link(
-            uri: Uri.parse('https://will-iam210.github.io/Go2Climb-Terms-and-Conditions/'),
-            target: LinkTarget.blank,
-            builder: (context, followLink) {
-              return GestureDetector(
-                onTap: followLink,
-                child: Text(
-                  condition,
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Color.fromARGB(255, 43, 43, 80),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold
-                  ),),
-              );
-            }
-          )
+        GestureDetector(
+          onTap: () {
+            _launchURL("will-iam210.github.io");
+          },
+          child: Text(condition,
+              style: const TextStyle(
+                decoration: TextDecoration.underline,
+                color: Color(0xff0000ee),
+                fontSize: 16, 
+                fontWeight: FontWeight.bold
+              )
+          ),
         ),
       ],
     );

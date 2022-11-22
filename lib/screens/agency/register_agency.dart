@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go2climb/screens/agency/register_agency_plan.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/global_variables.dart';
 
@@ -108,6 +109,16 @@ class _RegisterAgencyState extends State<RegisterAgency> {
           ),
         ));
   }
+  
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri(scheme: "https", host: url, path: "Go2Climb-Terms-and-Conditions");
+    if(!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+      )) {
+        throw "Can not launch url";
+      }
+  }
 
   Row condition1(String condition) {
     return Row(
@@ -118,8 +129,19 @@ class _RegisterAgencyState extends State<RegisterAgency> {
               _checkboxState1 = value!;
               setState(() {});
             }),
-        Text(condition,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        GestureDetector(
+          onTap: () {
+            _launchURL("will-iam210.github.io");
+          },
+          child: Text(condition,
+              style: const TextStyle(
+                decoration: TextDecoration.underline,
+                color: Color(0xff0000ee),
+                fontSize: 16, 
+                fontWeight: FontWeight.bold
+              )
+          ),
+        ),
       ],
     );
   }
