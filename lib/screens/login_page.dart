@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/agency/register_agency.dart';
 import 'package:go2climb/screens/services_view.dart';
+import 'package:go2climb/screens/tourist/register_tourist.dart';
 
 import '../constants/global_variables.dart';
 
@@ -42,6 +44,10 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 20.0,
               ),
+              _bottonLogin2(),
+              const SizedBox(
+                height: 20.0,
+              ),
               _bottonRegisterClient(),
               SizedBox(
                 height: 20.0,
@@ -64,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             icon: Icon(Icons.email),
             hintText: 'ejemplo@correo.com',
-            labelText: 'Correo electronico',
+            labelText: 'Correo electrónico',
           ),
           onChanged: (value) {},
         ),
@@ -82,8 +88,8 @@ class _LoginPageState extends State<LoginPage> {
           obscureText: true,
           decoration: InputDecoration(
             icon: Icon(Icons.lock),
-            hintText: 'Contrasena',
-            labelText: 'Contrasena',
+            hintText: 'Contraseña',
+            labelText: 'Contraseña',
           ),
           onChanged: (value) {},
         ),
@@ -98,7 +104,20 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           Navigator.pushNamed(context, ServicesView.routeName);
         },
-        child: Text("Iniciar Sesión"),
+        child: const Text("Iniciar Sesión"),
+      );
+    });
+  }
+
+  //Borrar ↓
+  Widget _bottonLogin2() {
+    return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, AgencyPage.routeName);
+        },
+        child: const Text("Iniciar como agencia"),
       );
     });
   }
@@ -108,9 +127,9 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, ServicesView.routeName);
+          Navigator.pushNamed(context, RegisterTourist.routeName);
         },
-        child: Text("Registrate y disfruta tu aventura"),
+        child: const Text("Regístrate y disfruta tu aventura"),
       );
     });
   }
@@ -120,9 +139,9 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, AgencyPage.routeName);
+          Navigator.pushNamed(context, RegisterAgency.routeName);
         },
-        child: Text("Registrate y ofrece servicios turisticos"),
+        child: const Text("Regístrate y ofrece servicios turisticos"),
       );
     });
   }

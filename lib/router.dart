@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go2climb/main.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
+import 'package:go2climb/screens/agency/register_agency.dart';
+import 'package:go2climb/screens/agency/register_agency_plan.dart';
 import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:go2climb/screens/services_view.dart';
-import 'package:go2climb/screens/tourist/personalize_trip.dart';
+import 'package:go2climb/screens/tourist/register_tourist.dart';
 import 'package:go2climb/screens/tourist/tourist_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -57,10 +59,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const PromoteAgencyService(),
       );
-    case PersonalizeTrip.routeName:
+    case RegisterTourist.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => PersonalizeTrip(),
+        builder: (_) => RegisterTourist(),
+      );
+    case RegisterAgency.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => RegisterAgency(),
+      );
+    case RegisterAgencyPlan.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const RegisterAgencyPlan(),
       );
     default:
       return MaterialPageRoute(

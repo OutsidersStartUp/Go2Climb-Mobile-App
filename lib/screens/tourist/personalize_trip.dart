@@ -1,17 +1,52 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go2climb/constants/global_variables.dart';
+import 'package:go2climb/models/create_hired_services.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:http/http.dart' as http;
 
+import '../../models/service.dart';
 import '../services_view.dart';
 
-class PersonalizeTrip extends StatelessWidget {
+class PersonalizeTrip extends StatefulWidget {
   static const String routeName = '/personalize-trip';
-  PersonalizeTrip({super.key});
+  final Service service;
+  final String agencyName;
 
-  String imageUrl = GlobalVariables.mountain1;
-  String title = 'Disfruta de una aventura en la montaña el Huascarán';
-  String agency = 'TravelNew';
+  PersonalizeTrip(this.service, this.agencyName);
 
+  @override
+  State<PersonalizeTrip> createState() => _PersonalizeTripState(service, agencyName);
+}
+
+class _PersonalizeTripState extends State<PersonalizeTrip> {
+  final urlAPI = Uri.parse("${GlobalVariables.url}api/v1/hiredservice");
+  final headers = {"Content-Type" : "application/json"};
+  late Future<CreateHiredServices> createHiredServices;
+
+  final Service service;
+  final String agencyName;
+  late String imageUrl;
+  late String title;
+  late String agency;
+  late int serviceId; //late? :v
+
+  int customerId = 1;
+  String status = "pending"; //default
+
+  _PersonalizeTripState(this.service, this.agencyName){
+    imageUrl = service.photos;
+    title = service.name;
+    agency = agencyName;
+    serviceId = service.id;
+  }
+
+  final scheduledDate = TextEditingController();
+  final amount = TextEditingController();
+  final price = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +129,7 @@ class PersonalizeTrip extends StatelessWidget {
                 TextButton(
                   child: const Text("Aceptar"),
                   onPressed: () {
+                    saveHiredService();
                     Navigator.pushNamed(
                       context, ServicesView.routeName);
                   },
@@ -169,9 +205,7 @@ class PersonalizeTrip extends StatelessWidget {
     );
   }
 
-  Container _travelDate() {
-    var dateMask = MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
-    
+  Container _travelDate() {  
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -180,11 +214,27 @@ class PersonalizeTrip extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [dateMask],
         keyboardType: TextInputType.number,
+        controller: scheduledDate,
         decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "Fecha de salida"),
-          textAlign: TextAlign.center
+          icon: Icon(Icons.calendar_today),
+          border: InputBorder.none, hintText: "Salida"
+          ),
+          readOnly: true,
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate:DateTime(2022),
+              lastDate: DateTime(2024)
+            );
+            if(pickedDate != null){
+              String formattedDate = DateFormat.yMd().format(pickedDate);
+              setState(() {
+                scheduledDate.text = formattedDate;
+              });
+            }
+          },
       )),
     );
   }
@@ -202,6 +252,7 @@ class PersonalizeTrip extends StatelessWidget {
           child: TextFormField(
         inputFormatters: [numberOfPeopleMask],
         keyboardType: TextInputType.number,
+        controller: amount,
         decoration: const InputDecoration(
           border: InputBorder.none, hintText: "# Personas"),
           textAlign: TextAlign.center
@@ -211,7 +262,7 @@ class PersonalizeTrip extends StatelessWidget {
 
   Container priceForm() {
     var priceMask = MaskTextInputFormatter(
-        mask: 'S/.#####', filter: {"#": RegExp(r'[0-9]')});
+        mask: '#####', filter: {"#": RegExp(r'[0-9]')});
 
     return Container(
       decoration: BoxDecoration(
@@ -223,6 +274,7 @@ class PersonalizeTrip extends StatelessWidget {
           child: TextFormField(
         inputFormatters: [priceMask],
         keyboardType: TextInputType.number,
+        controller: price,
         decoration: const InputDecoration(
           border: InputBorder.none, 
           hintText: "Total importe (S/.)"),
@@ -239,7 +291,7 @@ class PersonalizeTrip extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
@@ -257,7 +309,7 @@ class PersonalizeTrip extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: GlobalVariables.primaryColor, width: 3)),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
@@ -320,5 +372,21 @@ class PersonalizeTrip extends StatelessWidget {
           textAlign: TextAlign.center
       )),
     );
+  }
+  
+  void saveHiredService() async {
+    final newHiredService = {
+      "scheduledDate": scheduledDate.text,
+      "amount": amount.text,
+      "price": price.text,
+      "customerId": customerId, 
+      "serviceId": serviceId,
+      "status": status
+    };
+
+    await http.post(urlAPI, headers: headers, body: jsonEncode(newHiredService));
+    scheduledDate.clear();
+    amount.clear();
+    price.clear();
   }
 }
