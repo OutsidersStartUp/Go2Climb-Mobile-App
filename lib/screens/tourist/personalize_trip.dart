@@ -23,7 +23,7 @@ class PersonalizeTrip extends StatefulWidget {
 
 class _PersonalizeTripState extends State<PersonalizeTrip> {
   final urlAPI = Uri.parse("${GlobalVariables.url}api/v1/hiredservice");
-  final headers = {"Content-Type" : "application/json"};
+  final headers = {"Content-Type": "application/json"};
   late Future<CreateHiredServices> createHiredServices;
 
   final Service service;
@@ -36,7 +36,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
   int customerId = 1;
   String status = "pending"; //default
 
-  _PersonalizeTripState(this.service, this.agencyName){
+  _PersonalizeTripState(this.service, this.agencyName) {
     imageUrl = service.photos;
     title = service.name;
     agency = agencyName;
@@ -46,133 +46,130 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
   final scheduledDate = TextEditingController();
   final amount = TextEditingController();
   final price = TextEditingController();
-  
+
+  final _keyForm = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GlobalVariables.backgroundColor,
-      appBar: AppBar(
-        title: const Text("Pagar Servicio"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: GlobalVariables.whiteColor,
-                          borderRadius: BorderRadius.circular(GlobalVariables.borderRadius)
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              newSubtitle("Servicio seleccionado"),
-                              sizedBox(),
-                              serviceImage(),
-                              sizedBox(),
-                              newSubtitle(title),
-                              sizedBox(),
-                              Row(
-                                children: [
-                                  const Text("Ofrecido por "),
-                                  Text(
-                                    agency,
-                                    style: const TextStyle(
-                                    fontWeight: FontWeight.bold
-                                    ),
-                                  )
-                                ],
-                              ),
-                              sizedBox(),
-                              personalizeFields(context),
-                              sizedBox(),
-                              priceForm(),
-                              sizedBox(),
-                              newSubtitle("Método de pago"),
-                              sizedBox(),
-                              cardNumber(),
-                              sizedBox(),
-                              cardholderName(),
-                              sizedBox(),
-                              cardInformation(context),
-                              sizedBox(),
-                              payButton(context)]
-                          )
-                      )
-                    ]
-                )
-            )
-          ]
-        )
-      )
-    );
+        backgroundColor: GlobalVariables.backgroundColor,
+        appBar: AppBar(
+          title: const Text("Pagar Servicio"),
+        ),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(children: [
+                Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    decoration: BoxDecoration(
+                        color: GlobalVariables.whiteColor,
+                        borderRadius: BorderRadius.circular(
+                            GlobalVariables.borderRadius)),
+                    child: Form(
+                      key: _keyForm,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            newSubtitle("Servicio seleccionado"),
+                            sizedBox(),
+                            serviceImage(),
+                            sizedBox(),
+                            newSubtitle(title),
+                            sizedBox(),
+                            Row(
+                              children: [
+                                const Text("Ofrecido por "),
+                                Text(
+                                  agency,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            sizedBox(),
+                            personalizeFields(context),
+                            sizedBox(),
+                            priceForm(),
+                            sizedBox(),
+                            newSubtitle("Método de pago"),
+                            sizedBox(),
+                            cardNumber(),
+                            sizedBox(),
+                            cardholderName(),
+                            sizedBox(),
+                            cardInformation(context),
+                            sizedBox(),
+                            payButton(context)
+                          ]),
+                    ))
+              ]))
+        ])));
+  }
+
+  String? validateForm(value) {
+    if (value!.isEmpty) {
+      return 'Este campo es obligatorio';
+    }
+    return null;
   }
 
   Container payButton(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      width: MediaQuery.of(context).size.width,
-      child: ElevatedButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false, 
-            builder: ((context) => AlertDialog(
-              title: const Text("¡Enhorabuena!"),
-              content: const Text("Servicio contratado exitosamente"),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text("Aceptar"),
-                  onPressed: () {
-                    saveHiredService();
-                    Navigator.pushNamed(
-                      context, ServicesView.routeName);
-                  },
-                )
-              ],
-            )),
-          );
-        },
-      style: ButtonStyle(
-        minimumSize: 
-        const MaterialStatePropertyAll<Size>(
-          Size(double.infinity, 40)),
-        backgroundColor:
-        const MaterialStatePropertyAll<Color>(
-          GlobalVariables.primaryColor),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                GlobalVariables.borderRadius
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          onPressed: () {
+            if (_keyForm.currentState!.validate()) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: ((context) => AlertDialog(
+                      title: const Text("¡Enhorabuena!"),
+                      content: const Text("Servicio contratado exitosamente"),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text("Aceptar"),
+                          onPressed: () {
+                            saveHiredService();
+                            Navigator.pushNamed(context, ServicesView.routeName);
+                          },
+                        )
+                      ],
+                    )),
+              );
+            }
+          },
+          style: ButtonStyle(
+            minimumSize:
+                const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+                GlobalVariables.primaryColor),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(GlobalVariables.borderRadius),
               ),
             ),
           ),
-      ), 
-      child: const Text(
-        "Pagar",
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.black,
-        ),
-      ),
-      )
-    );
+          child: const Text(
+            "Pagar",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ));
   }
 
   Container serviceImage() {
     return Container(
       alignment: Alignment.center,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
-        child: Image.network(
-          imageUrl, 
-          height: 165)
-      ),
+          borderRadius: BorderRadius.circular(GlobalVariables.borderRadius),
+          child: Image.network(imageUrl, height: 165)),
     );
   }
 
@@ -199,13 +196,13 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
             width: MediaQuery.of(context).size.width * 0.4,
             child: _travelDate()),
         SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4, 
+            width: MediaQuery.of(context).size.width * 0.4,
             child: _numberOfPeople()),
       ],
     );
   }
 
-  Container _travelDate() {  
+  Container _travelDate() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -214,27 +211,27 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+        validator: validateForm,
         keyboardType: TextInputType.number,
         controller: scheduledDate,
         decoration: const InputDecoration(
-          icon: Icon(Icons.calendar_today),
-          border: InputBorder.none, hintText: "Salida"
-          ),
-          readOnly: true,
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
+            icon: Icon(Icons.calendar_today),
+            border: InputBorder.none,
+            hintText: "Salida"),
+        readOnly: true,
+        onTap: () async {
+          DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate:DateTime(2022),
-              lastDate: DateTime(2024)
-            );
-            if(pickedDate != null){
-              String formattedDate = DateFormat.yMd().format(pickedDate);
-              setState(() {
-                scheduledDate.text = formattedDate;
-              });
-            }
-          },
+              firstDate: DateTime(2022),
+              lastDate: DateTime(2024));
+          if (pickedDate != null) {
+            String formattedDate = DateFormat.yMd().format(pickedDate);
+            setState(() {
+              scheduledDate.text = formattedDate;
+            });
+          }
+        },
       )),
     );
   }
@@ -250,13 +247,13 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [numberOfPeopleMask],
-        keyboardType: TextInputType.number,
-        controller: amount,
-        decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "# Personas"),
-          textAlign: TextAlign.center
-      )),
+              validator: validateForm,
+              inputFormatters: [numberOfPeopleMask],
+              keyboardType: TextInputType.number,
+              controller: amount,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "# Personas"),
+              textAlign: TextAlign.center)),
     );
   }
 
@@ -272,14 +269,13 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [priceMask],
-        keyboardType: TextInputType.number,
-        controller: price,
-        decoration: const InputDecoration(
-          border: InputBorder.none, 
-          hintText: "Total importe (S/.)"),
-          textAlign: TextAlign.center
-      )),
+              validator: validateForm,
+              inputFormatters: [priceMask],
+              keyboardType: TextInputType.number,
+              controller: price,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "Total importe (S/.)"),
+              textAlign: TextAlign.center)),
     );
   }
 
@@ -295,12 +291,11 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [cardMask],
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: InputBorder.none, 
-          hintText: "Número de tarjeta crédito/débito")
-      )),
+              inputFormatters: [cardMask],
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Número de tarjeta crédito/débito"))),
     );
   }
 
@@ -313,11 +308,10 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        keyboardType: TextInputType.text,
-        decoration: const InputDecoration(
-          border: InputBorder.none, 
-          hintText: "Nombre del titular de la tarjeta")
-      )),
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Nombre del titular de la tarjeta"))),
     );
   }
 
@@ -325,7 +319,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
     return Row(
       children: [
         SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
+            width: MediaQuery.of(context).size.width * 0.4, 
             child: _dueDate()),
         SizedBox(
             width: MediaQuery.of(context).size.width * 0.4, 
@@ -336,7 +330,7 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
 
   Container _dueDate() {
     var dueDateMask = MaskTextInputFormatter(mask: '##/##', filter: {"#": RegExp(r'[0-9]')});
-    
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -345,12 +339,11 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [dueDateMask],
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "MM/AA"),
-          textAlign: TextAlign.center
-      )),
+              inputFormatters: [dueDateMask],
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "MM/AA"),
+              textAlign: TextAlign.center)),
     );
   }
 
@@ -365,21 +358,20 @@ class _PersonalizeTripState extends State<PersonalizeTrip> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
-        inputFormatters: [cvcMask],
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: InputBorder.none, hintText: "CVC/CVV"),
-          textAlign: TextAlign.center
-      )),
+              inputFormatters: [cvcMask],
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                  border: InputBorder.none, hintText: "CVC/CVV"),
+              textAlign: TextAlign.center)),
     );
   }
-  
+
   void saveHiredService() async {
     final newHiredService = {
       "scheduledDate": scheduledDate.text,
       "amount": amount.text,
       "price": price.text,
-      "customerId": customerId, 
+      "customerId": customerId,
       "serviceId": serviceId,
       "status": status
     };
