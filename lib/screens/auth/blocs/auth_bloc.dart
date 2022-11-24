@@ -10,15 +10,17 @@ class AuthBloc extends Bloc<AuthEvents, AuthState> {
   }
 
   _startEvent(LoginButtonPressed event, Emitter<AuthState> emit) async {
-    emit(LoginInitState());
+    //emit(LoginInitState());
     emit(LoginLoadingState());
-    var data = await repository.login(event.email, event.password);
-    if (data['ruc'] != null) {
-      emit(AgencyLoginSuccessState());
-    } else if (data['lastName'] != null) {
-      emit(CustomerLoginSuccessState());
-    } else {
-      emit(LoginErrorState(message: "There was an error"));
+    try{
+      var data = await repository.login(event.email, event.password);
+      if (data['ruc'] != null) {
+        emit(AgencyLoginSuccessState());
+      } else if (data['lastName'] != null) {
+        emit(CustomerLoginSuccessState());
+      }
+      }catch(e){
+        emit(LoginErrorState(message: e.toString()));
     }
   }
 

@@ -15,7 +15,7 @@ class AuthRepository {
     if (data['token'] != null) {
       return data;
     } else {
-      return "problem when authenticating";
+      return "There was a problem while authenticating";
     }
   }
 }

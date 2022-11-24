@@ -37,9 +37,9 @@ class _LoginPageState extends State<LoginPage> {
     final msg = BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is LoginErrorState) {
-          return Text(state.message);
+          return const Text("Error al momento de verificar sus datos.");
         } else if (state is LoginLoadingState) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
           return Container();
         }
@@ -73,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       passwordContainer(),
                       sizedBox(),
                       loginButton(context),
+                      msg,
                       sizedBox(),
                       sizedBox(),
                       newSubHeading("Aun no tienes una cuenta?"),
