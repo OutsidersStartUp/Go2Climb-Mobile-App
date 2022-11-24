@@ -181,6 +181,31 @@ class DayOffersState extends State<ServicesView> {
                       ],
                     ),
 
+                    const SizedBox(height: 2.0),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: pushSaved,
+                          style: ButtonStyle(
+                            minimumSize: const MaterialStatePropertyAll<Size>(
+                                Size(90, 40)),
+                            backgroundColor:
+                            const MaterialStatePropertyAll<Color>(
+                                Colors.grey),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    GlobalVariables.borderRadius),
+                              ),
+                            ),
+                          ),
+                          child: const Text("Favoritos"),
+                        ),
+                      ],
+                    ),
+
                     const SizedBox(height: 10.0),
 
                     //Current State
@@ -343,9 +368,33 @@ class DayOffersState extends State<ServicesView> {
                         ),
                       ],
                     )),
+                const SizedBox(height: 5.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RatingBar.builder(
+                        initialRating: agencyScore,
+                        itemCount: 1,
+                        itemSize: 25,
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
-          )),
+          ),),
     );
+  }
+
+  void pushSaved() {
   }
 }
