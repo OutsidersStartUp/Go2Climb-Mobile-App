@@ -25,7 +25,7 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
   late Future<CreateService> createService;
 
   bool isOffer = false;
-  int agencyId = 2;
+  int agencyId = 1;
   String creationDate = DateTime.now().toString().substring(0, 10);
 
   final name = TextEditingController();
