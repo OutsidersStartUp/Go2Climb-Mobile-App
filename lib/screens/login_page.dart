@@ -1,9 +1,12 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go2climb/constants/global_variables.dart';
 import 'package:go2climb/controllers/auth.controller.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
 import 'package:go2climb/screens/agency/register_agency.dart';
+import 'package:go2climb/screens/auth/blocs/auth_bloc.dart';
+import 'package:go2climb/screens/auth/blocs/auth_events.dart';
+import 'package:go2climb/screens/auth/blocs/auth_state.dart';
 import 'package:go2climb/screens/services_view.dart';
 import 'package:go2climb/screens/tourist/register_tourist.dart';
 
@@ -21,39 +24,67 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   AuthController authController = AuthController();
+  late AuthBloc authBloc;
+
+  @override
+  void initState() {
+    authBloc = BlocProvider.of<AuthBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final msg = BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is LoginErrorState) {
+          return Text(state.message);
+        } else if (state is LoginLoadingState) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return Container();
+        }
+      },
+    );
+
     return Scaffold(
         backgroundColor: GlobalVariables.backgroundColor,
         appBar: AppBar(title: const Text("Iniciar sesion")),
-        body: SingleChildScrollView(
-            child: Column(
-          children: [
-            Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    newSubHeading("Te damos la bienvenida a Go2Climb"),
-                    sizedBox(),
-                    emailContainer(),
-                    sizedBox(),
-                    passwordContainer(),
-                    sizedBox(),
-                    loginButton(context),
-                    sizedBox(),
-                    sizedBox(),
-                    newSubHeading("Aun no tienes una cuenta?"),
-                    sizedBox(),
-                    registerCustomerButton(context),
-                    sizedBox(),
-                    registerAgencyButton(context)
-                  ],
-                ))
-          ],
-        )));
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is CustomerLoginSuccessState) {
+              Navigator.pushNamed(context, ServicesView.routeName);
+            } else if (state is AgencyLoginSuccessState) {
+              Navigator.pushNamed(context, AgencyPage.routeName);
+            }
+          },
+          child: SingleChildScrollView(
+              child: Column(
+            children: [
+              Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      newSubHeading("Te damos la bienvenida a Go2Climb"),
+                      sizedBox(),
+                      emailContainer(),
+                      sizedBox(),
+                      passwordContainer(),
+                      sizedBox(),
+                      loginButton(context),
+                      sizedBox(),
+                      sizedBox(),
+                      newSubHeading("Aun no tienes una cuenta?"),
+                      sizedBox(),
+                      registerCustomerButton(context),
+                      sizedBox(),
+                      registerAgencyButton(context)
+                    ],
+                  ))
+            ],
+          )),
+        ));
   }
 
   SizedBox sizedBox() => const SizedBox(height: 15);
@@ -64,8 +95,9 @@ class _LoginPageState extends State<LoginPage> {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
-            authController.loginUser(
-              emailController.text, passwordController.text);
+            authBloc.add(LoginButtonPressed(
+                email: emailController.text,
+                password: passwordController.text));
           },
           style: ButtonStyle(
             minimumSize:
