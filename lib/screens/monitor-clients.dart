@@ -154,226 +154,298 @@ class _HiredServiceState extends State<HiredService> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
-      child: Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(GlobalVariables.borderRadius)),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(GlobalVariables.borderRadius)),
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Name",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Name",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(GlobalVariables.borderRadius)),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(GlobalVariables.borderRadius)),
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(name),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(name),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Email",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Email",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(email),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(email),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Phone",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Phone",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(phone),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(phone),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Quantity (people)",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Quantity (people)",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(amount),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(amount),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Service",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Service",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(service),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(service),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Departure date",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Departure date",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(date),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(date),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("Mount",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Mount",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                    ),
+                    margin: EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("S/${price}.00"),
                   ),
-                  margin: EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("S/${price}.00"),
                 ),
-              ]
+              ],
+            ),
           ),
-          TableRow(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
-                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(GlobalVariables.borderRadius)),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.primaryColor,
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(GlobalVariables.borderRadius)),
+                    ),
+                    margin: const EdgeInsets.only(bottom: 2.5),
+                    padding: EdgeInsets.all(10.0),
+                    child: const Text("Status",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )),
                   ),
-                  margin: const EdgeInsets.only(bottom: 2.5),
-                  padding: EdgeInsets.all(10.0),
-                  child: const Text("Status",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold
-                      )),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.backgroundColor,
-                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(GlobalVariables.borderRadius)),
-                  ),
-                  margin: const EdgeInsets.only(bottom: 2.5),
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: DropdownButton(
-                    value: status,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items, style: const TextStyle(fontSize: 14),),
-                      );
-                    }).toList(),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: GlobalVariables.backgroundColor,
+                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(GlobalVariables.borderRadius)),
+                    ),
+                    margin: const EdgeInsets.only(bottom: 2.5),
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: DropdownButton(
+                      value: status,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: items.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items, style: const TextStyle(fontSize: 14),),
+                        );
+                      }).toList(),
 
-                    onChanged: (String? newValue) {
-                      HiredServices newHiredService = HiredServices(
-                          id: hiredService.id,
-                          customerId: hiredService.customerId,
-                          serviceId: hiredService.serviceId,
-                          amount: hiredService.amount,
-                          price: hiredService.price,
-                          scheduledDate: hiredService.scheduledDate,
-                          status: newValue!
-                      );
-                      updateHiredService(newHiredService)
-                          .then((value) {
-                            setState(() {
-                              amount = value.amount.toString();
-                              date = value.scheduledDate;
-                              price = value.price.toString();
-                              status = value.status;
-                            });
+                      onChanged: (String? newValue) {
+                        HiredServices newHiredService = HiredServices(
+                            id: hiredService.id,
+                            customerId: hiredService.customerId,
+                            serviceId: hiredService.serviceId,
+                            amount: hiredService.amount,
+                            price: hiredService.price,
+                            scheduledDate: hiredService.scheduledDate,
+                            status: newValue!
+                        );
+                        updateHiredService(newHiredService)
+                            .then((value) {
+                          setState(() {
+                            amount = value.amount.toString();
+                            date = value.scheduledDate;
+                            price = value.price.toString();
+                            status = value.status;
                           });
-                    },
+                        });
+                      },
+                    ),
                   ),
                 ),
-              ]
+              ],
+            ),
           ),
         ],
       ),

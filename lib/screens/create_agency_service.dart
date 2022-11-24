@@ -25,7 +25,7 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
   late Future<CreateService> createService;
 
   bool isOffer = false;
-  int agencyId = 2;
+  int agencyId = 1;
   String creationDate = DateTime.now().toString().substring(0, 10);
 
   final name = TextEditingController();
@@ -34,6 +34,8 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
   final price = TextEditingController();
   final newPrice = TextEditingController();
   final photos = TextEditingController();
+
+  final _keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -117,66 +119,34 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
                     ),
                     //Form
                     child: SingleChildScrollView(
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        newSubtitle("Agregar nuevo servicio"),
-                        sizedBox(),
-                        agencyServiceForm(),
-                        sizedBox(),
-                        newSubtitle("Actividades a realizar"),
-                        sizedBox(),
-                        activityForm(),
-                        sizedBox(),
-                        /*newSubtitle("Horario"),
-                        sizedBox(),
-                        scheduleForms(context),*/
-                        //Text(creationDate),
-                        newSubtitle("Precio"),
-                        sizedBox(),
-                        priceForm(),
-                        sizedBox(),
-                        addOfferToggle(),
-                        addOfferForm(),
-                        newSubtitle("Imagenes referenciales"),
-                        sizedBox(),
-                        Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Image.network(GlobalVariables.uploadImage)),
-                        sizedBox(),
-                        urlImageForm(),
-                        sizedBox(),
-                        Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            width: MediaQuery.of(context).size.width,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                saveService();
-                                print("The price is $price");
-                                print("offer: $isOffer");
-                                Navigator.pushNamed(
-                                    context, PromoteAgencyService.routeName);
-                              },
-                              style: ButtonStyle(
-                                minimumSize:
-                                    const MaterialStatePropertyAll<Size>(
-                                        Size(double.infinity, 40)),
-                                backgroundColor:
-                                    const MaterialStatePropertyAll<Color>(
-                                        GlobalVariables.primaryColor),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
-                              ),
-                              child: const Text(
-                                "Continuar",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ))
-                      ]),
+                      child: Form(
+                        key: _keyForm,
+                        child: Column(mainAxisSize: MainAxisSize.min, children: [
+                          newSubtitle("Agregar nuevo servicio"),
+                          sizedBox(),
+                          agencyServiceForm(),
+                          sizedBox(),
+                          newSubtitle("Actividades a realizar"),
+                          sizedBox(),
+                          activityForm(),
+                          sizedBox(),
+                          newSubtitle("Precio"),
+                          sizedBox(),
+                          priceForm(),
+                          sizedBox(),
+                          addOfferToggle(),
+                          addOfferForm(),
+                          newSubtitle("Imagenes referenciales"),
+                          sizedBox(),
+                          Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: Image.network(GlobalVariables.uploadImage)),
+                          sizedBox(),
+                          urlImageForm(),
+                          sizedBox(),
+                          continueButton(context)
+                        ]),
+                      ),
                     ))
               ],
             ),
@@ -184,6 +154,45 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
         ),
       ),
     );
+  }
+
+  String? validateForm(value) {
+    if (value!.isEmpty) {
+      return 'Este campo es obligatorio';
+    }
+    return null;
+  }
+
+  Container continueButton(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          onPressed: () {
+            if (_keyForm.currentState!.validate()) {
+              saveService();
+              Navigator.pushNamed(context, PromoteAgencyService.routeName);
+            }
+          },
+          style: ButtonStyle(
+            minimumSize:
+                const MaterialStatePropertyAll<Size>(Size(double.infinity, 40)),
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+                GlobalVariables.primaryColor),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          child: const Text(
+            "Continuar",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ));
   }
 
   Container urlImageForm() {
@@ -195,6 +204,7 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+        validator: validateForm,
         controller: photos,
         decoration: const InputDecoration(
             border: InputBorder.none,
@@ -278,17 +288,20 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
           child: Column(
         children: [
           TextFormField(
+            validator: validateForm,
             controller: name,
             decoration: const InputDecoration(hintText: "Nombre del servicio"),
           ),
           TextFormField(
+            validator: validateForm,
             controller: location,
             decoration: const InputDecoration(hintText: "Lugar"),
           ),
           TextFormField(
-              controller: description,
-              decoration: const InputDecoration(
-                  border: InputBorder.none, hintText: "Descripción")),
+            validator: validateForm,
+            controller: description,
+            decoration: const InputDecoration(
+              border: InputBorder.none, hintText: "Descripción")),
         ],
       )),
     );
@@ -299,8 +312,8 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton.icon(
-        icon: Text("Agregar oferta"),
-        label: Icon(Icons.add),
+        icon: const Text("Agregar oferta"),
+        label: const Icon(Icons.add),
         onPressed: () => setState(() => isVisible = !isVisible),
       ),
     );
@@ -309,22 +322,21 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
   Visibility addOfferForm() {
     return Visibility(
         visible: isVisible,
-        child: Container(
-            child: SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              newSubtitle("Precio promocional (USD)"),
-              sizedBox(),
-              offerPriceForm(),
-              sizedBox(),
-              newSubtitle("Válido"),
-              sizedBox(),
-              scheduleForms(context),
-              sizedBox(),
-            ],
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          newSubtitle("Precio promocional (USD)"),
+          sizedBox(),
+          offerPriceForm(),
+          sizedBox(),
+          newSubtitle("Válido"),
+          sizedBox(),
+          scheduleForms(context),
+          sizedBox(),
+        ],
           ),
-        )));
+        ));
   }
 
   Container activityForm() {
@@ -336,6 +348,7 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+        validator: validateForm,
         decoration: const InputDecoration(
             border: InputBorder.none, hintText: "ejm: alpinismo"),
       )),
@@ -391,6 +404,7 @@ class _CreateAgencyServiceState extends State<CreateAgencyService> {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
           child: TextFormField(
+        validator: validateForm,
         inputFormatters: [priceMask],
         keyboardType: TextInputType.number,
         controller: price,
@@ -449,6 +463,6 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text('');
+    return const Text('');
   }
 }
