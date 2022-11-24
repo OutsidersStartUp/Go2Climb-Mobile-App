@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go2climb/constants/global_variables.dart';
-import 'package:go2climb/controllers/auth.controller.dart';
 import 'package:go2climb/screens/agency/agency_page.dart';
 import 'package:go2climb/screens/agency/register_agency.dart';
 import 'package:go2climb/screens/auth/blocs/auth_bloc.dart';
@@ -23,7 +22,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  AuthController authController = AuthController();
   late AuthBloc authBloc;
 
   @override
