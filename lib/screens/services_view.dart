@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go2climb/components/AppBarGo2Climb.dart';
 import 'package:go2climb/models/agency.dart';
 import 'package:go2climb/models/service.dart';
 import 'package:go2climb/screens/service_detail.dart';
+import 'package:go2climb/screens/favorites_view.dart';
 import '../constants/global_variables.dart';
 import 'agency/agency_page.dart';
 import 'package:http/http.dart' as http;
@@ -181,6 +184,33 @@ class DayOffersState extends State<ServicesView> {
                       ],
                     ),
 
+                    const SizedBox(height: 2.0),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FavoritesView()));
+                          },
+                          style: ButtonStyle(
+                            minimumSize: const MaterialStatePropertyAll<Size>(
+                                Size(90, 40)),
+                            backgroundColor:
+                            const MaterialStatePropertyAll<Color>(
+                                Colors.grey),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    GlobalVariables.borderRadius),
+                              ),
+                            ),
+                          ),
+                          child: const Text("Favoritos"),
+                        ),
+                      ],
+                    ),
+
                     const SizedBox(height: 10.0),
 
                     //Current State
@@ -343,9 +373,59 @@ class DayOffersState extends State<ServicesView> {
                         ),
                       ],
                     )),
+                const SizedBox(height: 5.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RatingBar.builder(
+                        initialRating: agencyScore,
+                        itemCount: 1,
+                        itemSize: 25,
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
-          )),
+          ),),
     );
   }
+
+  /* void pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context){
+          final Iterable<ListTile> tiles = saved.map(
+                (WordPair pair){
+              return GestureDetector(
+                title: Text(pair.asPascalCase,
+                    style: biggerFont
+                ),
+              );
+            },
+          );
+          final List<Widget> divided = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+              .toList();
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Saved favorites"),
+            ),
+            body: ListView(children: divided,),
+          );
+        },
+      ),
+    );
+  } */
 }

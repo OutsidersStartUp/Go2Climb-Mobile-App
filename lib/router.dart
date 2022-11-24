@@ -5,6 +5,7 @@ import 'package:go2climb/screens/agency/register_agency.dart';
 import 'package:go2climb/screens/agency/register_agency_plan.dart';
 import 'package:go2climb/screens/change_agency_plan.dart';
 import 'package:go2climb/screens/create_agency_service.dart';
+import 'package:go2climb/screens/favorites_view.dart';
 import 'package:go2climb/screens/monitor-clients.dart';
 import 'package:go2climb/screens/promote_agency_service.dart';
 import 'package:go2climb/screens/services_view.dart';
@@ -22,6 +23,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const ServicesView(),
+      );
+    case FavoritesView.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const FavoritesView(),
       );
     case CreateAgencyService.routeName:
       return MaterialPageRoute(

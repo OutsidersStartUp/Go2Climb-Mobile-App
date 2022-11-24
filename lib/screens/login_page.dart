@@ -126,22 +126,7 @@ class _LoginPageState extends State<LoginPage> {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: ((context) => AlertDialog(
-                    title: const Text("¡Enhorabuena!"),
-                    content: const Text("Plan actualizado exitosamente"),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text("Aceptar"),
-                        onPressed: () {
-                          Navigator.pushNamed(context, ServicesView.routeName);
-                        },
-                      )
-                    ],
-                  )),
-            );
+            Navigator.pushNamed(context, RegisterAgency.routeName);
           },
           style: ButtonStyle(
             minimumSize:
@@ -171,22 +156,7 @@ class _LoginPageState extends State<LoginPage> {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: ((context) => AlertDialog(
-                    title: const Text("¡Enhorabuena!"),
-                    content: const Text("Plan actualizado exitosamente"),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text("Aceptar"),
-                        onPressed: () {
-                          Navigator.pushNamed(context, ServicesView.routeName);
-                        },
-                      )
-                    ],
-                  )),
-            );
+            Navigator.pushNamed(context, RegisterTourist.routeName);
           },
           style: ButtonStyle(
             minimumSize:
